@@ -4,18 +4,22 @@
             <p>Date: </p><input type="text" v-model="transaction.date"/>
             <p>Payee: </p><input type="text" v-model="transaction.payee" />
         </div>
-        <div v-for="(entry, index) in transaction.entries" :key="index">
-            <EditedEntry
-                @update-entry="updateEntry"
-                :account="entry.account"
-                :amount="entry.amount" 
-                :id="entry.id"
-            />
+        <div class="entries">
+            <div v-for="(entry, index) in transaction.entries" :key="index">
+                <EditedEntry
+                    @update-entry="updateEntry"
+                    :account="entry.account"
+                    :amount="entry.amount" 
+                    :id="entry.id"
+                />
+            </div>
         </div>
         <br />
-        <button @click="saveTransaction">Save</button>
-        <button @click="cancelTransaction">Cancel</button>
-        <button @click="deleteTransaction">Delete</button>
+        <div class="buttons">
+            <button @click="saveTransaction">Save</button>
+            <button @click="cancelTransaction">Cancel</button>
+            <button @click="deleteTransaction">Delete</button>
+        </div>
     </div>
 </template>
 
@@ -73,6 +77,11 @@ export default {
 </script>
 
 <style scoped>
+    @keyframes display-animation {
+        from { top: 0; opacity: 0.5; }
+        to { top: 10%; opacity: 1; }
+    }
+
     .edited-transaction-container {
         background-color: #fefefe;
         border: solid 1px #bbb;
@@ -82,19 +91,32 @@ export default {
         margin: auto;
         max-width: 600pt;
         padding: 1em;
+        padding-bottom: 4em;
         position: fixed;
         right: 0;
         top: 10%;
+        animation-name: display-animation;
+        animation-duration: 0.3s;
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        grid-gap: 10pt;
     }
 
     .header {
-        display: grid;
-        grid-template-columns: 60px 1fr;
+        display: flex;
+        flex-direction: column;
     }
 
     .header p {
-        vertical-align: middle;
+        padding: 0;
+        margin: 0;
         height: 100%;
+    }
+
+    .buttons {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
     }
 
     .edited-transaction-container button {
