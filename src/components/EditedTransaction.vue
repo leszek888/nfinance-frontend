@@ -45,18 +45,14 @@ export default {
     },
 
     methods: {
-        async saveTransaction() {
-            const body = JSON.stringify({...this.transaction, balance_id: this.balance_id});
-            await fetch('http://127.0.0.1:5000/api/transaction',
-                {method: 'POST', mode: 'cors', body: body, headers: {'Content-Type':'application/json'}});
-            this.$emit('close-transaction');
+        saveTransaction() {
+            this.$emit('save-transaction', this.transaction);
         },
         cancelTransaction() {
             this.$emit('close-transaction');
         },
         deleteTransaction() {
-            console.log('Deleting: ', this.transaction.id);
-            this.$emit('close-transaction');
+            this.$emit('delete-transaction', this.transaction);
         },
         updateEntry(entry) {
             const index = this.transaction.entries.findIndex(e => e.id === entry.id);
@@ -71,7 +67,7 @@ export default {
         this.transaction.entries = this.entries.map((entry) => {return {...entry, id: nanoid()}});
     },
 
-    emits: [ 'close-transaction', 'save-transaction' ]
+    emits: [ 'close-transaction', 'save-transaction', 'delete-transaction' ]
 }
 
 </script>
