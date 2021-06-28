@@ -38,9 +38,14 @@ export default {
 <style scoped>
     .container {
         padding: 1.5em;
+        border-radius: 6px;
+        background-color: #f5f5f5;
+        margin: 5px;
+        transition: all 0.3s ease-out;
     }
 
     .container:hover {
+        background-color: #fcfcfc;
         box-shadow: 0px 0px 5px #444;
     }
 
