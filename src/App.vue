@@ -120,6 +120,7 @@ export default {
     padding: 1.5em;
     position: fixed;
     right: 2em;
+    z-index: 99;
 }
 
 .btn-new-transaction:hover {

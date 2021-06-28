@@ -100,6 +100,7 @@ export default {
         display: grid;
         grid-template-columns: 2fr 3fr;
         grid-gap: 10pt;
+        z-index: 99;
     }
 
     .header {
