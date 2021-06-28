@@ -31,10 +31,11 @@ export default {
     },
 
     props: {
-        id: String,
+        id: Number,
         date: String,
         payee: String,
         entries: Array,
+        balance_id: String,
     },
 
     data() {
@@ -44,9 +45,11 @@ export default {
     },
 
     methods: {
-        saveTransaction() {
-            console.log('Saving: ', JSON.stringify(this.transaction));
-            this.$emit('save-transaction', JSON.stringify(this.transaction));
+        async saveTransaction() {
+            const body = JSON.stringify({...this.transaction, balance_id: this.balance_id});
+            await fetch('http://127.0.0.1:5000/api/transaction',
+                {method: 'POST', mode: 'cors', body: body, headers: {'Content-Type':'application/json'}});
+            this.$emit('close-transaction');
         },
         cancelTransaction() {
             this.$emit('close-transaction');
@@ -98,4 +101,10 @@ export default {
         height: 100%;
     }
 
+    .edited-transaction-container button {
+        border: solid 1px #aaa;
+        padding: 0.5em;
+        width: 100px;
+        margin: 0.25em;
+    }
 </style>

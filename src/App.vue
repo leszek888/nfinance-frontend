@@ -2,13 +2,14 @@
     <TransactionsList @edit-transaction="editTransaction" :transactions="transactions" />
     <div v-if="editedTransaction">
         <EditedTransaction
-            @close-transaction="editedTransaction = null"
+            @close-transaction="closeEditedTransaction"
             @save-transaction="saveEditedTransaction"
             :key="editedTransaction.id"
             :id="editedTransaction.id"
             :date="editedTransaction.date"
             :payee="editedTransaction.payee"
             :entries="editedTransaction.entries"
+            :balance_id="balance_id"
         />
     </div>
 </template>
@@ -26,21 +27,9 @@ export default {
 
     data() {
         return {
-            transactions: [
-                { id: '1', date: '2020-01-01', payee: 'Pracodawca',
-                    entries: [
-                        {account: 'Aktywa:Obrotowe', amount: '2200.33'},
-                        {account: 'Przychód:Wypłata', amount: '-2200.33'},
-                    ]
-                },
-                { id: '2', date: '2020-01-02', payee: 'Biedronka',
-                    entries: [
-                        {account: 'Aktywa:Obrotowe', amount: '-15'},
-                        {account: 'Wydatki:Codzienne', amount: '15'},
-                    ]
-                },
-            ],
+            transactions: [],
             editedTransaction: null,
+            balance_id: 'd2d9fa10-c1c1-4d59-8074-2bb20c6358c3',
         }
     },
 
@@ -49,14 +38,26 @@ export default {
             const index = (this.transactions.findIndex(transaction => transaction.id === id));
             this.editedTransaction = this.transactions[index];
         },
-        saveEditedTransaction(transaction) {
-            const saved = JSON.parse(transaction);
-            const index = (this.transactions.findIndex(t => t.id === saved.id));
-            this.transactions[index] = saved;
+
+        async closeEditedTransaction() {
+            await this.fetchTransactions();
             this.editedTransaction = null;
-            console.log(this.transactions);
-        }
-    }
+        },
+
+        saveEditedTransaction() {
+        },
+
+        async fetchTransactions() {
+            const response = await fetch('http://127.0.0.1:5000/api/transaction?bal_id='+this.balance_id,
+                {method: 'GET', mode: 'cors'})
+            const data = await response.json();
+            this.transactions = data['transactions'];
+        },
+    },
+
+    async created() {
+        this.fetchTransactions();
+    },
 }
 </script>
 
