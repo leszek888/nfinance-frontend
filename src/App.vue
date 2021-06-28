@@ -1,7 +1,7 @@
 <template>
-    <center>
-    <button @click="createNewTransaction">New Transaction</button>
-    </center>
+    <div v-if="!editedTransaction">
+        <button class="btn-new-transaction" @click="createNewTransaction">New Transaction</button>
+    </div>
     <div v-if="editedTransaction">
         <EditedTransaction
             @close-transaction="closeEditedTransaction"
@@ -40,8 +40,10 @@ export default {
 
     methods: {
         editTransaction(id) {
-            const index = (this.transactions.findIndex(transaction => transaction.id === id));
-            this.editedTransaction = this.transactions[index];
+            if (!this.editedTransaction) {
+                const index = (this.transactions.findIndex(transaction => transaction.id === id));
+                this.editedTransaction = this.transactions[index];
+            }
         },
 
         createNewTransaction() {
@@ -105,5 +107,22 @@ export default {
 #app {
     font-family: sans-serif;
     position: relative;
+}
+
+.btn-new-transaction {
+    background-color: #4a9e56;
+    border: 0px;
+    border-radius: 25pt;
+    box-shadow: 0px 0px 8px #aaa;
+    bottom: 2em;
+    color: #fefefe;
+    font-size: 12pt;
+    padding: 1.5em;
+    position: fixed;
+    right: 2em;
+}
+
+.btn-new-transaction:hover {
+    filter: brightness(0.9);
 }
 </style>
