@@ -1,5 +1,7 @@
 <template>
-    <TransactionsList @edit-transaction="editTransaction" :transactions="transactions" />
+    <center>
+    <button @click="createNewTransaction">New Transaction</button>
+    </center>
     <div v-if="editedTransaction">
         <EditedTransaction
             @close-transaction="closeEditedTransaction"
@@ -13,6 +15,7 @@
             :balance_id="balance_id"
         />
     </div>
+    <TransactionsList @edit-transaction="editTransaction" :transactions="transactions" />
 </template>
 
 <script>
@@ -39,6 +42,11 @@ export default {
         editTransaction(id) {
             const index = (this.transactions.findIndex(transaction => transaction.id === id));
             this.editedTransaction = this.transactions[index];
+        },
+
+        createNewTransaction() {
+            this.editedTransaction = { date: '', payee: '',
+                entries: [ {account: '', amount: ''}, {account: '', amount: ''} ] };
         },
 
         async sendApiRequest(url, method, data) {
