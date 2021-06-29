@@ -29,7 +29,8 @@ export default {
 
 <style scoped>
     div {
-        max-width: 1000px;
+        max-width: 1000pt;
+        min-width: 320pt;
         margin: auto;
     }
 </style>

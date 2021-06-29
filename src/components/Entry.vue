@@ -1,7 +1,7 @@
 <template>
     <div class="entry-container">
-        <span class="account">{{ account }}</span>
-        <span class="amount">{{ amount }}</span>
+        <div class="account">{{ account }}</div>
+        <div class="amount">{{ amount }}</div>
     </div>
 </template>
 
@@ -17,7 +17,13 @@ export default {
 
 <style scoped>
     .entry-container {
-        justify-content: space-between;
         display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    .entry-container .account {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 </style>

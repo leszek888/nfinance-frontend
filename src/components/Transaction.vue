@@ -1,7 +1,6 @@
 <template>
     <div class="container">
-        <span class="header">{{ transaction.date }}, {{ transaction.payee }}</span>
-        <hr />
+        <div class="header">{{ transaction.date }}, {{ transaction.payee }}</div>
         <div :class="[assetValue > 0 && 'positive-balance',
                   assetValue < 0 && 'negative-balance']"
             v-for="(entry, index) in transaction.entries" :key="index">
@@ -18,7 +17,6 @@ export default {
     name: 'Transaction',
     data() {
         return {
-            newId: 0,
             assetValue: 0,
         }
     },
@@ -47,11 +45,11 @@ export default {
 
 <style scoped>
     .container {
-        padding: 1.5em;
-        position: relative;
-        border-radius: 6px;
-        background-color: #f5f5f5;
+        background-color: #fefefe;
+        border-top: solid 1px #ddd;
         margin: 5px;
+        padding: 1em 2em 1em 2em;
+        position: relative;
         transition: all 0.3s ease-out;
     }
 
@@ -62,6 +60,7 @@ export default {
 
     .header {
         font-size: 16pt;
+        padding-bottom: 0.3em;
     }
 
     h3 {
@@ -71,16 +70,21 @@ export default {
     .container .btn-edit-transaction {
         background-color: #f0f0f0;
         border: 0px;
-        border-radius: 50%;
+        border-radius: 10px;
         display: none;
-        padding: 1em;
+        padding: 0.6em;
         position: absolute;
         right: 1em;
         top: 0.5em;
+        width: 100px;
     }
 
     .container:hover .btn-edit-transaction {
         display: initial;
+    }
+
+    .btn-edit-transaction:hover {
+        background-color: #ddd;
     }
 
     .positive-balance {
@@ -88,6 +92,6 @@ export default {
     }
 
     .negative-balance {
-        color: #82201f;
+        color: #994343;
     }
 </style>

@@ -64,6 +64,10 @@ export default {
                 {method: method, mode: 'cors', headers: headers, body: body})
 
             const json = await response.json();
+
+            if ('message' in json || 'error' in json) {
+                console.log(json);
+            }
             return json;
         },
 
@@ -103,6 +107,7 @@ export default {
 #app {
     font-family: sans-serif;
     position: relative;
+    color: #555;
 }
 
 .btn-new-transaction {

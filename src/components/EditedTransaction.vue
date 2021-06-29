@@ -101,8 +101,8 @@ export default {
 
 <style scoped>
     @keyframes display-animation {
-        from { top: 0; opacity: 0.5; }
-        to { top: 10%; opacity: 1; }
+        from { top: -100pt; opacity: 0.5; }
+        to { top: 30pt; opacity: 1; }
     }
 
     .edited-transaction-container {
@@ -117,7 +117,7 @@ export default {
         padding-bottom: 4em;
         position: fixed;
         right: 0;
-        top: 10%;
+        top: 30pt;
         animation-name: display-animation;
         animation-duration: 0.3s;
         display: grid;
