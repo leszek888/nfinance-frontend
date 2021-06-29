@@ -1,18 +1,20 @@
 <template>
     <div class="edited-transaction-container">
         <div class="header">
-            <p>Date: </p><input type="text" v-model="transaction.date"/>
-            <p>Payee: </p><input type="text" v-model="transaction.payee" />
+            <InputWithLabel :value="transaction.date" @change="updateDate" label="Date"/>
+            <InputWithLabel :value="transaction.payee" @change="updatePayee" label="Payee"/>
         </div>
         <div class="entries">
-            <div v-for="(entry, index) in transaction.entries" :key="index">
+            <div v-for="(entry) in transaction.entries" :key="entry.id">
                 <EditedEntry
                     @update-entry="updateEntry"
+                    @remove-entry="removeEntry"
                     :account="entry.account"
                     :amount="entry.amount" 
                     :id="entry.id"
                 />
             </div>
+            <button class="btn-add-entry" @click="addEntry">Add Entry</button>
         </div>
         <br />
         <div class="buttons">
@@ -25,6 +27,7 @@
 
 <script>
 import EditedEntry from './EditedEntry.vue'
+import InputWithLabel from './InputWithLabel.vue'
 import { nanoid } from 'nanoid'
 
 export default {
@@ -32,6 +35,7 @@ export default {
 
     components: {
         EditedEntry,
+        InputWithLabel,
     },
 
     props: {
@@ -59,17 +63,35 @@ export default {
         deleteTransaction() {
             this.$emit('delete-transaction', this.transaction);
         },
+        addEntry() {
+            this.transaction.entries = [ ...this.transaction.entries, this.parseEntry(null)];
+        },
         updateEntry(entry) {
             const index = this.transaction.entries.findIndex(e => e.id === entry.id);
             this.transaction.entries[index] = {...entry};
-        }
+        },
+        parseEntry(entry) {
+            if (!entry)
+                entry = { account: '', amount: '' };
+            return { ...entry, id: nanoid() };
+        },
+        removeEntry(id) {
+            console.log('Removing entry with id: ', id);
+            this.transaction.entries = this.transaction.entries.filter(entry => entry.id !== id);
+        },
+        updatePayee(value) {
+            this.transaction.payee = value;
+        },
+        updateDate(value) {
+            this.transaction.date = value;
+        },
     },
 
     created() {
         this.transaction.id = this.id;
         this.transaction.date = this.date;
         this.transaction.payee = this.payee;
-        this.transaction.entries = this.entries.map((entry) => {return {...entry, id: nanoid()}});
+        this.transaction.entries = this.entries.map((entry) => {return this.parseEntry(entry)});
     },
 
     emits: [ 'close-transaction', 'save-transaction', 'delete-transaction' ]
@@ -124,7 +146,15 @@ export default {
     .edited-transaction-container button {
         border: solid 1px #aaa;
         padding: 0.5em;
-        width: 100px;
         margin: 0.25em;
     }
+
+    .buttons button {
+        width: 100px;
+    }
+
+    .btn-add-entry {
+        width: 100%;
+    }
+
 </style>

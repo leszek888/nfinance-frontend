@@ -1,13 +1,30 @@
 <template>
-    <div class="container">
-        <input @focusout="updateEntry" type="text" v-model="entry.account" />
-        <input @focusout="updateEntry" type="text" v-model="entry.amount" />
+    <div class="edited-entry-container">
+        <InputWithLabel
+            :value="entry.account"
+            @change="updateAccount"
+            @focusout="updateEntry"
+            label="Account"
+        />
+        <InputWithLabel
+            :value="entry.amount"
+            @change="updateAmount"
+            @focusout="updateEntry"
+            label="Amount"
+        />
+        <button @click="$emit('remove-entry', id)">X</button>
     </div>
 </template>
 
 <script>
+import InputWithLabel from './InputWithLabel.vue'
+
 export default {
     name: 'EditedEntry',
+
+    components: {
+        InputWithLabel,
+    },
 
     props: {
         account: String,
@@ -28,17 +45,35 @@ export default {
     methods: {
         updateEntry() {
             this.$emit('update-entry', this.entry);
-        }
+        },
+        updateAccount(value) {
+            this.entry.account = value;
+        },
+        updateAmount(value) {
+            this.entry.amount = value;
+        },
     },
 
-    emits: [ 'update-entry' ]
+    emits: [ 'update-entry', 'remove-entry' ]
 
 }
 </script>
 
 <style scoped>
-.container {
+.edited-entry-container {
     display: grid;
-    grid-template-columns: 1fr 125px;
+    grid-template-columns: 1fr 125px 25px;
+}
+
+.edited-entry-container button {
+    border: 0px;
+    color: red;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.edited-entry-container button:hover {
+    color: white;
+    background-color: red;
 }
 </style>
