@@ -83,19 +83,15 @@ export default {
         },
 
         async fetchTransactions() {
-            let headers = new Headers();
-            headers.append('x-access-token', this.auth_token);
-            const response = await fetch('http://127.0.0.1:5000/api/transaction',
-                {method: 'GET', mode: 'cors', headers: headers})
-            const data = await response.json();
-            this.transactions = data['transactions'];
+            const response = await this.sendApiRequest('transaction', 'GET');
+            this.transactions = response['transactions'];
         },
     },
 
     async created() {
         let headers = new Headers();
         headers.append('Authorization', 'Basic ' + btoa(this.balance_id + ':pw'))
-        const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers});
+        const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
         const data = await response.json();
         this.auth_token = data['token'];
         this.fetchTransactions();

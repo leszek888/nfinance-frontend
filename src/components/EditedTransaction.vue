@@ -51,6 +51,7 @@ export default {
     methods: {
         saveTransaction() {
             this.$emit('save-transaction', this.transaction);
+            
         },
         cancelTransaction() {
             this.$emit('close-transaction');
