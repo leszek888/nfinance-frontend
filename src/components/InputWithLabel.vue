@@ -1,17 +1,42 @@
 <template>
     <div class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input type="text" :value="value" @change="$emit('change', $event.target.value)" />
+        <input type="text" :value="formattedValue" @change="handleChange" />
     </div>
 </template>
 
 <script>
+import { formatNumber, stringToNumber } from './../helpers.js'
 export default {
     name: 'InputWithLabel',
 
     props: {
         value: String,
         label: String,
+        type: String,
+    },
+
+    computed: {
+        formattedValue: function() {
+            let value = null;
+
+            if (this.type === 'number')
+                value = formatNumber(this.value);
+            else
+                value = this.value;
+
+            return value;
+        },
+    },
+
+    methods: {
+        handleChange(event) {
+            let value = event.target.value;
+
+            if (this.type === 'number')
+                value = stringToNumber(value);
+            this.$emit('change', value);
+        }
     },
 
     emits: ['change'],

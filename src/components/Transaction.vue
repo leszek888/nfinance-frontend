@@ -59,12 +59,8 @@ export default {
     }
 
     .header {
-        font-size: 16pt;
+        font-size: 14pt;
         padding-bottom: 0.3em;
-    }
-
-    h3 {
-        font-size: 11pt;
     }
 
     .container .btn-edit-transaction {
