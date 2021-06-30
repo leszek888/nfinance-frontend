@@ -1,11 +1,11 @@
 <template>
-    <div class="edited-entry-container">
+    <div data-cy="container-edited-entry" class="edited-entry-container">
         <InputWithLabel
             :value="entry.account"
             @change="updateAccount"
             @focusout="updateEntry"
             label="Account"
-            name="account"
+            data-cy="input-account"
         />
         <InputWithLabel
             type="number"
@@ -13,7 +13,7 @@
             @change="updateAmount"
             @focusout="updateEntry"
             label="Amount"
-            name="amount"
+            data-cy="input-amount"
         />
         <button @click="$emit('remove-entry', id)">X</button>
     </div>

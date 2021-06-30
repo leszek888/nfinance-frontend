@@ -1,6 +1,10 @@
 <template>
     <div v-if="!editedTransaction">
-        <button class="btn-new-transaction" @click="createNewTransaction">New Transaction</button>
+        <button data-cy="btn-new-transaction"
+                class="btn-new-transaction"
+                @click="createNewTransaction">
+            New Transaction
+        </button>
     </div>
     <div v-if="editedTransaction">
         <EditedTransaction

@@ -1,6 +1,8 @@
 <template>
-    <div v-bind:key="transaction.id" v-for="transaction in transactions">
-        <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
+    <div data-cy="container-transactions-list">
+        <div v-bind:key="transaction.id" v-for="transaction in transactions">
+            <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
+        </div>
     </div>
 </template>
 

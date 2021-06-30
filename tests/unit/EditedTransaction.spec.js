@@ -32,20 +32,20 @@ describe('EditedTransaction.vue', () => {
 
         expect(inputs.length).toBe(6);
     });
-
+ 
     it('should fill out input fields with transaction data', () => {
-        const container = wrapper.find('.edited-transaction-container');
-        const payee_input = container.find("[name='payee']");
-        const date_input = container.find("[name='date']");
+        const container = wrapper.find('[data-cy="container-edit-transaction"]');
+        const payee_input = container.find('[data-cy="input-payee"]');
+        const date_input = container.find('[data-cy="input-date"]');
 
         const entries = container.findAll('.edited-entry-container');
 
         expect(payee_input.element.value).toBe('Payee');
         expect(date_input.element.value).toBe('2020-01-01');
-        expect(entries[0].find("[name='account']").element.value).toBe('Assets');
-        expect(entries[0].find("[name='amount']").element.value).toBe('-5,00');
-        expect(entries[1].find("[name='account']").element.value).toBe('Expenses');
-        expect(entries[1].find("[name='amount']").element.value).toBe('5,00');
+        expect(entries[0].find("[data-cy='input-account']").element.value).toBe('Assets');
+        expect(entries[0].find("[data-cy='input-amount']").element.value).toBe('-5,00');
+        expect(entries[1].find("[data-cy='input-account']").element.value).toBe('Expenses');
+        expect(entries[1].find("[data-cy='input-amount']").element.value).toBe('5,00');
     });
 
     it('should remove entry when clicking remove button', () => {
@@ -58,7 +58,7 @@ describe('EditedTransaction.vue', () => {
     });
 
     it('should add entry when clicking add entry button', () => {
-        wrapper.find("[name='btn-add-entry']").element.click();
+        wrapper.find('[data-cy="btn-add-entry"]').element.click();
         expect(wrapper.vm.transaction.entries.length).toBe(3);
     });
 
