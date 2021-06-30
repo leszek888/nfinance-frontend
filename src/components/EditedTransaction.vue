@@ -1,8 +1,8 @@
 <template>
     <div class="edited-transaction-container">
         <div class="header">
-            <InputWithLabel :value="transaction.date" @change="updateDate" label="Date"/>
-            <InputWithLabel :value="transaction.payee" @change="updatePayee" label="Payee"/>
+            <InputWithLabel name="date" :value="transaction.date" @change="updateDate" label="Date"/>
+            <InputWithLabel name="payee" :value="transaction.payee" @change="updatePayee" label="Payee"/>
         </div>
         <div class="entries">
             <div v-for="(entry) in transaction.entries" :key="entry.id">
@@ -14,7 +14,7 @@
                     :id="entry.id"
                 />
             </div>
-            <button class="btn-add-entry" @click="addEntry">Add Entry</button>
+            <button name="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
         </div>
         <br />
         <div class="buttons">

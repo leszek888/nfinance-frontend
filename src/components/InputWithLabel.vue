@@ -1,7 +1,7 @@
 <template>
     <div class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input type="text" :value="formattedValue" @change="handleChange" />
+        <input :name="name" type="text" :value="formattedValue" @change="handleChange" />
     </div>
 </template>
 
@@ -14,6 +14,7 @@ export default {
         value: String,
         label: String,
         type: String,
+        name: String,
     },
 
     computed: {

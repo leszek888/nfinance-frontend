@@ -5,6 +5,7 @@
             @change="updateAccount"
             @focusout="updateEntry"
             label="Account"
+            name="account"
         />
         <InputWithLabel
             type="number"
@@ -12,6 +13,7 @@
             @change="updateAmount"
             @focusout="updateEntry"
             label="Amount"
+            name="amount"
         />
         <button @click="$emit('remove-entry', id)">X</button>
     </div>
