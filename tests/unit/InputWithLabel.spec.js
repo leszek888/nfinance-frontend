@@ -16,14 +16,28 @@ describe('InputWithLabel.vue', () => {
     it('renders with AutoComplete when autocomplete prop is true and suggestions are present', () => {
         const wrapper = mount(InputWithLabel, {
             props: {
-                value: '12345.44',
-                type: 'number',
+                value: '',
                 autocomplete: true,
                 suggestionsList: ['Assets', 'Equity', 'Liabilities'],
-            } ,
+            },
         });
 
         expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeTruthy();
+    });
+
+    it('marks first suggestion as selected when suggestions are given', () => {
+        const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                type: 'number',
+                autocomplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        expect(wrapper.vm.currentSelection).toEqual(0);
+        expect(wrapper.find('.selected').exists()).toBeTruthy();
+        expect(wrapper.findAll('.selected')).toHaveLength(1);
     });
 
     it('should format number, when input type is number', async () => {
@@ -46,14 +60,8 @@ describe('InputWithLabel.vue', () => {
         });
 
         wrapper.find('input').trigger('keydown.down');
-        expect(wrapper.vm.currentSelection).toEqual(1);
-
         wrapper.find('input').trigger('keydown.down');
-        expect(wrapper.vm.currentSelection).toEqual(2);
-
         wrapper.find('input').trigger('keydown.down');
-        expect(wrapper.vm.currentSelection).toEqual(0);
-
         wrapper.find('input').trigger('keydown.up');
         expect(wrapper.vm.currentSelection).toEqual(2);
     });
@@ -71,6 +79,20 @@ describe('InputWithLabel.vue', () => {
         wrapper.vm.onEnter();
         await wrapper.vm.$nextTick();
         expect(wrapper.find('input').element.value).toEqual('Equity');
+    });
+
+    it('should set input value to clicked suggestion', async () => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autocomplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        wrapper.findAll('[data-cy="ac-suggestion"]')[2].trigger('click');
+        await wrapper.vm.$nextTick();
+        expect(wrapper.find('input').element.value).toEqual('Liabilities');
     });
 
 });

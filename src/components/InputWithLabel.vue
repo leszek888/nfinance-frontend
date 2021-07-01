@@ -1,21 +1,26 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input @keydown="handleKeyDown" :data-cy="dataCy" type="text" :value="formattedValue" @change="handleChange" />
-        <AutoComplete :suggestions-list="suggestionsList" :selection="currentSelection" />
+        <input :data-cy="dataCy" type="text" :value="formattedValue" @change="handleChange" />
+        <div v-if="autocomplete && suggestionsList.length > 0" data-cy="container-autocomplete">
+            <div v-for="(suggestion, index) in currentSuggestions" :key="index">
+                <div
+                    data-cy="ac-suggestion"
+                    :class="index === this.currentSelection && 'selected'"
+                    @click="selectSuggestion(index)"
+                >
+                    {{ suggestion }}
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import { formatNumber, stringToNumber } from './../helpers.js'
-import AutoComplete from './AutoComplete.vue'
 
 export default {
     name: 'InputWithLabel',
-
-    components: {
-        AutoComplete,
-    },
 
     data() {
         return {
@@ -44,6 +49,10 @@ export default {
 
             return value;
         },
+
+        currentSuggestions: function() {
+            return this.suggestionsList;
+        },
     },
 
     methods: {
@@ -56,8 +65,6 @@ export default {
         },
 
         handleKeyDown(event) {
-            console.log('handling keyCode: ', event.keyCode);
-            console.log('selection before: ', this.currentSelection);
             switch (event.keyCode) {
                 case 40:
                     this.currentSelection++;
@@ -74,8 +81,10 @@ export default {
                 this.currentSelection = this.suggestionsList.length-1;
             else if (this.currentSelection > this.suggestionsList.length - 1)
                 this.currentSelection = 0;
+        },
 
-            console.log('current selection: ' + this.currentSelection);
+        selectSuggestion(index) {
+            this.input_value = this.suggestionsList[index];
         },
 
         onEnter() {
