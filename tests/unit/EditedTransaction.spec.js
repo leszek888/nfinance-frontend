@@ -26,14 +26,14 @@ describe('EditedTransaction.vue', () => {
 
     });
  
-    it('should display container with input fields', () => {
+    it('renders correctly', () => {
         const container = wrapper.find('.edited-transaction-container');
         const inputs = container.findAll('input');
 
         expect(inputs.length).toBe(6);
     });
  
-    it('should fill out input fields with transaction data', () => {
+    it('should fill out input fields with passed transaction data', () => {
         const container = wrapper.find('[data-cy="container-edit-transaction"]');
         const payee_input = container.find('[data-cy="input-payee"]');
         const date_input = container.find('[data-cy="input-date"]');

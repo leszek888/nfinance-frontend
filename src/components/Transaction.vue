@@ -6,7 +6,7 @@
             v-for="(entry, index) in transaction.entries" :key="index">
             <Entry :account="entry.account" :amount="entry.amount" />
         </div>
-        <button @click="$emit('edit-transaction', transaction.id)" class="btn-edit-transaction">Edit</button>
+        <button data-cy="btn-edit-transaction" @click="$emit('edit-transaction', transaction.id)" class="btn-edit-transaction">Edit</button>
     </div>
 </template>
 
@@ -15,9 +15,17 @@ import Entry from './Entry.vue'
 
 export default {
     name: 'Transaction',
-    data() {
-        return {
-            assetValue: 0,
+
+    computed: {
+        assetValue: function() {
+            const assets_entries = this.transaction.entries.filter(entry => entry.account.startsWith('A'));
+            let assetValue = 0;
+
+            assets_entries.forEach(entry => {
+                const convertedEntry = parseInt(parseFloat(entry.amount)*100);
+                assetValue += convertedEntry;
+            });
+            return assetValue;
         }
     },
 
@@ -27,16 +35,6 @@ export default {
 
     components: {
         Entry,
-    },
-
-    created() {
-        const assets_entries = this.transaction.entries.filter(entry => entry.account.startsWith('A'));
-        this.assetValue = 0;
-
-        assets_entries.forEach(entry => {
-            const convertedEntry = parseInt(parseFloat(entry.amount)*100);
-            this.assetValue += convertedEntry;
-        });
     },
 
     emits: [ 'edit-transaction' ],
