@@ -1,7 +1,7 @@
 <template>
     <div v-if="suggestionsNotEmpty" data-cy="container-autocomplete">
         <div v-for="(suggestion, index) in currentSuggestions" :key="index">
-            <div data-cy="ac-suggestion">
+            <div data-cy="ac-suggestion" :class="[checkIfSelected(index)]">
                 {{ suggestion }}
             </div>
         </div>
@@ -12,15 +12,11 @@
 export default {
     name: 'AutoComplete',
 
-    data() {
-        return {
-            currentSelection: 0,
-        }
-    },
-
     props: {
         text: String,
         suggestionsList: Array,
+        onSelectNext: Boolean,
+        selection: Number,
     },
 
     computed: {
@@ -38,9 +34,17 @@ export default {
         },
     },
 
-    created() {
-        if (this.currentSuggestions)
-            this.$emit('ac-selection', this.currentSuggestions[this.currentSelection]);
+    methods: {
+        checkIfSelected(index) {
+            if (!this.selection && index === 0) {
+                return 'selected';
+            }
+            else if (this.selection === index) {
+                return 'selected';
+            }
+            return '';
+        },
+
     },
 }
 </script>

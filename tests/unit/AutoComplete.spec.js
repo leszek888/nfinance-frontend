@@ -28,26 +28,24 @@ describe('AutoComplete.vue', () => {
         expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeFalsy();
     });
 
-    it('shows only passing suggestions', () => {
+    it('marks first suggestion as selected when selection prop not specified', () => {
         const wrapper = mount(AutoComplete, {
             props: {
                 suggestionsList: suggestions,
-                text: 'A',
             },
         });
-        expect(wrapper.findAll('[data-cy="ac-suggestion"]')).toHaveLength(1);
-        expect(wrapper.html()).toContain('Assets');
+
+        expect(wrapper.find('.selected').exists()).toBeTruthy();
     });
 
-    it('emits first suggestion as selected', async () => {
+    it('marks suggestion as selected when prop specified', () => {
         const wrapper = mount(AutoComplete, {
             props: {
                 suggestionsList: suggestions,
+                selection: 1,
             },
         });
 
-        await wrapper.vm.$nextTick();
-        expect(wrapper.emitted('ac-selection')).toBeTruthy();
-        expect(wrapper.emitted('ac-selection')[0][0]).toEqual('Assets');
+        expect(wrapper.find('.selected').exists()).toBeTruthy();
     });
 });
