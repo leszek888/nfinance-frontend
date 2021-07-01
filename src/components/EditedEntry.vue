@@ -1,6 +1,8 @@
 <template>
     <div data-cy="container-edited-entry" class="edited-entry-container">
         <InputWithLabel
+            :auto-complete="true"
+            :suggestions-list="['Assets', 'Equity', 'Liabilities']"
             :value="entry.account"
             @change="updateAccount"
             @focusout="updateEntry"
@@ -41,7 +43,7 @@ export default {
                 account: this.account,
                 amount: this.amount,
                 id: this.id,
-            }
+            },
         }
     },
 

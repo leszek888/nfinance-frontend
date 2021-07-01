@@ -2,6 +2,17 @@ import { mount } from '@vue/test-utils'
 import EditedEntry from '@/components/EditedEntry.vue'
 
 describe('EditedEntry.vue', () => {
+    it('renders correctly', () => {
+        const wrapper = mount(EditedEntry, {
+            props: {
+                account: '',
+                amount: '',
+            },
+        });
+
+        expect(wrapper.findAll('input')).toHaveLength(2);
+    });
+
     it('should emit update-entry on blur', async () => {
         const wrapper = mount(EditedEntry, {
             props: {

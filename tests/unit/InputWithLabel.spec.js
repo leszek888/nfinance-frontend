@@ -17,7 +17,7 @@ describe('InputWithLabel.vue', () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
-                autocomplete: true,
+                autoComplete: true,
                 suggestionsList: ['Assets', 'Equity', 'Liabilities'],
             },
         });
@@ -25,12 +25,27 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeTruthy();
     });
 
+    it('should update suggestions when input has changed', async () => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autoComplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });       
+
+        wrapper.vm.input_value = 'E';
+        await wrapper.vm.$nextTick();
+        expect(wrapper.findAll('[data-cy="ac-suggestion"]')).toHaveLength(1);
+        expect(wrapper.findAll('[data-cy="ac-suggestion"]')[0].text()).toEqual('Equity');
+    });
+
     it('marks first suggestion as selected when suggestions are given', () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
                 type: 'number',
-                autocomplete: true,
+                autoComplete: true,
                 suggestionsList: ['Assets', 'Equity', 'Liabilities'],
             },
         });
@@ -54,7 +69,7 @@ describe('InputWithLabel.vue', () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
-                autocomplete: true,
+                autoComplete: true,
                 suggestionsList: ['Assets', 'Equity', 'Liabilities'],
             },
         });
@@ -70,13 +85,13 @@ describe('InputWithLabel.vue', () => {
          const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
-                autocomplete: true,
+                autoComplete: true,
                 suggestionsList: ['Assets', 'Equity', 'Liabilities'],
             },
         });
 
         wrapper.vm.currentSelection = 1;
-        wrapper.vm.onEnter();
+        wrapper.trigger('keydown.enter');
         await wrapper.vm.$nextTick();
         expect(wrapper.find('input').element.value).toEqual('Equity');
     });
@@ -85,7 +100,7 @@ describe('InputWithLabel.vue', () => {
          const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
-                autocomplete: true,
+                autoComplete: true,
                 suggestionsList: ['Assets', 'Equity', 'Liabilities'],
             },
         });

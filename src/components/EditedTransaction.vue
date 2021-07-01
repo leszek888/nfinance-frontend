@@ -49,6 +49,7 @@ export default {
     data() {
         return {
             transaction: {},
+            suggestions: ['Assets', 'Equity'],
         }
     },
 

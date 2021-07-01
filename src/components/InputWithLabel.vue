@@ -2,11 +2,11 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input :data-cy="dataCy" type="text" :value="formattedValue" @change="handleChange" />
-        <div v-if="autocomplete && suggestionsList.length > 0" data-cy="container-autocomplete">
+        <div v-if="autoComplete" data-cy="container-autocomplete">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
                     data-cy="ac-suggestion"
-                    :class="index === this.currentSelection && 'selected'"
+                    :class="index === currentSelection && 'selected'"
                     @click="selectSuggestion(index)"
                 >
                     {{ suggestion }}
@@ -34,7 +34,7 @@ export default {
         label: String,
         type: String,
         dataCy: String,
-        autocomplete: Boolean,
+        autoComplete: Boolean,
         suggestionsList: Array,
     },
 
@@ -51,7 +51,9 @@ export default {
         },
 
         currentSuggestions: function() {
-            return this.suggestionsList;
+            if (this.suggestionsList)
+                return this.suggestionsList.filter(suggestion => suggestion.startsWith(this.input_value));
+            return [];
         },
     },
 
@@ -61,10 +63,15 @@ export default {
 
             if (this.type === 'number')
                 value = stringToNumber(value);
+
+            this.input_value = value;
             this.$emit('change', value);
         },
 
         handleKeyDown(event) {
+            if (!this.autoComplete)
+                return;
+
             switch (event.keyCode) {
                 case 40:
                     this.currentSelection++;
@@ -72,26 +79,28 @@ export default {
                 case 38:
                     this.currentSelection--;
                     break;
+                case 13:
+                    this.selectSuggestion(this.currentSelection);
+                    return;
                 default:
                     console.log('no case matched');
-                    break;
-            };
+                    return;
+            }
 
             if (this.currentSelection < 0)
-                this.currentSelection = this.suggestionsList.length-1;
-            else if (this.currentSelection > this.suggestionsList.length - 1)
+                this.currentSelection = this.currentSuggestions.length-1;
+            else if (this.currentSelection > this.currentSuggestions.length - 1)
                 this.currentSelection = 0;
         },
 
         selectSuggestion(index) {
-            this.input_value = this.suggestionsList[index];
+            this.input_value = this.currentSuggestions[index];
         },
+    },
 
-        onEnter() {
-            if (this.autocomplete && this.suggestionsList && this.suggestionsList.length > 0) {
-                this.input_value = this.suggestionsList[this.currentSelection];
-            }
-        },
+    created() {
+        if (this.suggestionsList)
+            console.log('suggestionsList: ', this.suggestionsList);
     },
 
     emits: ['change'],
@@ -123,5 +132,8 @@ export default {
         font-size: 8pt;
         left: 8pt;
         position: absolute;
+    }
+    .selected {
+        color: red;
     }
 </style>
