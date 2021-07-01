@@ -76,18 +76,19 @@ export default {
         },
 
         async closeEditedTransaction() {
-            await this.fetchTransactions();
             this.editedTransaction = null;
         },
 
         async saveEditedTransaction(transaction) {
-            await this.sendApiRequest('transaction', 'POST', transaction);
             this.closeEditedTransaction();
+            await this.sendApiRequest('transaction', 'POST', transaction);
+            await this.fetchTransactions();
         },
 
         async deleteEditedTransaction(transaction) {
-            await this.sendApiRequest('transaction', 'DELETE', transaction);
             this.closeEditedTransaction();
+            await this.sendApiRequest('transaction', 'DELETE', transaction);
+            await this.fetchTransactions();
         },
 
         async fetchTransactions() {

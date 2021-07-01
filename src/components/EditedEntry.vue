@@ -2,7 +2,7 @@
     <div data-cy="container-edited-entry" class="edited-entry-container">
         <InputWithLabel
             :value="entry.account"
-            @change="entry.account"
+            @change="updateAccount"
             @focusout="updateEntry"
             label="Account"
             data-cy="input-account"
