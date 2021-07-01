@@ -12,7 +12,6 @@ describe('EditedEntry.vue', () => {
 
         wrapper.find('[data-cy="input-account"]').trigger('focusout');
         await wrapper.vm.$nextTick();
-        console.log(wrapper.emitted('update-entry')[0]);
         expect(wrapper.emitted('update-entry')).toBeTruthy();
         expect(wrapper.emitted('update-entry')[0][0].account).toEqual('Assets');
         expect(wrapper.emitted('update-entry')[0][0].amount).toEqual('100');

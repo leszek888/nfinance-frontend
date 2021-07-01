@@ -10,7 +10,6 @@ describe('Entry.vue', () => {
             },
         });
 
-        console.log(wrapper.html());
         expect(wrapper.html()).toContain('Assets');
         expect(wrapper.html()).toContain('32,00');
     });

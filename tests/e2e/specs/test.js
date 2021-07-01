@@ -1,8 +1,12 @@
-// https://docs.cypress.io/api/introduction/api.html
 import { nanoid } from 'nanoid'
 import { formatNumber } from '../../../src/helpers';
 
 describe('Transactions List Test', () => {
+  const fillOutWithAutocomplete = (parent) => {
+    parent.trigger('keydown', { keyCode: 13 });
+    parent.get('[data-cy="container-autocomplete"]');
+  }
+
   it('Display, Edit and Create transactions', () => {
     cy.visit('/');
     const debitAccountName = nanoid();
@@ -29,7 +33,7 @@ describe('Transactions List Test', () => {
         cy.wrap(entry).find('[data-cy="input-amount"]').type(transactionValue.toString());
       }
       if (index === 1) {
-        cy.wrap(entry).find('[data-cy="input-account"]').type(creditAccountName);
+        fillOutWithAutocomplete(cy.wrap(entry).find('[data-cy="input-account"]'));
         cy.wrap(entry).find('[data-cy="input-amount"]').type('-'+transactionValue.toString());
       }
     });
