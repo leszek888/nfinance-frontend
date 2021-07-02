@@ -13,7 +13,7 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeFalsy();
     });
 
-    it('renders with AutoComplete when autocomplete prop is true and suggestions are present', () => {
+    it('renders with AutoComplete when autocomplete prop is true, suggestions are present and is focused', async () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
@@ -22,6 +22,7 @@ describe('InputWithLabel.vue', () => {
             },
         });
 
+        await wrapper.find('input').trigger('focus');
         expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeTruthy();
     });
 
@@ -34,12 +35,13 @@ describe('InputWithLabel.vue', () => {
             },
         });       
 
+        await wrapper.find('input').trigger('focus');
         await wrapper.find('input').setValue('e');
         expect(wrapper.findAll('[data-cy="ac-suggestion"]')).toHaveLength(1);
         expect(wrapper.findAll('[data-cy="ac-suggestion"]')[0].text()).toEqual('Equity');
     });
 
-    it('marks first suggestion as selected when suggestions are given', () => {
+    it('marks first suggestion as selected when suggestions are given', async () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
@@ -49,6 +51,7 @@ describe('InputWithLabel.vue', () => {
             },
         });
 
+        await wrapper.find('input').trigger('focus');
         expect(wrapper.vm.currentSelection).toEqual(0);
         expect(wrapper.find('.selected').exists()).toBeTruthy();
         expect(wrapper.findAll('.selected')).toHaveLength(1);
@@ -103,6 +106,7 @@ describe('InputWithLabel.vue', () => {
             },
         });
 
+        await wrapper.find('input').trigger('focus');
         await wrapper.findAll('[data-cy="ac-suggestion"]')[2].trigger('click');
         expect(wrapper.find('input').element.value).toEqual('Liabilities');
     });
@@ -134,8 +138,6 @@ describe('InputWithLabel.vue', () => {
             props: {
                 value: '',
                 type: 'number',
-                autoComplete: true,
-                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
             },
         });
 
@@ -145,6 +147,21 @@ describe('InputWithLabel.vue', () => {
 
     });
 
+    it('should show autocomplete menu only when input is focused', async() => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autoComplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeFalsy();
+        await wrapper.find('input').trigger('focus');
+        expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeTruthy();
+        await wrapper.find('input').trigger('blur');
+        expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeFalsy();
+    });
 
 });
 

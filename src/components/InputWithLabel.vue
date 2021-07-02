@@ -1,12 +1,12 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="formatInput" />
-        <div v-if="autoComplete" data-cy="container-autocomplete">
+        <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
+        <div v-if="autoComplete && isFocused" data-cy="container-autocomplete" class="autocomplete-container">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
                     data-cy="ac-suggestion"
-                    :class="index === currentSelection && 'selected'"
+                    :class="[index === currentSelection && 'selected', 'suggestion']"
                     @click="selectSuggestion(index)"
                 >
                     {{ suggestion }}
@@ -26,6 +26,7 @@ export default {
         return {
             currentSelection: 0,
             input_value: this.formatValue(),
+            isFocused: false,
         }
     },
 
@@ -55,9 +56,14 @@ export default {
             return this.value;
         },
 
-        formatInput() {
+        handleBlur() {
+            this.isFocused = false;
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
+        },
+
+        handleFocus() {
+            this.isFocused = true;
         },
 
         handleChange() {
@@ -117,6 +123,7 @@ export default {
         border-bottom: solid 1px #aaa;
         border-left: solid 1px #aaa;
         box-sizing: border-box;
+        font-size: 11pt;
         padding: 4pt;
         padding-bottom: 6pt;
         padding-top: 1pt;
@@ -124,7 +131,7 @@ export default {
     }
     .input-with-label-container .label {
         background-color: #fefefe;
-        bottom: 0pt;
+        top: 0pt;
         color: #aaa;
         font-size: 8pt;
         left: 8pt;
@@ -132,5 +139,16 @@ export default {
     }
     .selected {
         color: red;
+    }
+    .autocomplete-container {
+        background-color: #fefefe;
+        border: solid;
+        border-width: 0px 1px 1px 1px;
+        border-color: #aaa;
+        left: 4pt;
+        position: absolute;
+        right: 4pt;
+        top: 24pt;
+        z-index: 100;
     }
 </style>
