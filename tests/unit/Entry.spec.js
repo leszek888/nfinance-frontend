@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import Entry from '@/components/Entry.vue'
 
 describe('Entry.vue', () => {
-    it('renders correctly', () => {
+    it('renders correctly', async () => {
         const wrapper = mount(Entry, {
             props: {
                 account: 'Assets',

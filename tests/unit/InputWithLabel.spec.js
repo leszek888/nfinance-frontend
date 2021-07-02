@@ -34,8 +34,7 @@ describe('InputWithLabel.vue', () => {
             },
         });       
 
-        wrapper.vm.input_value = 'E';
-        await wrapper.vm.$nextTick();
+        await wrapper.find('input').setValue('e');
         expect(wrapper.findAll('[data-cy="ac-suggestion"]')).toHaveLength(1);
         expect(wrapper.findAll('[data-cy="ac-suggestion"]')[0].text()).toEqual('Equity');
     });
@@ -65,7 +64,7 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.find('input').element.value).toEqual('12.345,44');
     });
 
-    it('should update current selection when up and down arrows are pressed', () => {
+    it('should update current selection when up and down arrows are pressed', async () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '',
@@ -74,10 +73,10 @@ describe('InputWithLabel.vue', () => {
             },
         });
 
-        wrapper.find('input').trigger('keydown.down');
-        wrapper.find('input').trigger('keydown.down');
-        wrapper.find('input').trigger('keydown.down');
-        wrapper.find('input').trigger('keydown.up');
+        await wrapper.find('input').trigger('keydown.down');
+        await wrapper.find('input').trigger('keydown.down');
+        await wrapper.find('input').trigger('keydown.down');
+        await wrapper.find('input').trigger('keydown.up');
         expect(wrapper.vm.currentSelection).toEqual(2);
     });
 
@@ -91,8 +90,7 @@ describe('InputWithLabel.vue', () => {
         });
 
         wrapper.vm.currentSelection = 1;
-        wrapper.trigger('keydown.enter');
-        await wrapper.vm.$nextTick();
+        await wrapper.trigger('keydown.enter');
         expect(wrapper.find('input').element.value).toEqual('Equity');
     });
 
@@ -105,10 +103,48 @@ describe('InputWithLabel.vue', () => {
             },
         });
 
-        wrapper.findAll('[data-cy="ac-suggestion"]')[2].trigger('click');
-        await wrapper.vm.$nextTick();
+        await wrapper.findAll('[data-cy="ac-suggestion"]')[2].trigger('click');
         expect(wrapper.find('input').element.value).toEqual('Liabilities');
     });
+
+    it('should not change input amount when amount couldnt be formatted', async () => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                type: 'number',
+                autoComplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        await wrapper.find('input').setValue('32,122.11');
+        await wrapper.find('input').trigger('blur');
+
+        expect(wrapper.find('input').element.value).toEqual('32,122.11');
+
+        await wrapper.find('input').setValue('a');
+        await wrapper.find('input').trigger('blur');
+
+        expect(wrapper.find('input').element.value).toEqual('a');
+
+    });
+
+    it('should emit numeric values for number fields', async () => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                type: 'number',
+                autoComplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        await wrapper.find('input').setValue('32.122,11');
+
+        expect(wrapper.emitted('change')[0][0]).toEqual('32122.11');
+
+    });
+
 
 });
 

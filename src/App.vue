@@ -56,6 +56,7 @@ export default {
         },
 
         async sendApiRequest(url, method, data) {
+            console.log('request data: ', data);
             let headers = new Headers();
             headers.append('x-access-token', this.auth_token);
             headers.append('Content-Type', 'application/json');

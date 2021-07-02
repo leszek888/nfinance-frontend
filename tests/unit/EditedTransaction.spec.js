@@ -33,7 +33,7 @@ describe('EditedTransaction.vue', () => {
         expect(inputs.length).toBe(6);
     });
  
-    it('should fill out input fields with passed transaction data', () => {
+    it('should fill out input fields with passed transaction data', async () => {
         const container = wrapper.find('[data-cy="container-edit-transaction"]');
         const payee_input = container.find('[data-cy="input-payee"]');
         const date_input = container.find('[data-cy="input-date"]');

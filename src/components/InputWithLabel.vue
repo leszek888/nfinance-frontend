@@ -1,7 +1,7 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input :data-cy="dataCy" type="text" :value="formattedValue" @change="handleChange" />
+        <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="formatInput" />
         <div v-if="autoComplete" data-cy="container-autocomplete">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             currentSelection: 0,
-            input_value: this.value,
+            input_value: this.formatValue(),
         }
     },
 
@@ -39,39 +39,37 @@ export default {
     },
 
     computed: {
-        formattedValue: function() {
-            let value = null;
-
-            if (this.type === 'number')
-                value = formatNumber(this.input_value);
-            else
-                value = this.input_value;
-
-            return value;
-        },
-
         currentSuggestions: function() {
+            let updatedSuggestions = [];
             if (this.suggestionsList)
-                return this.suggestionsList.filter(suggestion => suggestion.startsWith(this.input_value));
-            return [];
+                updatedSuggestions = this.suggestionsList.filter(suggestion => suggestion.toLowerCase().startsWith(this.input_value.toLowerCase()));
+            this.$nextTick();
+            return updatedSuggestions;
         },
     },
 
     methods: {
-        handleChange(event) {
-            let value = event.target.value;
+        formatValue() {
+            if (this.type === 'number')
+                return formatNumber(this.value);
+            return this.value;
+        },
+
+        formatInput() {
+            if (this.type === 'number' && formatNumber(this.input_value))
+                this.input_value = formatNumber(this.input_value);
+        },
+
+        handleChange() {
+            let value = this.input_value;
 
             if (this.type === 'number')
                 value = stringToNumber(value);
 
-            this.input_value = value;
             this.$emit('change', value);
         },
 
         handleKeyDown(event) {
-            if (!this.autoComplete)
-                return;
-
             switch (event.keyCode) {
                 case 40:
                     this.currentSelection++;
@@ -83,7 +81,6 @@ export default {
                     this.selectSuggestion(this.currentSelection);
                     return;
                 default:
-                    console.log('no case matched');
                     return;
             }
 
@@ -95,12 +92,12 @@ export default {
 
         selectSuggestion(index) {
             this.input_value = this.currentSuggestions[index];
+            this.handleChange();
         },
     },
 
     created() {
-        if (this.suggestionsList)
-            console.log('suggestionsList: ', this.suggestionsList);
+        this.formatValue();
     },
 
     emits: ['change'],
