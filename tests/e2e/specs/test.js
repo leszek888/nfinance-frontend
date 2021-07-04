@@ -2,8 +2,11 @@ import { nanoid } from 'nanoid'
 import { formatNumber } from '../../../src/helpers';
  
 describe('Transactions List Test', () => {
-  const fillOutWithAutocomplete = (parent) => {
-    parent.type('{enter}');
+  const fillOutWithAutocomplete = (selectionType, parent) => {
+    if (selectionType === 'enter')
+      parent.type('{enter}');
+    if (selectionType === 'click')
+      parent.get('[data-cy="container-autocomplete]').find('[data-cy="ac-suggestion"]')[0].click();
     // parent.trigger('keydown', { keyCode: 13 });
     // parent.get('[data-cy="container-autocomplete"]');
   }
@@ -24,17 +27,27 @@ describe('Transactions List Test', () => {
       cy.wrap(input).invoke('val').should('eq', '');
     });
 
+    // Add third entry
+    cy.get('[data-cy="btn-add-entry"]').click();
+
     // Fill out the transactions data
     cy.get('[data-cy="container-edit-transaction"] [data-cy="input-date"]').type('2021-01-01');
     cy.get('[data-cy="container-edit-transaction"] [data-cy="input-payee"]').type(payeeName);
     cy.get('[data-cy="container-edit-transaction"]').find('[data-cy="container-edited-entry"]').each((entry, index) => {
+      const accountField = cy.wrap(entry).find('[data-cy="input-account"]');
+      const amountField = cy.wrap(entry).find('[data-cy="input-amount"]');
+
       if (index === 0) {
-        cy.wrap(entry).find('[data-cy="input-account"]').type(debitAccountName);
-        cy.wrap(entry).find('[data-cy="input-amount"]').type(transactionValue.toString());
+        accountField.type(debitAccountName);
+        amountField.type(transactionValue.toString());
       }
       if (index === 1) {
-        fillOutWithAutocomplete(cy.wrap(entry).find('[data-cy="input-account"]'));
-        cy.wrap(entry).find('[data-cy="input-amount"]').type('-'+transactionValue.toString());
+        fillOutWithAutocomplete('enter', accountField);
+        amountField.type('-'+(transactionValue-100).toString());
+      }
+      if (index === 3) {
+        fillOutWithAutocomplete('click', cy.wrap(entry).find('[data-cy="input-account"]'));
+        cy.wrap(entry).find('[data-cy="input-amount"]').type('-100');
       }
     });
 
