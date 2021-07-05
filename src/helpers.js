@@ -22,3 +22,7 @@ export function stringToNumber(string) {
     }
 }
 
+export function getLastFiveDates() {
+
+}
+

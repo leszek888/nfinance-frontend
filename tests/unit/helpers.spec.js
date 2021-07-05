@@ -15,4 +15,5 @@ describe('Helper functions', () => {
 
         expect(number).toEqual("1234.5");
     });
+
 });

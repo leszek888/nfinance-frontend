@@ -1,7 +1,13 @@
 <template>
     <div data-cy="container-edit-transaction" class="edited-transaction-container">
         <div class="header">
-            <InputWithLabel data-cy="input-date" :value="transaction.date" @change="updateDate" label="Date"/>
+            <InputWithLabel
+                :auto-complete="true"
+                :suggestions-list="getLastDays(4)"
+                data-cy="input-date"
+                :value="transaction.date"
+                @change="updateDate"
+                label="Date"/>
             <InputWithLabel data-cy="input-payee" :value="transaction.payee" @change="updatePayee" label="Payee"/>
         </div>
         <div class="entries">
@@ -56,7 +62,6 @@ export default {
     methods: {
         saveTransaction() {
             this.$emit('save-transaction', this.transaction);
-            
         },
         cancelTransaction() {
             this.$emit('close-transaction');
@@ -84,6 +89,21 @@ export default {
         },
         updateDate(value) {
             this.transaction.date = value;
+        },
+        getLastDays(numberOfDays) {
+            const dateNow = new Date();
+            const lastDaysArray = [];
+            const convertToDoubleDigits = (str) => { return str.toString().length === 2 ? str.toString() : '0'+str.toString() };
+
+            for (let i = 0; i !== numberOfDays; i++) {
+                let dateString = dateNow.getFullYear() + '-'
+                                + convertToDoubleDigits(dateNow.getMonth()+1) + '-'
+                                + convertToDoubleDigits(dateNow.getDate());
+                lastDaysArray.push(dateString);
+                dateNow.setDate(dateNow.getDate() - 1);
+            }
+
+            return lastDaysArray;
         },
     },
 
