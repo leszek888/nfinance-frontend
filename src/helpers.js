@@ -4,7 +4,11 @@ export function formatNumber(number) {
     try {
         number = Decimal(number).toString();
     } catch (e) {
-        return '';
+        try {
+            number = Decimal(number.toString().replaceAll(',', '.'));
+        } catch (e) {
+                return '';
+        }
     }
     return Intl.NumberFormat('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 8}).format(number);
 }
@@ -21,8 +25,3 @@ export function stringToNumber(string) {
         return '';
     }
 }
-
-export function getLastFiveDates() {
-
-}
-
