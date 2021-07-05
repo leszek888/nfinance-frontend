@@ -156,11 +156,11 @@ describe('InputWithLabel.vue', () => {
             },
         });
 
-        expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeFalsy();
+        expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeTruthy();
         await wrapper.find('input').trigger('focus');
-        expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeTruthy();
+        expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeFalsy();
         await wrapper.find('input').trigger('blur');
-        expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeFalsy();
+        expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeTruthy();
     });
 
 });

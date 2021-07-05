@@ -2,12 +2,12 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
-        <div v-if="autoComplete && isFocused" data-cy="container-autocomplete" class="autocomplete-container">
+        <div v-if="autoComplete" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused && 'hidden']">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
                     data-cy="ac-suggestion"
                     :class="[index === currentSelection && 'selected', 'suggestion']"
-                    @click="selectSuggestion(index)"
+                    @click="clickSuggestion(index)"
                 >
                     {{ suggestion }}
                 </div>
@@ -96,7 +96,13 @@ export default {
                 this.currentSelection = 0;
         },
 
+        clickSuggestion(index) {
+            console.log('clicked index: ', index);
+            this.selectSuggestion(index);
+        },
+
         selectSuggestion(index) {
+            console.log('selecting :', index);
             this.input_value = this.currentSuggestions[index];
             this.handleChange();
         },
@@ -125,8 +131,6 @@ export default {
         box-sizing: border-box;
         font-size: 11pt;
         padding: 4pt;
-        padding-bottom: 6pt;
-        padding-top: 1pt;
         width: 100%;
     }
     .input-with-label-container .label {
@@ -138,7 +142,8 @@ export default {
         position: absolute;
     }
     .selected {
-        color: red;
+        background-color: #00aa00;
+        color: #fff;
     }
     .autocomplete-container {
         background-color: #fefefe;
@@ -149,6 +154,11 @@ export default {
         position: absolute;
         right: 4pt;
         top: 24pt;
-        z-index: 100;
+        z-index: 1000;
+        overflow: hidden;
+    }
+    .hidden {
+        max-height: 0px;
+        border: none;
     }
 </style>

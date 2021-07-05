@@ -4,11 +4,9 @@ import { formatNumber } from '../../../src/helpers';
 describe('Transactions List Test', () => {
   const fillOutWithAutocomplete = (selectionType, parent) => {
     if (selectionType === 'enter')
-      parent.type('{enter}');
+      parent.find('[data-cy="input-account"]').type('{enter}');
     if (selectionType === 'click')
-      parent.get('[data-cy="container-autocomplete]').find('[data-cy="ac-suggestion"]')[0].click();
-    // parent.trigger('keydown', { keyCode: 13 });
-    // parent.get('[data-cy="container-autocomplete"]');
+      parent.get('[data-cy="container-autocomplete"]').find('[data-cy="ac-suggestion"]').eq(2).click();
   }
 
   it('Display, Edit and Create transactions', () => {
@@ -33,21 +31,19 @@ describe('Transactions List Test', () => {
     // Fill out the transactions data
     cy.get('[data-cy="container-edit-transaction"] [data-cy="input-date"]').type('2021-01-01');
     cy.get('[data-cy="container-edit-transaction"] [data-cy="input-payee"]').type(payeeName);
-    cy.get('[data-cy="container-edit-transaction"]').find('[data-cy="container-edited-entry"]').each((entry, index) => {
-      const accountField = cy.wrap(entry).find('[data-cy="input-account"]');
-      const amountField = cy.wrap(entry).find('[data-cy="input-amount"]');
 
+    cy.get('[data-cy="container-edit-transaction"]').find('[data-cy="container-edited-entry"]').each((entry, index) => {
       if (index === 0) {
-        accountField.type(debitAccountName);
-        amountField.type(transactionValue.toString());
+        cy.wrap(entry).find('[data-cy="input-account"]').type(debitAccountName);
+        cy.wrap(entry).find('[data-cy="input-amount"]').type(transactionValue.toString());
       }
       if (index === 1) {
-        fillOutWithAutocomplete('enter', accountField);
-        amountField.type('-'+(transactionValue-100).toString());
+        fillOutWithAutocomplete('enter', cy.wrap(entry));
+        cy.wrap(entry).find('[data-cy="input-amount"]').type((-1*(transactionValue-100)).toString());
       }
-      if (index === 3) {
-        fillOutWithAutocomplete('click', cy.wrap(entry).find('[data-cy="input-account"]'));
-        cy.wrap(entry).find('[data-cy="input-amount"]').type('-100');
+      if (index === 2) {
+        fillOutWithAutocomplete('click', cy.wrap(entry));
+        cy.wrap(entry).find('[data-cy="input-amount"]').type((-100).toString());
       }
     });
 
@@ -55,6 +51,6 @@ describe('Transactions List Test', () => {
     cy.get('[data-cy="btn-save-transaction"]').click();
     cy.get('[data-cy="container-transactions-list"]').contains(payeeName);
     cy.get('[data-cy="container-transactions-list"]').contains(debitAccountName);
-    cy.get('[data-cy="container-transactions-list"]').contains('-'+formatNumber(transactionValue));
+    cy.get('[data-cy="container-transactions-list"]').contains('-'+formatNumber(transactionValue-100));
   })
 })
