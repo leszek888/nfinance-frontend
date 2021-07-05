@@ -8,6 +8,7 @@
                     data-cy="ac-suggestion"
                     :class="[index === currentSelection && 'selected', 'suggestion']"
                     @click="selectSuggestion(index)"
+                    @mouseover="currentSelection = index"
                 >
                     {{ suggestion }}
                 </div>

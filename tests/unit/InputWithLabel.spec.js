@@ -180,6 +180,21 @@ describe('InputWithLabel.vue', () => {
 
     });
 
+    it('should set currentSelection to a hovered suggestion', async () => {
+        const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autoComplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        await wrapper.find('input').trigger('focus');
+        await wrapper.findAll('[data-cy="ac-suggestion"]')[1].trigger('mouseover');
+
+        expect(wrapper.vm.currentSelection).toEqual(1);
+    });
+
 });
 
 
