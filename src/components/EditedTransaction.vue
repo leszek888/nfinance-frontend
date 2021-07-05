@@ -77,7 +77,6 @@ export default {
             return { ...entry, id: nanoid() };
         },
         removeEntry(id) {
-            console.log('Removing entry with id: ', id);
             this.transaction.entries = this.transaction.entries.filter(entry => entry.id !== id);
         },
         updatePayee(value) {
@@ -148,6 +147,11 @@ export default {
         border: solid 1px #aaa;
         padding: 0.5em;
         margin: 0.25em;
+        transition: all 0.2s;
+    }
+
+    .edited-transaction-container button:hover {
+        filter: brightness(0.9);
     }
 
     .buttons button {
