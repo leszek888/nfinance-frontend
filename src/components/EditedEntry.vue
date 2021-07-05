@@ -52,11 +52,9 @@ export default {
             this.$emit('update-entry', this.entry);
         },
         updateAccount(value) {
-            console.log('updating account with: ', value);
             this.entry.account = value;
         },
         updateAmount(value) {
-            console.log('updating amount with: ', value);
             this.entry.amount = value;
         },
     },
