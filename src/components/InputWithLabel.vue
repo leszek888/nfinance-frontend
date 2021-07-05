@@ -141,6 +141,7 @@ export default {
     }
     .suggestion {
         padding: 4pt;
+        cursor: pointer;
         font-size: 11pt;
     }
     .selected {
