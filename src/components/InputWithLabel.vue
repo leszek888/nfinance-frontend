@@ -43,7 +43,10 @@ export default {
         currentSuggestions: function() {
             let updatedSuggestions = [];
             if (this.suggestionsList)
-                updatedSuggestions = this.suggestionsList.filter(suggestion => suggestion.toLowerCase().startsWith(this.input_value.toLowerCase()));
+                updatedSuggestions = this.suggestionsList.filter(suggestion =>
+                    suggestion.toLowerCase().startsWith(this.input_value.toLowerCase()) &&
+                    suggestion.toLowerCase() !== this.input_value.toLowerCase()
+                );
             this.$nextTick();
             return updatedSuggestions;
         },

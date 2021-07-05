@@ -163,6 +163,23 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeTruthy();
     });
 
+    it('should hide suggestion when input is identical to it', async() => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autoComplete: true,
+                suggestionsList: ['Assets', 'Equity', 'Liabilities'],
+            },
+        });
+
+        await wrapper.find('input').trigger('focus');
+        await wrapper.find('input').setValue('Asset');
+        expect(wrapper.findAll('[data-cy="ac-suggestion"]').length).toEqual(1);
+        await wrapper.find('input').setValue('Assets');
+        expect(wrapper.findAll('[data-cy="ac-suggestion"]').length).toEqual(0);
+
+    });
+
 });
 
 
