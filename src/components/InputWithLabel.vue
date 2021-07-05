@@ -2,7 +2,7 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
-        <div v-if="autoComplete" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused && 'hidden']">
+        <div v-if="autoComplete" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
                     data-cy="ac-suggestion"
@@ -116,6 +116,15 @@ export default {
 </script>
 
 <style scoped>
+    @keyframes show-autocomplete {
+        from { max-height: 0pt; }
+        to { max-height: 100pt; }
+    }
+    @keyframes hide-autocomplete {
+        from { max-height: 100pt; border: 1px; }
+        to { max-height: 0pt; border: 0px; }
+    }
+
     .input-with-label-container {
         background-color: #fefefe;
         padding: 4pt;
@@ -154,14 +163,20 @@ export default {
         border-width: 0px 1px 1px 1px;
         border-color: #aaa;
         left: 4pt;
+        max-height: 0pt;
+        overflow: auto;
         position: absolute;
         right: 4pt;
         top: 24pt;
         z-index: 1000;
-        overflow: hidden;
+    }
+    .shown {
+        animation-duration: 0.2s;
+        animation-name: show-autocomplete;
+        max-height: 100pt;
     }
     .hidden {
-        max-height: 0px;
-        border: none;
+        max-height: 0pt;
+        border: 0pt;
     }
 </style>
