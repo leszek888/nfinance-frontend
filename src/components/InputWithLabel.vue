@@ -7,7 +7,7 @@
                 <div
                     data-cy="ac-suggestion"
                     :class="[index === currentSelection && 'selected', 'suggestion']"
-                    @click="clickSuggestion(index)"
+                    @click="selectSuggestion(index)"
                 >
                     {{ suggestion }}
                 </div>
@@ -99,13 +99,7 @@ export default {
                 this.currentSelection = 0;
         },
 
-        clickSuggestion(index) {
-            console.log('clicked index: ', index);
-            this.selectSuggestion(index);
-        },
-
         selectSuggestion(index) {
-            console.log('selecting :', index);
             this.input_value = this.currentSuggestions[index];
             this.handleChange();
         },
