@@ -141,6 +141,10 @@ export default {
         left: 8pt;
         position: absolute;
     }
+    .suggestion {
+        padding: 4pt;
+        font-size: 11pt;
+    }
     .selected {
         background-color: #00aa00;
         color: #fff;
