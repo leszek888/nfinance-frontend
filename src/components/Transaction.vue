@@ -48,7 +48,7 @@ export default {
         margin: 5px;
         padding: 1em 2em 1em 2em;
         position: relative;
-        transition: all 0.3s ease-out;
+        transition: all 0.3s;
     }
 
     .container:hover {
