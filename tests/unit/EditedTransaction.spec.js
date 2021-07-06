@@ -63,14 +63,12 @@ describe('EditedTransaction.vue', () => {
     });
 
     it('should create array with five last dates for date input autocomplete', () => {
-        const realDate = Date.now.bind(global.Date);
-        const dateStub = jest.fn(() => 1625517407660); // 2021-07-05
-        global.Date.now = dateStub;
+        const dateStub = jest.spyOn(Date, 'now').mockImplementation(() => 1625517407660); // 2021-07-05
 
         const days = wrapper.vm.getLastDays(5);
         expect(days).toEqual(['2021-07-05', '2021-07-04', '2021-07-03', '2021-07-02', '2021-07-01']);
 
-        global.Date.now = realDate;
+        dateStub.mockRestore();
     });
 
     it('should pass array with five last days to input date upon creation', () => {

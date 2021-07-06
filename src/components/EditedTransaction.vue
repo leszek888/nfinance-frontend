@@ -91,7 +91,7 @@ export default {
             this.transaction.date = value;
         },
         getLastDays(numberOfDays) {
-            const dateNow = new Date();
+            const dateNow = new Date(Date.now());
             const lastDaysArray = [];
             const convertToDoubleDigits = (str) => { return str.toString().length === 2 ? str.toString() : '0'+str.toString() };
 
