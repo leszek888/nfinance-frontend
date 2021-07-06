@@ -164,7 +164,9 @@ export default {
     }
 
     .edited-transaction-container button {
-        border: solid 1px #aaa;
+        /*border: solid 1px #aaa;*/
+        border: 0pt;
+        box-shadow: 2px 2px 4px #bbb;
         padding: 0.5em;
         margin: 0.25em;
         transition: all 0.2s;
