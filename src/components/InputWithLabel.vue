@@ -1,7 +1,7 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
+        <input ref="input" :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
         <div v-if="autoComplete && currentSuggestions.length > 0" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
@@ -134,6 +134,7 @@ export default {
             else 
                 this.input_value = this.currentSuggestions[index];
             this.handleChange();
+            this.$refs.input.focus();
         },
     },
 
