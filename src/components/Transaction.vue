@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div data-cy="container-transaction" class="container">
         <div class="header">{{ transaction.date }}, {{ transaction.payee }}</div>
         <div :class="[assetValue > 0 && 'positive-balance',
                   assetValue < 0 && 'negative-balance']"

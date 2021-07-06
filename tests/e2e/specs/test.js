@@ -15,6 +15,10 @@ describe('Transactions List Test', () => {
     const debitAccountName = nanoid();
     const payeeName = nanoid();
     const transactionValue = Math.floor(Math.random()*10000);
+    
+    // There should be no transactions in the list
+    cy.wait(3000);
+    cy.get('[data-cy="container-transactions-list"]').find('[data-cy="container-transaction"]').should('have.length', 0);
 
     // Display Transaction Edit Window when clicking "New Transaction"
     cy.contains('button', 'New Transaction');
