@@ -183,6 +183,6 @@ export default {
     .hidden {
         border: 0pt;
         max-height: 0pt;
-        visibility: hidden;
+        opacity: 0;
     }
 </style>
