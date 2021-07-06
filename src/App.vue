@@ -118,10 +118,6 @@ export default {
             const response = await this.sendApiRequest('balance/new', 'GET');
             this.balance_id = response['balance_id'];
             window.location.href = "/?balance_id="+this.balance_id;
-            /*
-            this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
-            this.fetchTransactions();
-            */
         }
     },
 }
