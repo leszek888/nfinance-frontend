@@ -63,6 +63,24 @@ describe('InputWithLabel.vue', () => {
         await wrapper.find('input').setValue('L');
     });
 
+    it('should append sub-suggestion to input value', async() => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autoComplete: true,
+                autoCompleteType: 'splitted',
+                suggestionsList: ['Assets:Current:Bank', 'Assets:Fixed:House', 'Liabilities'],
+            },
+        });
+
+        await wrapper.find('input').trigger('focus');
+        await wrapper.find('input').setValue('A');
+        await wrapper.find('input').trigger('keydown.enter');
+        expect(wrapper.find('input').element.value).toEqual('Assets:');
+        await wrapper.find('input').setValue(wrapper.find('input').element.value+'F');
+        await wrapper.find('input').trigger('keydown.enter');
+        expect(wrapper.find('input').element.value).toEqual('Assets:Fixed:');
+    });
     it('should update suggestions when input has changed', async () => {
          const wrapper = mount(InputWithLabel, {
             props: {

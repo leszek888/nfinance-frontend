@@ -53,8 +53,10 @@ export default {
                             let splittedSuggestion = suggestion.split(':')[depth-1];
                             if (suggestion.split(':').length > depth)
                                 splittedSuggestion += ':';
-                            if (!updatedSuggestions.includes(splittedSuggestion))
+                            if (!updatedSuggestions.includes(splittedSuggestion) &&
+                                this.input_value.split(':')[depth-1] !== splittedSuggestion) {
                                 updatedSuggestions.push(splittedSuggestion);
+                            }
                         }
                     });
                 }
@@ -117,7 +119,20 @@ export default {
         },
 
         selectSuggestion(index) {
-            this.input_value = this.currentSuggestions[index];
+            if (this.autoCompleteType === 'splitted') {
+                let splittedParts = this.input_value.split(':');
+                let updatedValue = "";
+                splittedParts.pop();
+
+                splittedParts.forEach(part => {
+                    updatedValue += part + ":";
+                });
+
+                updatedValue += this.currentSuggestions[index];
+                this.input_value = updatedValue;
+            }
+            else 
+                this.input_value = this.currentSuggestions[index];
             this.handleChange();
         },
     },
