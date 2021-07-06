@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js'
 
-export function formatNumber(number) {
+export function numberToString(number) {
     try {
         number = Decimal(number).toString();
     } catch (e) {
@@ -24,4 +24,10 @@ export function stringToNumber(string) {
     } catch (e) {
         return '';
     }
+}
+
+export function formatNumber(string) {
+    if (string.match(/^-?(([1-9]\d{0,2}(\.\d{3})*)|([1-9]\d*|0))(,\d+)?$/))
+        string = stringToNumber(string);
+    return numberToString(string);
 }

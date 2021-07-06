@@ -57,7 +57,7 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.findAll('.selected')).toHaveLength(1);
     });
 
-    it('should format number, when input type is number', async () => {
+    it('should convert number to string, when input type is number', async () => {
         const wrapper = mount(InputWithLabel, {
             props: {
                 value: '12345.44',
@@ -65,6 +65,19 @@ describe('InputWithLabel.vue', () => {
             } ,
         });
         expect(wrapper.find('input').element.value).toEqual('12.345,44');
+    });
+
+    it('should format number input after blur', async () => {
+        const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                type: 'number',
+            } ,
+        });
+
+        await wrapper.find('input').setValue('1234,5');
+        await wrapper.find('input').trigger('blur');
+        expect(wrapper.find('input').element.value).toEqual('1.234,50');
     });
 
     it('should update current selection when up and down arrows are pressed', async () => {

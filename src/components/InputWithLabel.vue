@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { formatNumber, stringToNumber } from './../helpers.js'
+import { formatNumber, numberToString, stringToNumber } from './../helpers.js'
 
 export default {
     name: 'InputWithLabel',
@@ -56,7 +56,7 @@ export default {
     methods: {
         formatValue() {
             if (this.type === 'number')
-                return formatNumber(this.value);
+                return numberToString(this.value);
             return this.value;
         },
 

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { formatNumber } from './../helpers.js'
+import { numberToString } from './../helpers.js'
 
 export default {
     name: 'Entry',
@@ -16,7 +16,7 @@ export default {
     },
     computed: {
         formatedNumber: function() {
-            return (formatNumber(this.amount));
+            return (numberToString(this.amount));
         }
     },
 }
