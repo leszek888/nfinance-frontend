@@ -37,7 +37,8 @@ export default {
         return {
             transactions: [],
             editedTransaction: null,
-            balance_id: 'd2d9fa10-c1c1-4d59-8074-2bb20c6358c3',
+            //balance_id: 'd2d9fa10-c1c1-4d59-8074-2bb20c6358c3',
+            //balance_id: this.$route.query.balance_id,
             auth_token: null,
         }
     },
@@ -58,6 +59,7 @@ export default {
         async sendApiRequest(url, method, data) {
             console.log('request data: ', data);
             let headers = new Headers();
+            console.log('auth_token: ', this.auth_token);
             headers.append('x-access-token', this.auth_token);
             headers.append('Content-Type', 'application/json');
 
@@ -96,15 +98,31 @@ export default {
             const response = await this.sendApiRequest('transaction', 'GET');
             this.transactions = response['transactions'];
         },
+
+        async getTokenFromBalanceId(id) {
+            console.log('getting token for id: ', id);
+            let headers = new Headers();
+            headers.append('Authorization', 'Basic ' + btoa(id + ':pw'))
+            const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
+            const data = await response.json();
+            return data['token'];
+        },
     },
 
     async created() {
-        let headers = new Headers();
-        headers.append('Authorization', 'Basic ' + btoa(this.balance_id + ':pw'))
-        const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
-        const data = await response.json();
-        this.auth_token = data['token'];
-        this.fetchTransactions();
+        const params = new URLSearchParams(window.location.search.substring(1));
+        this.balance_id = params.get('balance_id');
+        if (this.balance_id) {
+            console.log('balance_id found: ', this.balance_id);
+            this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
+            this.fetchTransactions();
+        }
+        else {
+            const response = await this.sendApiRequest('balance/new', 'GET');
+            this.balance_id = response['balance_id'];
+            this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
+            this.fetchTransactions();
+        }
     },
 }
 </script>
