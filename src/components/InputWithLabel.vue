@@ -162,6 +162,7 @@ export default {
         border: solid;
         border-width: 0px 1px 1px 1px;
         border-color: #aaa;
+        box-shadow: 2px 2px 4px #bbb;
         left: 4pt;
         max-height: 0pt;
         overflow: auto;
