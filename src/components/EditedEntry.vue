@@ -2,6 +2,7 @@
     <div data-cy="container-edited-entry" class="edited-entry-container">
         <InputWithLabel
             :auto-complete="true"
+            auto-complete-type="splitted"
             :suggestions-list="['Assets:Current:Bank', 'Assets:Fixed:Cash', 'Equity', 'Liabilities']"
             :value="entry.account"
             @change="updateAccount"
