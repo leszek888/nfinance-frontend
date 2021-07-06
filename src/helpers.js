@@ -27,6 +27,7 @@ export function stringToNumber(string) {
 }
 
 export function formatNumber(string) {
+    string = string.toString();
     if (string.match(/^-?(([1-9]\d{0,2}(\.\d{3})*)|([1-9]\d*|0))(,\d+)?$/))
         string = stringToNumber(string);
     return numberToString(string);
