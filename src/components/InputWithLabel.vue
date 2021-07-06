@@ -94,6 +94,11 @@ export default {
             if (this.type === 'number')
                 value = stringToNumber(value);
 
+            value = value.trim();
+
+            if (this.autoCompleteType === 'splitted')
+                value = value.replace(/:$/, '');
+
             this.$emit('change', value);
         },
 

@@ -263,6 +263,32 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.vm.currentSelection).toEqual(1);
     });
 
+    it('should strip white spaces when emitting change', async () => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: ' Input: ',
+            },
+        });
+        
+        await wrapper.vm.handleChange();
+        expect(wrapper.emitted('change')[0][0]).toEqual('Input:');
+       
+    });
+    it('should strip ":" at the end of inputs value by splitted autocomplete', async () => {
+         const wrapper = mount(InputWithLabel, {
+            props: {
+                value: 'Input:',
+                autoComplete: true,
+                autoCompleteType: 'splitted',
+            },
+        });
+        
+        await wrapper.vm.handleChange();
+        expect(wrapper.emitted('change')[0][0]).toEqual('Input');
+       
+    });
+
+
 });
 
 
