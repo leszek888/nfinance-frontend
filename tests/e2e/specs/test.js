@@ -38,6 +38,10 @@ describe('Transactions List Test', () => {
     // Add third entry
     cy.get('[data-cy="btn-add-entry"]').click();
 
+    // Try to submit without filling out the inputs
+    cy.get('[data-cy="btn-save-transaction"]').click();
+    cy.get('[data-cy="container-edit-transaction"]').find('.has-error').should('have.length', 8);
+
     // Fill out the transactions data
     cy.get('[data-cy="container-edit-transaction"] [data-cy="input-date"]').type('2021-01-01');
     cy.get('[data-cy="container-edit-transaction"] [data-cy="input-payee"]').type(payeeName);

@@ -60,8 +60,24 @@ export default {
     },
 
     methods: {
+        validate(value) {
+            return value.toString().trim().length > 0 ? true : false;
+        },
+        transactionIsValid() {
+            if (!this.validate(this.transaction.date) ||
+                !this.validate(this.transaction.payee))
+                return false;
+            this.transaction.entries.forEach(entry => {
+                if (!this.validate(entry.account) ||
+                    !this.validate(entry.amount))
+                    return false;
+            });
+
+            return true;
+        },
         saveTransaction() {
-            this.$emit('save-transaction', this.transaction);
+            if (this.transactionIsValid())
+                this.$emit('save-transaction', this.transaction);
         },
         cancelTransaction() {
             this.$emit('close-transaction');

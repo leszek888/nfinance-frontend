@@ -4,7 +4,6 @@ import EditedTransaction from '@/components/EditedTransaction.vue'
 describe('EditedTransaction.vue', () => {
 
     const transaction = {
-        id: 1,
         date: '2020-01-01',
         payee: 'Payee',
         entries: [
@@ -74,6 +73,21 @@ describe('EditedTransaction.vue', () => {
     it('should pass array with five last days to input date upon creation', () => {
         expect(wrapper.findComponent({name: 'InputWithLabel'}).props().autoComplete).toBeTruthy();
         expect(wrapper.findComponent({name: 'InputWithLabel'}).props().suggestionsList.length).toBeGreaterThan(0);
+    });
+
+    it('should not allow to save when there are empty inputs', async () => {
+        wrapper = mount(EditedTransaction, {
+            props: {
+                date: '',
+                payee: '',
+                entries: [
+                    { account: '', amount: '' },
+                    { account: '', amount: '' }
+                ]
+            }});
+
+        await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
+        expect(wrapper.emitted('save-transaction')).toBeFalsy();
     });
 
 });

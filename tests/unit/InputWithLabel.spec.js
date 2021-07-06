@@ -288,7 +288,6 @@ describe('InputWithLabel.vue', () => {
        
     });
 
-
 });
 
 
