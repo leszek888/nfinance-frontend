@@ -26,6 +26,22 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.find('[data-cy="container-autocomplete"]').exists()).toBeTruthy();
     });
 
+    it('should display only first part of the suggestion when using autoCompleteType="splitted"', async () => {
+        const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                autoComplete: true,
+                autoCompleteType: 'splitted',
+                suggestionsList: ['Assets:Current:Bank', 'Assets:Fixed:House', 'Liabilities:Mortgage'],
+            },
+        });
+
+        await wrapper.find('input').trigger('focus');
+        expect(wrapper.html()).not.toContain('Current');
+        expect(wrapper.html()).not.toContain('Fixed');
+        expect(wrapper.html()).not.toContain('Mortgage');
+    });
+
     it('should update suggestions when input has changed', async () => {
          const wrapper = mount(InputWithLabel, {
             props: {

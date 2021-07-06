@@ -3,8 +3,10 @@ import { formatNumber } from '../../../src/helpers';
  
 describe('Transactions List Test', () => {
   const fillOutWithAutocomplete = (selectionType, parent) => {
-    if (selectionType === 'enter')
+    if (selectionType === 'enter') {
       parent.find('[data-cy="input-account"]').type('{enter}');
+      parent.find('[data-cy="input-account"]').type('{enter}');
+    }
     if (selectionType === 'click') {
       parent.get('[data-cy="container-autocomplete"]').find('[data-cy="ac-suggestion"]').eq(2).click();
     }
@@ -50,7 +52,9 @@ describe('Transactions List Test', () => {
       }
       if (index === 1) {
         cy.get('@inputAccount').focus();
-        fillOutWithAutocomplete('enter', cy.wrap(entry));
+        cy.get('@inputAccount').type('{enter}');
+        cy.get('@inputAccount').type('f');
+        cy.get('@inputAccount').type('{enter}');
         cy.get('@inputAmount').type((-1*(transactionValue-100)).toString());
       }
       if (index === 2) {
