@@ -20,6 +20,9 @@ describe('Transactions List Test', () => {
     cy.wait(3000);
     cy.get('[data-cy="container-transactions-list"]').find('[data-cy="container-transaction"]').should('have.length', 0);
 
+    // Link should contain balance_id
+    cy.location('search').should('contain', 'balance_id');
+
     // Display Transaction Edit Window when clicking "New Transaction"
     cy.contains('button', 'New Transaction');
     cy.get('[data-cy="btn-new-transaction"]').click();

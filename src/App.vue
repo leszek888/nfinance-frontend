@@ -59,7 +59,6 @@ export default {
         async sendApiRequest(url, method, data) {
             console.log('request data: ', data);
             let headers = new Headers();
-            console.log('auth_token: ', this.auth_token);
             headers.append('x-access-token', this.auth_token);
             headers.append('Content-Type', 'application/json');
 
@@ -100,7 +99,6 @@ export default {
         },
 
         async getTokenFromBalanceId(id) {
-            console.log('getting token for id: ', id);
             let headers = new Headers();
             headers.append('Authorization', 'Basic ' + btoa(id + ':pw'))
             const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
@@ -113,15 +111,17 @@ export default {
         const params = new URLSearchParams(window.location.search.substring(1));
         this.balance_id = params.get('balance_id');
         if (this.balance_id) {
-            console.log('balance_id found: ', this.balance_id);
             this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
             this.fetchTransactions();
         }
         else {
             const response = await this.sendApiRequest('balance/new', 'GET');
             this.balance_id = response['balance_id'];
+            window.location.href = "/?balance_id="+this.balance_id;
+            /*
             this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
             this.fetchTransactions();
+            */
         }
     },
 }
