@@ -2,7 +2,7 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
-        <div v-if="autoComplete" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']">
+        <div v-if="autoComplete && currentSuggestions.length > 0" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']">
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
                     data-cy="ac-suggestion"
@@ -125,6 +125,9 @@ export default {
         to { max-height: 0pt; border: 0px; }
     }
 
+    *:focus {
+        outline: none;
+    }
     .input-with-label-container {
         background-color: #fefefe;
         padding: 4pt;
@@ -132,13 +135,14 @@ export default {
         color: #aaa;
     }
     .input-with-label-container input {
-        border: 0px;
-        border-bottom: solid 1px #aaa;
-        border-left: solid 1px #aaa;
+        border: solid 1px #ddd;
         box-sizing: border-box;
         font-size: 11pt;
         padding: 4pt;
         width: 100%;
+    }
+    .input-with-label-container input:focus {
+        border-color: #666;
     }
     .input-with-label-container .label {
         background-color: #fefefe;
@@ -159,10 +163,6 @@ export default {
     }
     .autocomplete-container {
         background-color: #fefefe;
-        border: solid;
-        border-width: 0px 1px 1px 1px;
-        border-color: #aaa;
-        box-shadow: 2px 2px 4px #bbb;
         left: 4pt;
         max-height: 0pt;
         overflow: auto;
@@ -175,9 +175,14 @@ export default {
         animation-duration: 0.2s;
         animation-name: show-autocomplete;
         max-height: 100pt;
+        box-shadow: 2px 2px 4px #bbb;
+        border: solid;
+        border-width: 0px 1px 1px 1px;
+        border-color: #aaa;
     }
     .hidden {
-        max-height: 0pt;
         border: 0pt;
+        max-height: 0pt;
+        visibility: hidden;
     }
 </style>
