@@ -220,10 +220,15 @@ export default {
     }
 
     .edited-transaction-container {
+        animation-duration: 0.3s;
+        animation-name: display-animation;
         background-color: #fefefe;
         border: solid 1px #bbb;
         border-radius: 10px;
         box-shadow: 0px 0px 6px #aaa;
+        display: grid;
+        grid-gap: 10pt;
+        grid-template-columns: 2fr 3fr;
         left: 0;
         margin: auto;
         max-width: 600pt;
@@ -232,11 +237,6 @@ export default {
         position: fixed;
         right: 0;
         top: 30pt;
-        animation-name: display-animation;
-        animation-duration: 0.3s;
-        display: grid;
-        grid-template-columns: 2fr 3fr;
-        grid-gap: 10pt;
         z-index: 99;
     }
 
@@ -246,19 +246,18 @@ export default {
     }
 
     .header p {
-        padding: 0;
-        margin: 0;
         height: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .buttons {
-        position: absolute;
         bottom: 1em;
         left: 1em;
+        position: absolute;
     }
 
     .edited-transaction-container button {
-        /*border: solid 1px #aaa;*/
         border: 0pt;
         box-shadow: 2px 2px 4px #bbb;
         padding: 0.5em;
