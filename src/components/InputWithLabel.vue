@@ -80,7 +80,8 @@ export default {
         },
 
         isValid() {
-            return this.input_value.trim() > 0 ? true : false;
+            console.log('validity: ', this.input_value.trim().length);
+            return this.input_value.trim().length > 0 ? true : false;
         },
 
         handleBlur() {
@@ -88,13 +89,16 @@ export default {
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
 
-            if (this.isValid)
-                this.$refs.input.classList.add('has-error');
-            else
-                this.$refs.input.classList.remove('has-error');
+            if (this.required) {
+                if (!this.isValid())
+                    this.$refs.input.classList.add('has-error');
+                else
+                    this.$refs.input.classList.remove('has-error');
+            }
         },
 
         handleFocus() {
+            this.$refs.input.classList.remove('has-error');
             this.isFocused = true;
         },
 
@@ -233,5 +237,8 @@ export default {
         border: 0pt;
         max-height: 0pt;
         opacity: 0;
+    }
+    .has-error {
+        border-color: red !important;
     }
 </style>

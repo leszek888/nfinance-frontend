@@ -285,7 +285,25 @@ describe('InputWithLabel.vue', () => {
         
         await wrapper.vm.handleChange();
         expect(wrapper.emitted('change')[0][0]).toEqual('Input');
-       
+    });
+    it('should add class has-error if the field is required, but left empty', async() => {
+          const wrapper = mount(InputWithLabel, {
+            props: {
+                value: '',
+                required: true,
+            },
+        });
+
+        expect(wrapper.find('input').element.classList.contains('has-error')).toBeFalsy();
+        await wrapper.find('input').trigger('focus');
+        await wrapper.find('input').trigger('blur');
+        expect(wrapper.find('input').element.classList.contains('has-error')).toBeTruthy();
+        await wrapper.find('input').trigger('focus');
+        expect(wrapper.find('input').element.classList.contains('has-error')).toBeFalsy();
+        wrapper.find('input').setValue('A');
+        await wrapper.find('input').trigger('blur');
+        expect(wrapper.find('input').element.classList.contains('has-error')).toBeFalsy();
+               
     });
 
 });
