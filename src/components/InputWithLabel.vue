@@ -36,6 +36,7 @@ export default {
         label: String,
         type: String,
         dataCy: String,
+        required: Boolean,
         autoComplete: Boolean,
         autoCompleteType: String,
         suggestionsList: Array,
@@ -91,7 +92,6 @@ export default {
                 this.$refs.input.classList.add('has-error');
             else
                 this.$refs.input.classList.remove('has-error');
-            console.log('classList: ',this.$refs.input.classList);
         },
 
         handleFocus() {
@@ -135,7 +135,6 @@ export default {
 
         selectSuggestion(index) {
             if (this.autoCompleteType === 'splitted' && this.currentSuggestions.length > 0) {
-                console.log('went through');
                 let splittedParts = this.input_value.split(':');
                 let updatedValue = "";
                 splittedParts.pop();
@@ -145,7 +144,6 @@ export default {
                 });
 
                 updatedValue += this.currentSuggestions[index];
-                console.log('before assing: ', updatedValue);
                 this.input_value = updatedValue;
             }
             else if (this.currentSuggestions.length > 0) {
