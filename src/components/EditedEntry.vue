@@ -9,6 +9,7 @@
             @focusout="updateEntry"
             label="Account"
             :required="true"
+            :invalid="shouldValidate && !accountValidator(entry.account)"
             data-cy="input-account"
         />
         <InputWithLabel
@@ -18,6 +19,7 @@
             @focusout="updateEntry"
             label="Amount"
             :required="true"
+            :invalid="shouldValidate && !amountValidator(entry.amount)"
             data-cy="input-amount"
         />
         <button @click="$emit('remove-entry', id)">X</button>
@@ -38,6 +40,9 @@ export default {
         account: String,
         amount: String,
         id: String,
+        shouldValidate: Boolean,
+        amountValidator: Function,
+        accountValidator: Function,
     },
 
     data() {

@@ -90,4 +90,19 @@ describe('EditedTransaction.vue', () => {
         expect(wrapper.emitted('save-transaction')).toBeFalsy();
     });
 
+    it('should not allow to save when there are empty inputs', async () => {
+        wrapper = mount(EditedTransaction, {
+            props: {
+                date: '',
+                payee: '',
+                entries: [
+                    { account: '', amount: '' },
+                    { account: '', amount: '' }
+                ]
+            }});
+
+        await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
+        expect(wrapper.emitted('save-transaction')).toBeFalsy();
+    });
+
 });

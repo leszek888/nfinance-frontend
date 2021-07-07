@@ -1,5 +1,5 @@
 <template>
-    <div data-cy="container-edit-transaction" class="edited-transaction-container">
+    <div ref="container" data-cy="container-edit-transaction" class="edited-transaction-container">
         <div class="header">
             <InputWithLabel
                 :auto-complete="true"
@@ -8,8 +8,16 @@
                 :value="transaction.date"
                 @change="updateDate"
                 :required="true"
+                :invalid="shouldValidate && !validate(transaction.date)"
                 label="Date"/>
-            <InputWithLabel data-cy="input-payee" :value="transaction.payee" @change="updatePayee" label="Payee" :required="true"/>
+            <InputWithLabel
+                data-cy="input-payee"
+                :value="transaction.payee"
+                @change="updatePayee"
+                label="Payee"
+                :required="true"
+                :invalid="shouldValidate && !validate(transaction.payee)"
+            />
         </div>
         <div class="entries">
             <div v-for="(entry) in transaction.entries" :key="entry.id">
@@ -19,6 +27,9 @@
                     :account="entry.account"
                     :amount="entry.amount" 
                     :id="entry.id"
+                    :shouldValidate="shouldValidate"
+                    :accountValidator="validate"
+                    :amountValidator="validate"
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
@@ -57,6 +68,7 @@ export default {
         return {
             transaction: {},
             suggestions: ['Assets', 'Equity'],
+            shouldValidate: false,
         }
     },
 
@@ -77,8 +89,11 @@ export default {
             return true;
         },
         saveTransaction() {
-            if (this.transactionIsValid())
+            if (this.transactionIsValid()) {
                 this.$emit('save-transaction', this.transaction);
+            }
+            else
+                this.shouldValidate = true;
         },
         cancelTransaction() {
             this.$emit('close-transaction');

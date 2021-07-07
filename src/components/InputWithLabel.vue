@@ -1,8 +1,19 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
-        <input ref="input" :data-cy="dataCy" @change="handleChange" v-model="input_value" @blur="handleBlur" @focus="handleFocus" />
-        <div v-if="autoComplete && currentSuggestions.length > 0" data-cy="container-autocomplete" :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']">
+        <input
+            ref="input"
+            :data-cy="dataCy"
+            @change="handleChange"
+            :class="[invalid && 'has-error']"
+            v-model="input_value" @blur="handleBlur"
+            @focus="handleFocus"
+        />
+        <div
+            v-if="autoComplete && currentSuggestions.length > 0"
+            data-cy="container-autocomplete"
+            :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
+        >
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
                     data-cy="ac-suggestion"
@@ -36,6 +47,7 @@ export default {
         label: String,
         type: String,
         dataCy: String,
+        invalid: Boolean,
         required: Boolean,
         autoComplete: Boolean,
         autoCompleteType: String,
@@ -80,7 +92,6 @@ export default {
         },
 
         isValid() {
-            console.log('validity: ', this.input_value.trim().length);
             return this.input_value.trim().length > 0 ? true : false;
         },
 
