@@ -7,7 +7,6 @@
                 data-cy="input-date"
                 :value="transaction.date"
                 @change="updateDate"
-                :required="true"
                 :invalid="shouldValidate && !validate(transaction.date)"
                 label="Date"/>
             <InputWithLabel
@@ -15,7 +14,6 @@
                 :value="transaction.payee"
                 @change="updatePayee"
                 label="Payee"
-                :required="true"
                 :invalid="shouldValidate && !validate(transaction.payee)"
             />
         </div>
@@ -29,7 +27,7 @@
                     :id="entry.id"
                     :shouldValidate="shouldValidate"
                     :accountValidator="validate"
-                    :amountValidator="validate"
+                    :amountValidator="validateNumber"
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
@@ -75,6 +73,15 @@ export default {
     methods: {
         validate(value) {
             return value.toString().trim().length > 0 ? true : false;
+        },
+        validateNumber(value) {
+            if (!this.validate(value))
+                return false;
+
+            value = value.replaceAll(' ', '');
+            if (value.match(/^-?(([1-9]\d{0,2}(\.\d{3})*)|([1-9]\d*|0))(,\d+)?$/))
+                return true;
+            return false;
         },
         transactionIsValid() {
             if (!this.validate(this.transaction.date) ||

@@ -48,7 +48,6 @@ export default {
         type: String,
         dataCy: String,
         invalid: Boolean,
-        required: Boolean,
         autoComplete: Boolean,
         autoCompleteType: String,
         suggestionsList: Array,
@@ -99,13 +98,6 @@ export default {
             this.isFocused = false;
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
-
-            if (this.required) {
-                if (!this.isValid())
-                    this.$refs.input.classList.add('has-error');
-                else
-                    this.$refs.input.classList.remove('has-error');
-            }
         },
 
         handleFocus() {

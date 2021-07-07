@@ -8,7 +8,6 @@
             @change="updateAccount"
             @focusout="updateEntry"
             label="Account"
-            :required="true"
             :invalid="shouldValidate && !accountValidator(entry.account)"
             data-cy="input-account"
         />
@@ -18,7 +17,6 @@
             @change="updateAmount"
             @focusout="updateEntry"
             label="Amount"
-            :required="true"
             :invalid="shouldValidate && !amountValidator(entry.amount)"
             data-cy="input-amount"
         />
