@@ -3,31 +3,32 @@
         <div class="header">
             <InputWithLabel
                 :auto-complete="true"
-                :suggestions-list="getLastDays(4)"
                 data-cy="input-date"
+                :invalid="shouldValidate && !validateDate(transaction.date)"
+                label="Date"
+                :suggestions-list="getLastDays(4)"
                 :value="transaction.date"
                 @change="updateDate"
-                :invalid="shouldValidate && !validateDate(transaction.date)"
-                label="Date"/>
+            />
             <InputWithLabel
                 data-cy="input-payee"
+                :invalid="shouldValidate && !validate(transaction.payee)"
+                label="Payee"
                 :value="transaction.payee"
                 @change="updatePayee"
-                label="Payee"
-                :invalid="shouldValidate && !validate(transaction.payee)"
             />
         </div>
         <div class="entries">
             <div v-for="(entry) in transaction.entries" :key="entry.id">
                 <EditedEntry
-                    @update-entry="updateEntry"
-                    @remove-entry="removeEntry"
                     :account="entry.account"
+                    :accountValidator="validate"
                     :amount="entry.amount" 
+                    :amountValidator="validateNumber"
                     :id="entry.id"
                     :shouldValidate="shouldValidate"
-                    :accountValidator="validate"
-                    :amountValidator="validateNumber"
+                    @update-entry="updateEntry"
+                    @remove-entry="removeEntry"
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>

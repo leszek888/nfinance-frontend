@@ -3,22 +3,22 @@
         <InputWithLabel
             :auto-complete="true"
             auto-complete-type="splitted"
+            data-cy="input-account"
+            :invalid="shouldValidate && !accountValidator(entry.account)"
+            label="Account"
             :suggestions-list="['Assets:Current:Bank', 'Assets:Fixed:Cash', 'Equity', 'Liabilities']"
             :value="entry.account"
             @change="updateAccount"
             @focusout="updateEntry"
-            label="Account"
-            :invalid="shouldValidate && !accountValidator(entry.account)"
-            data-cy="input-account"
         />
         <InputWithLabel
+            data-cy="input-amount"
+            :invalid="shouldValidate && !amountValidator(entry.amount)"
+            label="Amount"
             type="number"
             :value="entry.amount"
             @change="updateAmount"
             @focusout="updateEntry"
-            label="Amount"
-            :invalid="shouldValidate && !amountValidator(entry.amount)"
-            data-cy="input-amount"
         />
         <button @click="$emit('remove-entry', id)">X</button>
     </div>

@@ -126,7 +126,7 @@ describe('EditedTransaction.vue', () => {
                 date: '2021-02-01a',
                 payee: 'Payee',
                 entries: [
-                    { account: 'Assets', amount: '33' },
+                    { account: 'Assets', amount: '-33' },
                     { account: 'Equity', amount: '33' }
                 ]
             }});

@@ -2,22 +2,23 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input
-            ref="input"
-            :data-cy="dataCy"
-            @change="handleChange"
             :class="[invalid && 'has-error']"
-            v-model="input_value" @blur="handleBlur"
+            :data-cy="dataCy"
+            ref="input"
+            v-model="input_value"
+            @blur="handleBlur"
+            @change="handleChange"
             @focus="handleFocus"
         />
         <div
-            v-if="autoComplete && currentSuggestions.length > 0"
-            data-cy="container-autocomplete"
             :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
+            data-cy="container-autocomplete"
+            v-if="autoComplete && currentSuggestions.length > 0"
         >
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
-                    data-cy="ac-suggestion"
                     :class="[index === currentSelection && 'selected', 'suggestion']"
+                    data-cy="ac-suggestion"
                     @click="selectSuggestion(index)"
                     @mouseover="currentSelection = index"
                 >
