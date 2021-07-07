@@ -57,18 +57,18 @@ export default {
     },
 
     props: {
-        id: Number,
-        date: String,
-        payee: String,
-        entries: Array,
         balance_id: String,
+        date: String,
+        entries: Array,
+        id: Number,
+        payee: String,
     },
 
     data() {
         return {
-            transaction: {},
-            suggestions: ['Assets', 'Equity'],
             shouldValidate: false,
+            suggestions: ['Assets', 'Equity'],
+            transaction: {},
         }
     },
 

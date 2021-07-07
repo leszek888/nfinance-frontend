@@ -44,14 +44,14 @@ export default {
     },
 
     props: {
-        value: String,
-        label: String,
-        type: String,
-        dataCy: String,
-        invalid: Boolean,
         autoComplete: Boolean,
         autoCompleteType: String,
+        dataCy: String,
+        invalid: Boolean,
+        label: String,
         suggestionsList: Array,
+        type: String,
+        value: String,
     },
 
     computed: {

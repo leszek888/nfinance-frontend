@@ -36,11 +36,11 @@ export default {
 
     props: {
         account: String,
+        accountValidator: Function,
         amount: String,
+        amountValidator: Function,
         id: String,
         shouldValidate: Boolean,
-        amountValidator: Function,
-        accountValidator: Function,
     },
 
     data() {
@@ -54,14 +54,14 @@ export default {
     },
 
     methods: {
-        updateEntry() {
-            this.$emit('update-entry', this.entry);
-        },
         updateAccount(value) {
             this.entry.account = value;
         },
         updateAmount(value) {
             this.entry.amount = value;
+        },
+        updateEntry() {
+            this.$emit('update-entry', this.entry);
         },
     },
 
