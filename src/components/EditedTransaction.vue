@@ -7,7 +7,7 @@
                 data-cy="input-date"
                 :value="transaction.date"
                 @change="updateDate"
-                :invalid="shouldValidate && !validate(transaction.date)"
+                :invalid="shouldValidate && !validateDate(transaction.date)"
                 label="Date"/>
             <InputWithLabel
                 data-cy="input-payee"
@@ -45,6 +45,7 @@
 import EditedEntry from './EditedEntry.vue'
 import InputWithLabel from './InputWithLabel.vue'
 import { nanoid } from 'nanoid'
+import Decimal from 'decimal.js'
 
 export default {
     name: 'EditedTransaction',
@@ -74,26 +75,79 @@ export default {
         validate(value) {
             return value.toString().trim().length > 0 ? true : false;
         },
+        validateDate(value) {
+            if (!this.validate(value))
+                return false;
+
+            const dateFormat = /^(\d{4})(-)(\d{1,2})(-)(\d{1,2})$/;
+            let dateString = value.trim();
+            let dateIsValid = true;
+
+            if(dateString.match(dateFormat)){      
+                const date_part = dateString.split('-');
+                if (date_part.length != 3)
+                    dateIsValid = false;
+
+                const year = parseInt(date_part[0]);      
+                const month= parseInt(date_part[1]);      
+                const day = parseInt(date_part[2]);      
+                      
+                const list_of_days = [31,28,31,30,31,30,31,31,30,31,30,31];      
+
+                if (day < 1)
+                    dateIsValid = false;
+
+                if (month >= 1 && month <= 12 && month != 2) {
+                    if (day>list_of_days[month-1])
+                        dateIsValid = false;
+                }
+                else if (month==2) {      
+                    let leap_year = false;
+
+                    if ( (!(year % 4) && year % 100) || !(year % 400))
+                        leap_year = true;
+
+                    if ((leap_year == false) && (day>=29))
+                        dateIsValid = false;
+                    else {
+                        if ((leap_year==true) && (day>29)){
+                            dateIsValid = false;
+                        }
+                    }
+                }
+                else
+                    dateIsValid = false;
+            }
+            else {
+                dateIsValid = false;
+            }
+
+            return dateIsValid;
+
+        },
         validateNumber(value) {
             if (!this.validate(value))
                 return false;
 
-            value = value.replaceAll(' ', '');
-            if (value.match(/^-?(([1-9]\d{0,2}(\.\d{3})*)|([1-9]\d*|0))(,\d+)?$/))
-                return true;
-            return false;
+            try {
+                value = new Decimal(value);
+            } catch {
+                return false;
+            }
+            return true;
         },
         transactionIsValid() {
-            if (!this.validate(this.transaction.date) ||
+            let isValid = true;
+            if (!this.validateDate(this.transaction.date) ||
                 !this.validate(this.transaction.payee))
-                return false;
+                isValid = false;
             this.transaction.entries.forEach(entry => {
                 if (!this.validate(entry.account) ||
-                    !this.validate(entry.amount))
-                    return false;
+                    !this.validateNumber(entry.amount))
+                    isValid = false;
             });
 
-            return true;
+            return isValid;
         },
         saveTransaction() {
             if (this.transactionIsValid()) {

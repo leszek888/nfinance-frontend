@@ -105,4 +105,36 @@ describe('EditedTransaction.vue', () => {
         expect(wrapper.emitted('save-transaction')).toBeFalsy();
     });
 
+    it('should not allow to save when amounts are invalid', async () => {
+        wrapper = mount(EditedTransaction, {
+            props: {
+                date: '2021-02-01',
+                payee: 'Payee',
+                entries: [
+                    { account: 'Assets', amount: '33a' },
+                    { account: 'Equity', amount: '33' }
+                ]
+            }});
+
+        await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
+        expect(wrapper.emitted('save-transaction')).toBeFalsy();
+    });
+
+    it('should not allow to save when date is invalid', async () => {
+        wrapper = mount(EditedTransaction, {
+            props: {
+                date: '2021-02-01a',
+                payee: 'Payee',
+                entries: [
+                    { account: 'Assets', amount: '33' },
+                    { account: 'Equity', amount: '33' }
+                ]
+            }});
+
+        await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
+        expect(wrapper.emitted('save-transaction')).toBeFalsy();
+    });
+
+
+
 });
