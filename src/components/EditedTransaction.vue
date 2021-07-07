@@ -85,33 +85,33 @@ export default {
             let dateIsValid = true;
 
             if(dateString.match(dateFormat)){      
-                const date_part = dateString.split('-');
-                if (date_part.length != 3)
+                const datePart = dateString.split('-');
+                if (datePart.length != 3)
                     dateIsValid = false;
 
-                const year = parseInt(date_part[0]);      
-                const month= parseInt(date_part[1]);      
-                const day = parseInt(date_part[2]);      
+                const year = parseInt(datePart[0]);      
+                const month= parseInt(datePart[1]);      
+                const day = parseInt(datePart[2]);      
                       
-                const list_of_days = [31,28,31,30,31,30,31,31,30,31,30,31];      
+                const listOfDays = [31,28,31,30,31,30,31,31,30,31,30,31];      
 
                 if (day < 1)
                     dateIsValid = false;
 
                 if (month >= 1 && month <= 12 && month != 2) {
-                    if (day>list_of_days[month-1])
+                    if (day>listOfDays[month-1])
                         dateIsValid = false;
                 }
                 else if (month==2) {      
-                    let leap_year = false;
+                    let leapYear = false;
 
                     if ( (!(year % 4) && year % 100) || !(year % 400))
-                        leap_year = true;
+                        leapYear = true;
 
-                    if ((leap_year == false) && (day>=29))
+                    if ((leapYear == false) && (day>=29))
                         dateIsValid = false;
                     else {
-                        if ((leap_year==true) && (day>29)){
+                        if ((leapYear==true) && (day>29)){
                             dateIsValid = false;
                         }
                     }
