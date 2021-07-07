@@ -8,6 +8,7 @@
             @change="updateAccount"
             @focusout="updateEntry"
             label="Account"
+            :required="true"
             data-cy="input-account"
         />
         <InputWithLabel
@@ -16,6 +17,7 @@
             @change="updateAmount"
             @focusout="updateEntry"
             label="Amount"
+            :required="true"
             data-cy="input-amount"
         />
         <button @click="$emit('remove-entry', id)">X</button>

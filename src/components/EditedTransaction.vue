@@ -7,8 +7,9 @@
                 data-cy="input-date"
                 :value="transaction.date"
                 @change="updateDate"
+                :required="true"
                 label="Date"/>
-            <InputWithLabel data-cy="input-payee" :value="transaction.payee" @change="updatePayee" label="Payee"/>
+            <InputWithLabel data-cy="input-payee" :value="transaction.payee" @change="updatePayee" label="Payee" :required="true"/>
         </div>
         <div class="entries">
             <div v-for="(entry) in transaction.entries" :key="entry.id">

@@ -37,8 +37,6 @@ export default {
         return {
             transactions: [],
             editedTransaction: null,
-            //balance_id: 'd2d9fa10-c1c1-4d59-8074-2bb20c6358c3',
-            //balance_id: this.$route.query.balance_id,
             auth_token: null,
         }
     },

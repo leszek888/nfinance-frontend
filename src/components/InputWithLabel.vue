@@ -78,10 +78,20 @@ export default {
             return this.value;
         },
 
+        isValid() {
+            return this.input_value.trim() > 0 ? true : false;
+        },
+
         handleBlur() {
             this.isFocused = false;
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
+
+            if (this.isValid)
+                this.$refs.input.classList.add('has-error');
+            else
+                this.$refs.input.classList.remove('has-error');
+            console.log('classList: ',this.$refs.input.classList);
         },
 
         handleFocus() {
@@ -124,7 +134,8 @@ export default {
         },
 
         selectSuggestion(index) {
-            if (this.autoCompleteType === 'splitted') {
+            if (this.autoCompleteType === 'splitted' && this.currentSuggestions.length > 0) {
+                console.log('went through');
                 let splittedParts = this.input_value.split(':');
                 let updatedValue = "";
                 splittedParts.pop();
@@ -134,10 +145,13 @@ export default {
                 });
 
                 updatedValue += this.currentSuggestions[index];
+                console.log('before assing: ', updatedValue);
                 this.input_value = updatedValue;
             }
-            else 
+            else if (this.currentSuggestions.length > 0) {
                 this.input_value = this.currentSuggestions[index];
+            }
+
             this.handleChange();
             this.$refs.input.focus();
         },
