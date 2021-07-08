@@ -102,7 +102,6 @@ export default {
         },
 
         handleFocus() {
-            this.$refs.input.classList.remove('has-error');
             this.isFocused = true;
         },
 
