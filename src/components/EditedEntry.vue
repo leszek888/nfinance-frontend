@@ -4,8 +4,8 @@
             :auto-complete="true"
             auto-complete-type="splitted"
             data-cy="input-account"
-            :invalid="shouldValidate && !accountValidator(entry.account)"
             label="Account"
+            ref="account"
             :suggestions-list="['Assets:Current:Bank', 'Assets:Fixed:Cash', 'Equity', 'Liabilities']"
             :value="entry.account"
             @change="updateAccount"
@@ -13,8 +13,8 @@
         />
         <InputWithLabel
             data-cy="input-amount"
-            :invalid="shouldValidate && !amountValidator(entry.amount)"
             label="Amount"
+            ref="amount"
             type="number"
             :value="entry.amount"
             @change="updateAmount"

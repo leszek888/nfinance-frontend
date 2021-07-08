@@ -287,19 +287,6 @@ describe('InputWithLabel.vue', () => {
         expect(wrapper.emitted('change')[0][0]).toEqual('Input');
     });
 
-    it('should add has-error class if the input is invalid', async() => {
-          const wrapper = mount(InputWithLabel, {
-            props: {
-                value: '',
-                invalid: true,
-            },
-        });
-
-        expect(wrapper.find('input').element.classList.contains('has-error')).toBeTruthy();
-        await wrapper.find('input').trigger('focus');
-        expect(wrapper.find('input').element.classList.contains('has-error')).toBeFalsy();
-    });
-
 });
 
 

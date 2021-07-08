@@ -2,7 +2,6 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input
-            :class="[invalid && 'has-error']"
             :data-cy="dataCy"
             ref="input"
             v-model="input_value"
@@ -47,7 +46,6 @@ export default {
         autoComplete: Boolean,
         autoCompleteType: String,
         dataCy: String,
-        invalid: Boolean,
         label: String,
         suggestionsList: Array,
         type: String,
@@ -85,6 +83,10 @@ export default {
     },
 
     methods: {
+        markAsInvalid() {
+            this.$refs.input.classList.add('has-error');
+        },
+
         formatValue() {
             if (this.type === 'number')
                 return numberToString(this.value);
@@ -103,6 +105,7 @@ export default {
 
         handleFocus() {
             this.isFocused = true;
+            this.$refs.input.classList.remove('has-error');
         },
 
         handleChange() {

@@ -4,28 +4,29 @@
             <InputWithLabel
                 :auto-complete="true"
                 data-cy="input-date"
-                :invalid="shouldValidate && !validateDate(transaction.date)"
                 label="Date"
+                ref="date"
                 :suggestions-list="getLastDays(4)"
                 :value="transaction.date"
                 @change="updateDate"
             />
             <InputWithLabel
                 data-cy="input-payee"
-                :invalid="shouldValidate && !validate(transaction.payee)"
                 label="Payee"
+                ref="payee"
                 :value="transaction.payee"
                 @change="updatePayee"
             />
         </div>
         <div class="entries">
-            <div v-for="(entry) in transaction.entries" :key="entry.id">
+            <div v-for="(entry, index) in transaction.entries" :key="entry.id">
                 <EditedEntry
                     :account="entry.account"
                     :accountValidator="validate"
                     :amount="entry.amount" 
                     :amountValidator="validateNumber"
                     :id="entry.id"
+                    :ref="'entry'+index"
                     :shouldValidate="shouldValidate"
                     @update-entry="updateEntry"
                     @remove-entry="removeEntry"
@@ -139,13 +140,27 @@ export default {
         },
         transactionIsValid() {
             let isValid = true;
-            if (!this.validateDate(this.transaction.date) ||
-                !this.validate(this.transaction.payee))
+
+            if (!this.validateDate(this.transaction.date)) {
                 isValid = false;
-            this.transaction.entries.forEach(entry => {
-                if (!this.validate(entry.account) ||
-                    !this.validateNumber(entry.amount))
+                this.$refs.date.markAsInvalid();
+            }
+
+            if (!this.validate(this.transaction.payee)) {
+                isValid = false;
+                this.$refs.payee.markAsInvalid();
+            }
+
+            this.transaction.entries.forEach((entry, index) => {
+                if (!this.validate(entry.account)) {
                     isValid = false;
+                    this.$refs['entry'+index].$refs.account.markAsInvalid();
+                }
+
+                if (!this.validateNumber(entry.amount)) {
+                    isValid = false;
+                    this.$refs['entry'+index].$refs.amount.markAsInvalid();
+                }
             });
 
             return isValid;
