@@ -135,7 +135,7 @@ describe('EditedTransaction.vue', () => {
         expect(wrapper.emitted('save-transaction')).toBeFalsy();
     });
 
-    it('should display unbalanced amount', async() => {
+    it('should display unbalanced amount when transaction is not balanced', async() => {
          wrapper = mount(EditedTransaction, {
             props: {
                 date: '2021-02-01',

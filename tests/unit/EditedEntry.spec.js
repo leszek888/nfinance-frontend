@@ -28,5 +28,4 @@ describe('EditedEntry.vue', () => {
         expect(wrapper.emitted('update-entry')[0][0].amount).toEqual('100');
 
     });
-
 });

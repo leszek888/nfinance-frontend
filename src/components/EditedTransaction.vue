@@ -33,7 +33,9 @@
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
-            <span class="span-unbalanced-amount">Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ unbalancedAmount }}</span></span>
+            <span v-if="unbalancedAmount != '0,00'" class="span-unbalanced-amount">
+                Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ unbalancedAmount }}</span>
+            </span>
         </div>
         <br />
         <div class="buttons">
@@ -80,7 +82,6 @@ export default {
             let unbalanced = Decimal('0');
 
             this.transaction.entries.forEach(entry => {
-                console.log('converting: ', entry.amount);
                 try {
                     unbalanced = unbalanced.plus(Decimal(entry.amount));
                 } catch (e) {
@@ -310,6 +311,14 @@ export default {
 
     .btn-add-entry {
         width: 100%;
+    }
+
+    .span-unbalanced-amount {
+        bottom: 2em;
+        color: #aaa;
+        font-size: 10pt;
+        position: absolute;
+        right: 3.5em;
     }
 
 </style>
