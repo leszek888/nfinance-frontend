@@ -33,6 +33,7 @@
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
+            <span class="span-unbalanced-amount">Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ unbalancedAmount }}</span></span>
         </div>
         <br />
         <div class="buttons">
@@ -47,6 +48,7 @@
 import EditedEntry from './EditedEntry.vue'
 import InputWithLabel from './InputWithLabel.vue'
 import { nanoid } from 'nanoid'
+import { numberToString } from '../helpers.js'
 import Decimal from 'decimal.js'
 
 export default {
@@ -71,6 +73,24 @@ export default {
             suggestions: ['Assets', 'Equity'],
             transaction: {},
         }
+    },
+
+    computed: {
+        unbalancedAmount: function() {
+            let unbalanced = Decimal('0');
+
+            this.transaction.entries.forEach(entry => {
+                console.log('converting: ', entry.amount);
+                try {
+                    unbalanced = unbalanced.plus(Decimal(entry.amount));
+                } catch (e) {
+                    unbalanced = unbalanced.plus('0');
+                }
+            });
+            unbalanced = unbalanced.times('-1');
+
+            return numberToString(unbalanced);
+        },
     },
 
     methods: {

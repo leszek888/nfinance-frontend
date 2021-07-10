@@ -60,6 +60,8 @@ describe('Transactions List Test', () => {
         cy.get('@inputAccount').type('f');
         cy.get('@inputAccount').type('{enter}');
         cy.get('@inputAmount').type((-1*(transactionValue-100)).toString());
+        cy.get('@inputAmount').blur();
+        cy.get('[data-cy="field-unbalanced-amount"]').contains('-100,00');
       }
       if (index === 2) {
         cy.get('@inputAccount').focus();

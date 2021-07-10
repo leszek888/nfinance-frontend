@@ -135,6 +135,19 @@ describe('EditedTransaction.vue', () => {
         expect(wrapper.emitted('save-transaction')).toBeFalsy();
     });
 
+    it('should display unbalanced amount', async() => {
+         wrapper = mount(EditedTransaction, {
+            props: {
+                date: '2021-02-01',
+                payee: 'Payee',
+                entries: [
+                    { account: 'Assets', amount: '33' },
+                    { account: 'Equity', amount: '' }
+                ]
+            }});
 
+        await wrapper.find('[data-cy="container-edited-entry"]').find('[data-cy="input-amount"]').trigger('blur');
+        expect(wrapper.find('[data-cy="field-unbalanced-amount"]').html()).toContain('-33,00');
+    });
 
 });
