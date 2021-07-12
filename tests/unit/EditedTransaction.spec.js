@@ -150,4 +150,19 @@ describe('EditedTransaction.vue', () => {
         expect(wrapper.find('[data-cy="field-unbalanced-amount"]').html()).toContain('-33,00');
     });
 
+    it('should not allow saving when transaction is not balanced', async() => {
+         wrapper = mount(EditedTransaction, {
+            props: {
+                date: '2021-02-01',
+                payee: 'Payee',
+                entries: [
+                    { account: 'Assets', amount: '33' },
+                    { account: 'Equity', amount: '-23' }
+                ]
+            }});
+
+        await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
+        expect(wrapper.emitted('save-transaction')).toBeFalsy();
+    });
+
 });

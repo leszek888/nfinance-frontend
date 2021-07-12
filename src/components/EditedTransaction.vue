@@ -33,8 +33,8 @@
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
-            <span v-if="unbalancedAmount != '0,00'" class="span-unbalanced-amount">
-                Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ unbalancedAmount }}</span>
+            <span v-if="unbalancedAmount != 0" class="span-unbalanced-amount">
+                Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ formattedUnbalancedAmount }}</span>
             </span>
         </div>
         <br />
@@ -90,7 +90,11 @@ export default {
             });
             unbalanced = unbalanced.times('-1');
 
-            return numberToString(unbalanced);
+            return unbalanced;
+        },
+
+        formattedUnbalancedAmount: function() {
+            return numberToString(this.unbalancedAmount);
         },
     },
 
@@ -161,6 +165,9 @@ export default {
         },
         transactionIsValid() {
             let isValid = true;
+
+            if (this.unbalancedAmount != 0)
+                isValid = false;
 
             if (!this.validateDate(this.transaction.date)) {
                 isValid = false;
@@ -315,7 +322,7 @@ export default {
 
     .span-unbalanced-amount {
         bottom: 2em;
-        color: #aaa;
+        color: #a44;
         font-size: 10pt;
         position: absolute;
         right: 3.5em;
