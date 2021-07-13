@@ -12,7 +12,7 @@ describe('Transactions List Test', () => {
     }
   }
 
-  it('Display, Edit and Create transactions', () => {
+  it('Creates transactions', () => {
     cy.visit('/');
     const debitAccountName = nanoid();
     const payeeName = nanoid();
@@ -76,4 +76,14 @@ describe('Transactions List Test', () => {
     cy.get('[data-cy="container-transactions-list"]').contains(debitAccountName);
     cy.get('[data-cy="container-transactions-list"]').contains('-'+formatNumber(transactionValue-100));
   })
+
 })
+
+describe.only('It filters transactions on the list', () => {
+  it('Filters transactions by payee name', () => {
+    cy.visit('/?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+    cy.get('[data-cy="filter-payee-input"]').type('Shop A').type('{enter}');
+    cy.get('[data-cy="container-transaction"]').should('have.length', 1);
+  });
+});
+
