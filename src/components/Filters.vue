@@ -5,3 +5,4 @@
 export default {
     name: 'Filters',
 }
+</script>

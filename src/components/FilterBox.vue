@@ -1,6 +1,7 @@
 <template>
     <div data-cy="container-filterbox">
         <span class="filterbox-title">{{ title }}</span>
+        <slot></slot>
     </div>
 </template>
 
