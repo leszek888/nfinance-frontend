@@ -2,6 +2,7 @@
     <div @keydown="handleKeyDown" class="input-with-label-container">
         <span class="label">{{ label }}</span>
         <input
+            :class="[isDisabled && 'pointer-cursor']"
             :data-cy="dataCy"
             ref="input"
             v-model="input_value"
@@ -222,6 +223,9 @@ export default {
         padding: 4pt;
         cursor: pointer;
         font-size: 11pt;
+    }
+    .pointer-cursor {
+        cursor: pointer;
     }
     .selected {
         background-color: #00aa00;
