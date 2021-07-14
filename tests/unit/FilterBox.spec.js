@@ -1,0 +1,9 @@
+import { mount } from '@vue/test-utils'
+import FilterBox from '@/components/FilterBox.vue'
+ 
+describe('FilterBox.vue', () => {
+    it('renders correctly', async() => {
+        const wrapper = mount(FilterBox);
+        expect(wrapper.find('[data-cy="container-filterbox"]').exists()).toBeTruthy();
+    });
+});
