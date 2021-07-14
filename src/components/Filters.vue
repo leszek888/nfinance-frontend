@@ -1,8 +1,9 @@
 <template>
     <div class="filters-container">
-        <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
         <FilterSimple data-cy="filter-date-from" title="Date From" value="" name="date_from" @filter-update="updateFilters" />
         <FilterSimple data-cy="filter-date-to" title="Date To" value="" name="date_to" @filter-update="updateFilters" />
+        <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
+        <FilterSimple data-cy="filter-account" title="Account" value="" name="account" @filter-update="updateFilters" />
     </div>
 </template>
 
