@@ -19,13 +19,11 @@ export default {
     computed: {
         filtersString() {
             let string = '';
-            console.log('filters: ', this.filters);
             this.filters.forEach((filter, index) => {
                 if (index > 0)
                     string += '&';
                 string += `${filter.name}=${filter.value}`;
             });
-            console.log('filtersString: ', string);
             return string;
         },
     },
