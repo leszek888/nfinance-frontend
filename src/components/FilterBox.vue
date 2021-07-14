@@ -12,12 +12,6 @@ export default {
     props: {
         title: String,
     },
-
-    methods: {
-        updateInfo(data) {
-            console.log("updateInfo: ", data);
-        },
-    },
 };
 </script>
 <style>

@@ -56,10 +56,8 @@ export default {
         },
 
         async updateFilters(filters) {
-            console.log('updateFilters called with: ', filters);
             this.filters = filters;
             await this.fetchTransactions();
-            console.log('Transactions now: ', this.transactions);
         },
 
         async sendApiRequest(url, method, data) {

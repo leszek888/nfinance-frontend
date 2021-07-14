@@ -21,7 +21,6 @@ export default {
     },
     methods: {
        updateFilter(data) {
-            console.log('FilterSimple got emit: ', data);
             this.$emit('filter-update', data);
         },
     },

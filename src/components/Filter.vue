@@ -19,7 +19,6 @@ export default {
                 this.emitFilter(e);
         },
         emitFilter(e) {
-            console.log('Filter emitting filter: ', this.name, e.target.value);
             this.$emit('filter-update', { name: this.name, value: e.target.value });
         }
     },
