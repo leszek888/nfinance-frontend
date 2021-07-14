@@ -8,6 +8,8 @@
             @blur="handleBlur"
             @change="handleChange"
             @focus="handleFocus"
+            @click="handleClick"
+            :readonly="isDisabled"
         />
         <div
             :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
@@ -46,6 +48,7 @@ export default {
         autoComplete: Boolean,
         autoCompleteType: String,
         dataCy: String,
+        isDisabled: Boolean,
         label: String,
         suggestionsList: Array,
         type: String,
@@ -54,6 +57,8 @@ export default {
 
     computed: {
         currentSuggestions: function() {
+            if (this.isDisabled)
+                return this.suggestionsList;
             let updatedSuggestions = [];
             if (this.suggestionsList) {
                 if (this.autoCompleteType === 'splitted') {
@@ -104,6 +109,7 @@ export default {
         },
 
         handleFocus() {
+            console.log('focused!');
             this.isFocused = true;
             this.$refs.input.classList.remove('has-error');
         },
@@ -161,7 +167,8 @@ export default {
             }
 
             this.handleChange();
-            this.$refs.input.focus();
+            if (!this.isDisabled)
+                this.$refs.input.focus();
         },
     },
 

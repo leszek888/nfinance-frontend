@@ -1,13 +1,13 @@
 <template>
     <div class="filters-container">
-        <FilterSimple data-cy="filter-date-from" title="Date From" value="" name="date_from" @filter-update="updateFilters" />
-        <FilterSimple data-cy="filter-date-to" title="Date To" value="" name="date_to" @filter-update="updateFilters" />
+        <FilterDate data-cy="filter-date" title="Date" name="date" @filter-update="updateFilters" />
         <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
         <FilterSimple data-cy="filter-account" title="Account" value="" name="account" @filter-update="updateFilters" />
     </div>
 </template>
 
 <script>
+import FilterDate from './FilterDate.vue'
 import FilterSimple from './FilterSimple.vue'
 
 export default {
@@ -30,6 +30,7 @@ export default {
     },
     components: {
         FilterSimple,
+        FilterDate,
     },
     methods: {
         updateFilters(updatedFilter) {
