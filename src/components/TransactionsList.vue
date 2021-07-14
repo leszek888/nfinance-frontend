@@ -1,4 +1,5 @@
 <template>
+    <Filters />
     <div data-cy="container-transactions-list">
         <div v-bind:key="transaction.id" v-for="transaction in transactions">
             <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
@@ -7,12 +8,14 @@
 </template>
 
 <script>
+import Filters from './Filters.vue'
 import Transaction from './Transaction.vue'
 
 export default {
     name: 'TransactionsList',
     components: {
         Transaction,
+        Filters,
     },
 
     props: {

@@ -82,7 +82,7 @@ describe('Transactions List Test', () => {
 describe.only('It filters transactions on the list', () => {
   it('Filters transactions by payee name', () => {
     cy.visit('/?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
-    cy.get('[data-cy="filter-payee-input"]').type('Shop A').type('{enter}');
+    cy.get('[data-cy="filter-payee"]').find('input').type('Shop A').type('{enter}');
     cy.get('[data-cy="container-transaction"]').should('have.length', 1);
   });
 });

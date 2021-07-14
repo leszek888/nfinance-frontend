@@ -8,10 +8,12 @@ describe('FilterSimple.vue', () => {
         const wrapper = mount(FilterSimple, {
             props: {
                 title: 'FilterTitle',
+                value: 'FilterValue',
             },
         });
 
         expect(wrapper.findComponent(FilterBox).exists()).toBeTruthy();
         expect(wrapper.findComponent(FilterBox).findAllComponents(Filter)).toHaveLength(1);
+        expect(wrapper.findComponent(FilterBox).findComponent(Filter).vm.value).toEqual('FilterValue');
     });
 }); 

@@ -1,6 +1,6 @@
 <template>
-    <FilterBox>
-        <Filter name="test" value="val" />
+    <FilterBox :title="title">
+        <Filter :name="name" :value="value" />
     </FilterBox>
 </template>
  
@@ -10,6 +10,11 @@ import Filter from './Filter.vue'
 
 export default {
     name: 'FilterSimple',
+    props: {
+        value: String,
+        title: String,
+        name: String,
+    },
     components: {
         Filter,
         FilterBox,
