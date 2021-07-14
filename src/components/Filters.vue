@@ -1,5 +1,7 @@
 <template>
-    <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
+    <div class="filters-container">
+        <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
+    </div>
 </template>
 
 <script>
@@ -55,3 +57,9 @@ export default {
     emits: ['filters-update'],
 }
 </script>
+
+<style>
+    .filters-container {
+        display: flex;
+    }
+</style>
