@@ -43,5 +43,4 @@ describe('Filter.vue', () => {
         expect(wrapper.emitted('filter-update')[0][0].name).toEqual('test-filter');
         expect(wrapper.emitted('filter-update')[0][0].value).toEqual('blur filter');
     });
-
 });
