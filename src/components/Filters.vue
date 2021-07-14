@@ -1,6 +1,8 @@
 <template>
     <div class="filters-container">
         <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
+        <FilterSimple data-cy="filter-date-from" title="Date From" value="" name="date_from" @filter-update="updateFilters" />
+        <FilterSimple data-cy="filter-date-to" title="Date To" value="" name="date_to" @filter-update="updateFilters" />
     </div>
 </template>
 
@@ -17,11 +19,13 @@ export default {
     computed: {
         filtersString() {
             let string = '';
+            console.log('filters: ', this.filters);
             this.filters.forEach((filter, index) => {
                 if (index > 0)
                     string += '&';
                 string += `${filter.name}=${filter.value}`;
             });
+            console.log('filtersString: ', string);
             return string;
         },
     },
@@ -45,8 +49,10 @@ export default {
 
                 }
             }
-            this.filters.push(updatedFilter);
-            this.emitFilters();
+            if (updatedFilter.value.length > 0) {
+                this.filters.push(updatedFilter);
+                this.emitFilters();
+            }
         },
         emitFilters() {
             this.$emit('filters-update', this.filtersString);
