@@ -1,6 +1,6 @@
 <template>
-    <Filters @filters-update="$emit('filters-update', $event)" />
-    <div data-cy="container-transactions-list">
+    <div data-cy="container-transactions-list" class="container-transactions-list">
+        <Filters @filters-update="$emit('filters-update', $event)" />
         <div v-bind:key="transaction.id" v-for="transaction in transactions">
             <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
         </div>
@@ -32,8 +32,8 @@ export default {
 }
 </script>
 
-<style scoped>
-    div {
+<style>
+    .container-transactions-list {
         max-width: 1000pt;
         min-width: 320pt;
         margin: auto;

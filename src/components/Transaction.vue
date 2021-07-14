@@ -45,8 +45,8 @@ export default {
     .container {
         background-color: #fefefe;
         border-top: solid 1px #ddd;
-        margin: 5px;
-        padding: 1em 2em 1em 2em;
+        margin-top: 1em;
+        padding: 1em 0em 1em 0em;
         position: relative;
         transition: all 0.3s;
         box-shadow: 0px 0px 5px transparent;
