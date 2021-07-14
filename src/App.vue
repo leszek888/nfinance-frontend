@@ -19,7 +19,7 @@
             :balance_id="balance_id"
         />
     </div>
-    <TransactionsList @edit-transaction="editTransaction" :transactions="transactions" />
+    <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
 </template>
 
 <script>
@@ -38,6 +38,7 @@ export default {
             transactions: [],
             editedTransaction: null,
             auth_token: null,
+            filters: '',
         }
     },
 
@@ -52,6 +53,13 @@ export default {
         createNewTransaction() {
             this.editedTransaction = { date: '', payee: '',
                 entries: [ {account: '', amount: ''}, {account: '', amount: ''} ] };
+        },
+
+        async updateFilters(filters) {
+            console.log('updateFilters called with: ', filters);
+            this.filters = filters;
+            await this.fetchTransactions();
+            console.log('Transactions now: ', this.transactions);
         },
 
         async sendApiRequest(url, method, data) {
@@ -92,7 +100,7 @@ export default {
         },
 
         async fetchTransactions() {
-            const response = await this.sendApiRequest('transaction', 'GET');
+            const response = await this.sendApiRequest('transaction?'+this.filters, 'GET');
             this.transactions = response['transactions'];
         },
 

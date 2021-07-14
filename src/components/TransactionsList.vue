@@ -1,5 +1,5 @@
 <template>
-    <Filters />
+    <Filters @filters-update="$emit('filters-update', $event)" />
     <div data-cy="container-transactions-list">
         <div v-bind:key="transaction.id" v-for="transaction in transactions">
             <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
@@ -28,7 +28,7 @@ export default {
         },
     },
 
-    emits: [ 'edit-transaction' ],
+    emits: [ 'edit-transaction', 'filters-update' ],
 }
 </script>
 

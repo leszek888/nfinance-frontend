@@ -1,6 +1,6 @@
 <template>
     <FilterBox :title="title">
-        <Filter :name="name" :value="value" @filter-update="$emit('filter-update', $event)"/>
+        <Filter :name="name" :value="value" @filter-update="updateFilter"/>
     </FilterBox>
 </template>
  
@@ -20,17 +20,10 @@ export default {
         FilterBox,
     },
     methods: {
-        what(args) {
-            console.log(args);
-        },
-        sec(args) {
-            console.log(args);
-        },
-        /*
-        updateFilter(data) {
+       updateFilter(data) {
+            console.log('FilterSimple got emit: ', data);
             this.$emit('filter-update', data);
         },
-        */
     },
     emits: [ 'filter-update' ],
 };

@@ -1,5 +1,5 @@
 <template>
-    <div data-cy="container-filterbox" @filter-update="updateInfo">
+    <div data-cy="container-filterbox">
         <span class="filterbox-title">{{ title }}</span>
         <slot></slot>
     </div>
