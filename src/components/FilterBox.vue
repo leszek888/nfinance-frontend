@@ -1,5 +1,5 @@
 <template>
-    <div data-cy="container-filterbox">
+    <div data-cy="container-filterbox" @filter-update="updateInfo">
         <span class="filterbox-title">{{ title }}</span>
         <slot></slot>
     </div>
@@ -11,6 +11,12 @@ export default {
 
     props: {
         title: String,
+    },
+
+    methods: {
+        updateInfo(data) {
+            console.log("updateInfo: ", data);
+        },
     },
 };
 </script>
