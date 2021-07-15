@@ -33,17 +33,22 @@ export default {
         FilterDate,
     },
     methods: {
-        updateFilters(updatedFilter) {
+        updateFilters(filters) {
+            if (Array.isArray(filters))
+                filters.forEach(filter => this.addFilter(filter));
+            else
+                this.addFilter(filters);
+            this.emitFilters();
+        },
+        addFilter(updatedFilter) {
             for (let i=0; i!==this.filters.length; i++) {
                 if (this.filters[i].name === updatedFilter.name) {
                     if (updatedFilter.value.length === 0) {
                         this.filters.splice(i, 1);
-                        this.emitFilters();
                         return;
                     }
                     else {
                         this.filters[i].value = updatedFilter.value;
-                        this.emitFilters();
                         return;
                     }
 
@@ -51,8 +56,8 @@ export default {
             }
             if (updatedFilter.value.length > 0) {
                 this.filters.push(updatedFilter);
-                this.emitFilters();
             }
+
         },
         emitFilters() {
             this.$emit('filters-update', this.filtersString);

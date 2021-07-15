@@ -1,23 +1,16 @@
 <template>
     <FilterBox :title="title">
-        <InputWithLabel
-            :auto-complete="true"
-            data-cy="filter-date-input"
-            label=""
-            :is-disabled="true"
-            :suggestions-list="periodes"
-            :value="currentPeriod"
-            @change="updatePeriod"
-        />
-        <Filter name="date_from" :value="value_from" @filter-update="updateFilter"/>
-        <Filter name="date_to" :value="value_to" @filter-update="updateFilter"/>
+        <select ref="periodselect" @change="updatePeriod">
+            <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
+        </select>
+        <Filter ref="from" name="date_from" :value="value_from" @filter-update="updateFilter"/>
+        <Filter ref="to" name="date_to" :value="value_to" @filter-update="updateFilter"/>
     </FilterBox>
 </template>
  
 <script>
 import FilterBox from './FilterBox.vue'
 import Filter from './Filter.vue'
-import InputWithLabel from './InputWithLabel.vue'
 
 export default {
     name: 'FilterDate',
@@ -74,7 +67,6 @@ export default {
             else
                 date_to = '';
             return date_to;
-
         }
     },
     props: {
@@ -85,18 +77,29 @@ export default {
     components: {
         Filter,
         FilterBox,
-        InputWithLabel,
     },
     methods: {
        updateFilter(data) {
-            this.$emit('filter-update', data);
+           this.$emit('filter-update', data);
         },
-        updatePeriod(period) {
-            console.log('updating period to: ', period);
-            this.currentPeriod = period;
+        updatePeriod() {
+            this.currentPeriod = this.$refs.periodselect.value;
+            this.emitAll();
+        },
+        emitAll() {
+            this.$emit('filter-update', [{name: 'date_from', value: this.value_from},
+                                          {name: 'date_to', value: this.value_to}]);
         },
     },
-    emits: [ 'filter-update' ],
+    emits: [ 'filter-update', 'filters-update' ],
+    mounted() {
+        this.$nextTick(function() {this.updatePeriod();});
+    },
 };
 </script>
 
+<style>
+    select {
+        width: 110pt;
+    }
+</style>

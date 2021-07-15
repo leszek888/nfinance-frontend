@@ -1,6 +1,6 @@
 <template>
     <div data-cy="container-filter" :name="name">
-        <input @keydown="handleKeyDown" @blur="emitFilter" :value="value" />
+        <input ref="filterinput" @keydown="handleKeyDown" @blur="emitFilter" :value="value" />
     </div>
 </template>
 
@@ -16,13 +16,17 @@ export default {
     methods: {
         handleKeyDown(e) {
             if (e.keyCode === 13)
-                this.emitFilter(e);
+                this.emitFilter();
         },
-        emitFilter(e) {
-            this.$emit('filter-update', { name: this.name, value: e.target.value });
-        }
+        emitFilter() {
+            this.$emit('filter-update', { name: this.name, value: this.$refs.filterinput.value });
+        },
     },
 
     emits: [ 'filter-update' ],
+    updated() {
+        this.emitFilter();
+    },
 }
 </script>
+

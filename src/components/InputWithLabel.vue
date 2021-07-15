@@ -9,7 +9,6 @@
             @blur="handleBlur"
             @change="handleChange"
             @focus="handleFocus"
-            @click="handleClick"
             :readonly="isDisabled"
         />
         <div
@@ -110,7 +109,6 @@ export default {
         },
 
         handleFocus() {
-            console.log('focused!');
             this.isFocused = true;
             this.$refs.input.classList.remove('has-error');
         },

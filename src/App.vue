@@ -1,25 +1,27 @@
 <template>
-    <div v-if="!editedTransaction">
-        <button data-cy="btn-new-transaction"
-                class="btn-new-transaction"
-                @click="createNewTransaction">
-            New Transaction
-        </button>
+    <div v-if="auth_token">
+        <div v-if="!editedTransaction">
+            <button data-cy="btn-new-transaction"
+                    class="btn-new-transaction"
+                    @click="createNewTransaction">
+                New Transaction
+            </button>
+        </div>
+        <div v-if="editedTransaction">
+            <EditedTransaction
+                @close-transaction="closeEditedTransaction"
+                @save-transaction="saveEditedTransaction"
+                @delete-transaction="deleteEditedTransaction"
+                :key="editedTransaction.id"
+                :id="editedTransaction.id"
+                :date="editedTransaction.date"
+                :payee="editedTransaction.payee"
+                :entries="editedTransaction.entries"
+                :balance_id="balance_id"
+            />
+        </div>
+        <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
     </div>
-    <div v-if="editedTransaction">
-        <EditedTransaction
-            @close-transaction="closeEditedTransaction"
-            @save-transaction="saveEditedTransaction"
-            @delete-transaction="deleteEditedTransaction"
-            :key="editedTransaction.id"
-            :id="editedTransaction.id"
-            :date="editedTransaction.date"
-            :payee="editedTransaction.payee"
-            :entries="editedTransaction.entries"
-            :balance_id="balance_id"
-        />
-    </div>
-    <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
 </template>
 
 <script>
@@ -61,7 +63,10 @@ export default {
         },
 
         async sendApiRequest(url, method, data) {
-            console.log('request data: ', data);
+            console.log('REQUEST TOKEN: ', this.auth_token);
+            console.log('url: ', url);
+            console.log('method: ', method);
+            console.log('##############################');
             let headers = new Headers();
             headers.append('x-access-token', this.auth_token);
             headers.append('Content-Type', 'application/json');
@@ -150,5 +155,12 @@ export default {
 
 .btn-new-transaction:hover {
     filter: brightness(0.9);
+}
+
+select {
+    appearance: none;
+    border: solid 1px #ddd;
+    font-size: 11pt;
+    padding: 4pt;
 }
 </style>
