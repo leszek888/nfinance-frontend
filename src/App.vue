@@ -63,6 +63,7 @@ export default {
         },
 
         async sendApiRequest(url, method, data) {
+            console.log('ApiRequest: ', url, ', ', method, ', ', data);
             let headers = new Headers();
             headers.append('x-access-token', this.auth_token);
             headers.append('Content-Type', 'application/json');
@@ -101,6 +102,7 @@ export default {
         async fetchTransactions() {
             const response = await this.sendApiRequest('transaction?'+this.filters, 'GET');
             this.transactions = response['transactions'];
+            console.log(this.transactions);
         },
 
         async getTokenFromBalanceId(id) {

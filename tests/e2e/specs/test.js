@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { formatNumber } from '../../../src/helpers';
  
-describe('Transactions List Test', () => {
+describe.only('Transactions List Test', () => {
   const fillOutWithAutocomplete = (selectionType, parent) => {
     if (selectionType === 'enter') {
       parent.find('[data-cy="input-account"]').type('{enter}');
@@ -13,6 +13,7 @@ describe('Transactions List Test', () => {
   }
 
   it('Creates transactions', () => {
+    cy.clock(new Date(2021, 0, 1, 12, 0, 0), ['Date']);
     cy.visit('/');
     const debitAccountName = nanoid();
     const payeeName = nanoid();
@@ -67,6 +68,7 @@ describe('Transactions List Test', () => {
         cy.get('@inputAccount').focus();
         fillOutWithAutocomplete('click', cy.wrap(entry));
         cy.get('@inputAmount').type((-100).toString());
+        cy.get('@inputAmount').blur();
       }
     });
 
@@ -79,11 +81,13 @@ describe('Transactions List Test', () => {
 
 })
 
-describe.only('It filters transactions on the list', () => {
-  it('Filters transactions by payee name', () => {
+describe('It filters transactions on the list', () => {
+  it('Filters transactions by date, account and payee name', () => {
     cy.visit('/?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+
     cy.get('[data-cy="filter-payee"]').find('input').type('Shop A').type('{enter}');
     cy.get('[data-cy="container-transaction"]').should('have.length', 1);
   });
+
 });
 
