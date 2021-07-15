@@ -16,8 +16,10 @@ export default {
 </script>
 <style>
     .container-filterbox {
-        border: solid 1px #ddd;
-        height: 120pt;
+        background-color: #fafafa;
+        border: none;
+        box-shadow: 0px 0px 6px #ccc;
+        height: 105pt;
         margin: 0.5em;
         text-align: center;
         width: 120pt;

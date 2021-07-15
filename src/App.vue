@@ -155,9 +155,12 @@ export default {
 }
 
 select {
-    appearance: none;
-    border: solid 1px #ddd;
+    border: solid 1px #aaa;
     font-size: 11pt;
     padding: 4pt;
+}
+
+select::after {
+    content: "A";
 }
 </style>

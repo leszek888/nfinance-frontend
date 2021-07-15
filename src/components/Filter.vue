@@ -1,5 +1,5 @@
 <template>
-    <div data-cy="container-filter" :name="name">
+    <div data-cy="container-filter" :name="name" class="container-filter">
         <input ref="filterinput" @keydown="handleKeyDown" @blur="emitFilter" :value="value" />
     </div>
 </template>
@@ -30,3 +30,8 @@ export default {
 }
 </script>
 
+<style>
+    .container-filter {
+        margin: 0.25em;
+    }
+</style>
