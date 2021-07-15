@@ -117,7 +117,6 @@ export default {
         this.balance_id = params.get('balance_id');
         if (this.balance_id) {
             this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
-            this.fetchTransactions();
         }
         else {
             const response = await this.sendApiRequest('balance/new', 'GET');
