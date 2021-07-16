@@ -66,7 +66,4 @@ select {
     padding: 4pt;
 }
 
-select::after {
-    content: "A";
-}
 </style>

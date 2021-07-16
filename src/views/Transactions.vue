@@ -57,13 +57,13 @@ export default {
                 entries: [ {account: '', amount: ''}, {account: '', amount: ''} ] };
         },
 
+        closeEditedTransaction() {
+            this.editedTransaction = null;
+        },
+
         async updateFilters(filters) {
             this.$store.commit('setFilters', filters);
             await this.$store.dispatch('fetchTransactions');
-        },
-
-        closeEditedTransaction() {
-            this.editedTransaction = null;
         },
 
         async saveEditedTransaction(transaction) {
@@ -81,4 +81,3 @@ export default {
 }
 
 </script>
-
