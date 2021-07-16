@@ -42,22 +42,4 @@ export default {
     color: #555;
 }
 
-.btn-new-transaction {
-    background-color: #4a9e56;
-    border: 0px;
-    border-radius: 25pt;
-    box-shadow: 0px 0px 8px #aaa;
-    bottom: 2em;
-    color: #fefefe;
-    font-size: 12pt;
-    padding: 1.5em;
-    position: fixed;
-    right: 2em;
-    z-index: 99;
-}
-
-.btn-new-transaction:hover {
-    filter: brightness(0.9);
-}
-
 </style>
