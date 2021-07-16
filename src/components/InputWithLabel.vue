@@ -10,22 +10,6 @@
                 @focus="handleFocus"
                 name="input"
             />
-        <div
-            :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
-            data-cy="container-autocomplete"
-            v-if="autoComplete && currentSuggestions.length > 0"
-        >
-            <div v-for="(suggestion, index) in currentSuggestions" :key="index">
-                <div
-                    :class="[index === currentSelection && 'selected', 'suggestion']"
-                    data-cy="ac-suggestion"
-                    @click="selectSuggestion(index)"
-                    @mouseover="currentSelection = index"
-                >
-                    {{ suggestion }}
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -37,50 +21,15 @@ export default {
 
     data() {
         return {
-            currentSelection: 0,
             input_value: this.formatValue(),
-            isFocused: false,
         }
     },
 
     props: {
-        autoComplete: Boolean,
-        autoCompleteType: String,
         dataCy: String,
         label: String,
-        suggestionsList: Array,
         type: String,
         value: String,
-    },
-
-    computed: {
-        currentSuggestions: function() {
-            let updatedSuggestions = [];
-            if (this.suggestionsList) {
-                if (this.autoCompleteType === 'splitted') {
-                    const depth = this.input_value.split(':').length;
-
-                    this.suggestionsList.forEach(suggestion => {
-                        if (suggestion.toLowerCase().startsWith(this.input_value.toLowerCase())) {
-                            let splittedSuggestion = suggestion.split(':')[depth-1];
-                            if (suggestion.split(':').length > depth)
-                                splittedSuggestion += ':';
-                            if (!updatedSuggestions.includes(splittedSuggestion) &&
-                                this.input_value.split(':')[depth-1] !== splittedSuggestion) {
-                                updatedSuggestions.push(splittedSuggestion);
-                            }
-                        }
-                    });
-                }
-                else {
-                    updatedSuggestions = this.suggestionsList.filter(suggestion =>
-                        suggestion.toLowerCase().startsWith(this.input_value.toLowerCase()) &&
-                        suggestion.toLowerCase() !== this.input_value.toLowerCase()
-                    );
-                }
-            }
-            return updatedSuggestions;
-        },
     },
 
     methods: {
@@ -99,13 +48,11 @@ export default {
         },
 
         handleBlur() {
-            this.isFocused = false;
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
         },
 
         handleFocus() {
-            this.isFocused = true;
             this.$refs.input.classList.remove('has-error');
         },
 
@@ -117,51 +64,7 @@ export default {
 
             value = value.trim();
 
-            if (this.autoCompleteType === 'splitted')
-                value = value.replace(/:$/, '');
-
             this.$emit('change', value);
-        },
-
-        handleKeyDown(event) {
-            switch (event.keyCode) {
-                case 40:
-                    this.currentSelection++;
-                    break;
-                case 38:
-                    this.currentSelection--;
-                    break;
-                case 13:
-                    this.selectSuggestion(this.currentSelection);
-                    return;
-                default:
-                    return;
-            }
-
-            if (this.currentSelection < 0)
-                this.currentSelection = this.currentSuggestions.length-1;
-            else if (this.currentSelection > this.currentSuggestions.length - 1)
-                this.currentSelection = 0;
-        },
-
-        selectSuggestion(index) {
-            if (this.autoCompleteType === 'splitted' && this.currentSuggestions.length > 0) {
-                let splittedParts = this.input_value.split(':');
-                let updatedValue = "";
-                splittedParts.pop();
-
-                splittedParts.forEach(part => {
-                    updatedValue += part + ":";
-                });
-
-                updatedValue += this.currentSuggestions[index];
-                this.input_value = updatedValue;
-            }
-            else if (this.currentSuggestions.length > 0) {
-                this.input_value = this.currentSuggestions[index];
-            }
-
-            this.handleChange();
         },
     },
 

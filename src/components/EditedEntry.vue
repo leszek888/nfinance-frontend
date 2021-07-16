@@ -1,7 +1,6 @@
 <template>
     <div data-cy="container-edited-entry" class="edited-entry-container">
-        <InputWithLabel
-            :auto-complete="true"
+        <InputWithAutoComplete
             auto-complete-type="splitted"
             data-cy="input-account"
             label="Account"
@@ -25,12 +24,14 @@
 </template>
 
 <script>
+import InputWithAutoComplete from './InputWithAutocomplete.vue'
 import InputWithLabel from './InputWithLabel.vue'
 
 export default {
     name: 'EditedEntry',
 
     components: {
+        InputWithAutoComplete,
         InputWithLabel,
     },
 
