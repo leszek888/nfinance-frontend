@@ -59,28 +59,7 @@ export default {
 
         async updateFilters(filters) {
             this.$store.commit('setFilters', filters);
-            await this.fetchTransactions();
-        },
-
-        async sendApiRequest(url, method, data) {
-            console.log('ApiRequest: ', url, ', ', method, ', ', data);
-            let headers = new Headers();
-            headers.append('x-access-token', this.authToken);
-            headers.append('Content-Type', 'application/json');
-
-            let body = null;
-            if (method !== 'GET')
-                body = JSON.stringify(data);
-
-            const response = await fetch('http://127.0.0.1:5000/api/'+url,
-                {method: method, mode: 'cors', headers: headers, body: body})
-
-            const json = await response.json();
-
-            if ('message' in json || 'error' in json) {
-                console.log(json);
-            }
-            return json;
+            await this.$store.dispatch('fetchTransactions');
         },
 
         async closeEditedTransaction() {
@@ -89,7 +68,7 @@ export default {
 
         async saveEditedTransaction(transaction) {
             this.closeEditedTransaction();
-            await this.sendApiRequest('transaction', 'POST', transaction);
+            await this.$store.dispatch('saveTransaction', transaction);
             await this.fetchTransactions();
         },
 

@@ -49,10 +49,11 @@ const store = createStore({
             commit('setAuthToken', data['token']);
         },
         async createNewBalance({ commit, dispatch }) {
-            console.log('createNewBalance');
             const response = await dispatch('sendApiRequest', {url: 'balance/new', method: 'GET'});
-            console.log('balanceId = ', response['balance_id']);
             commit('setBalanceId', response['balance_id']);
+        },
+        async saveTransaction({ dispatch }, transaction) {
+            await dispatch('sendApiRequest', {url: 'transaction', method: 'POST', data: transaction});
         },
     },
 
