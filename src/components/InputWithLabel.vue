@@ -1,16 +1,15 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
-        <span class="label">{{ label }}</span>
-        <input
-            :class="[isDisabled && 'pointer-cursor']"
-            :data-cy="dataCy"
-            ref="input"
-            v-model="input_value"
-            @blur="handleBlur"
-            @change="handleChange"
-            @focus="handleFocus"
-            :readonly="isDisabled"
-        />
+        <label for="input" class="label">{{ label }}</label>
+            <input
+                :data-cy="dataCy"
+                ref="input"
+                v-model="input_value"
+                @blur="handleBlur"
+                @change="handleChange"
+                @focus="handleFocus"
+                name="input"
+            />
         <div
             :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
             data-cy="container-autocomplete"
@@ -48,7 +47,6 @@ export default {
         autoComplete: Boolean,
         autoCompleteType: String,
         dataCy: String,
-        isDisabled: Boolean,
         label: String,
         suggestionsList: Array,
         type: String,
@@ -57,8 +55,6 @@ export default {
 
     computed: {
         currentSuggestions: function() {
-            if (this.isDisabled)
-                return this.suggestionsList;
             let updatedSuggestions = [];
             if (this.suggestionsList) {
                 if (this.autoCompleteType === 'splitted') {
@@ -166,8 +162,6 @@ export default {
             }
 
             this.handleChange();
-            if (!this.isDisabled)
-                this.$refs.input.focus();
         },
     },
 
