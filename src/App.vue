@@ -39,14 +39,6 @@ export default {
             }
             return json;
         },
-
-        async getTokenFromBalanceId(id) {
-            let headers = new Headers();
-            headers.append('Authorization', 'Basic ' + btoa(id + ':pw'))
-            const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
-            const data = await response.json();
-            return data['token'];
-        },
     },
 
     async created() {
@@ -54,13 +46,12 @@ export default {
         this.balance_id = params.get('balance_id');
         if (this.balance_id) {
             this.$store.commit('setBalanceId', this.balance_id);
-            await this.$store.dispatch('getToken');
         }
         else {
-            const response = await this.sendApiRequest('balance/new', 'GET');
-            this.balance_id = response['balance_id'];
-            window.location.href = "/?balance_id="+this.balance_id;
+            await this.$store.dispatch('createNewBalance');
         }
+        await this.$store.dispatch('getToken');
+        this.$router.push({ path: '/', query: { balance_id: this.$store.getters.getBalanceId }});
     },
 }
 </script>

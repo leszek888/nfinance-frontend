@@ -48,11 +48,18 @@ const store = createStore({
             const data = await response.json();
             commit('setAuthToken', data['token']);
         },
+        async createNewBalance({ commit, dispatch }) {
+            console.log('createNewBalance');
+            const response = await dispatch('sendApiRequest', {url: 'balance/new', method: 'GET'});
+            console.log('balanceId = ', response['balance_id']);
+            commit('setBalanceId', response['balance_id']);
+        },
     },
 
     getters: {
         allTransactions: (state) => state.transactions,
         getAuthToken: (state) => state.authToken,
+        getBalanceId: (state) => state.balanceId,
         getFilters: (state) => state.filters,
     },
 });
