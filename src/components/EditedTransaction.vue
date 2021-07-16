@@ -62,7 +62,6 @@ export default {
     },
 
     props: {
-        balance_id: String,
         date: String,
         entries: Array,
         id: Number,

@@ -1,4 +1,5 @@
 <template>
+    <NavBar />
     <div v-if="auth_token">
         <router-view>
         </router-view>
@@ -6,15 +7,17 @@
 </template>
 
 <script>
+import NavBar from '@/components/NavBar.vue'
+
 export default {
     name: 'App',
 
-    data() {
-        return {
-            auth_token: null,
-        }
+    components: {
+        NavBar,
     },
-
+    computed: {
+        auth_token() { return this.$store.getters.getAuthToken; },
+    },
     methods: {
         async sendApiRequest(url, method, data) {
             console.log('ApiRequest: ', url, ', ', method, ', ', data);
@@ -50,7 +53,8 @@ export default {
         const params = new URLSearchParams(window.location.search.substring(1));
         this.balance_id = params.get('balance_id');
         if (this.balance_id) {
-            this.auth_token = await this.getTokenFromBalanceId(this.balance_id);
+            this.$store.commit('setBalanceId', this.balance_id);
+            await this.$store.dispatch('getToken');
         }
         else {
             const response = await this.sendApiRequest('balance/new', 'GET');
