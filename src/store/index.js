@@ -55,6 +55,9 @@ const store = createStore({
         async saveTransaction({ dispatch }, transaction) {
             await dispatch('sendApiRequest', {url: 'transaction', method: 'POST', data: transaction});
         },
+        async deleteTransaction({ dispatch }, transaction) {
+            await dispatch('sendApiRequest', {url: 'transaction', method: 'DELETE', data: transaction});
+        },
     },
 
     getters: {

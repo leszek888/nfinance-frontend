@@ -62,29 +62,20 @@ export default {
             await this.$store.dispatch('fetchTransactions');
         },
 
-        async closeEditedTransaction() {
+        closeEditedTransaction() {
             this.editedTransaction = null;
         },
 
         async saveEditedTransaction(transaction) {
             this.closeEditedTransaction();
             await this.$store.dispatch('saveTransaction', transaction);
-            await this.fetchTransactions();
+            await this.$store.dispatch('fetchTransactions');
         },
 
         async deleteEditedTransaction(transaction) {
             this.closeEditedTransaction();
-            await this.sendApiRequest('transaction', 'DELETE', transaction);
-            await this.fetchTransactions();
-        },
-
-        async fetchTransactions() {
-            this.$store.dispatch('fetchTransactions');
-            /*
-            const response = await this.sendApiRequest('transaction?'+this.filters, 'GET');
-            this.transactions = response['transactions'];
-            console.log(this.transactions);
-            */
+            await this.$store.dispatch('deleteTransaction', transaction);
+            await this.$store.dispatch('fetchTransactions');
         },
     },
 }
