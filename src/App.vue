@@ -42,8 +42,7 @@ export default {
     },
 
     async created() {
-        const params = new URLSearchParams(window.location.search.substring(1));
-        this.balance_id = params.get('balance_id');
+        this.balance_id = this.$route.query.balance_id;
         if (this.balance_id) {
             this.$store.commit('setBalanceId', this.balance_id);
         }
