@@ -82,6 +82,7 @@ export default {
 
 </script>
 <style>
+
     .btn-new-transaction {
         background-color: #4a9e56;
         border: 0px;

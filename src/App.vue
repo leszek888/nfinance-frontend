@@ -15,9 +15,11 @@ export default {
     components: {
         NavBar,
     },
+
     computed: {
         auth_token() { return this.$store.getters.getAuthToken; },
     },
+
     async mounted() {
         const params = new URLSearchParams(window.location.search.substring(1));
         this.balance_id = params.get('balance_id');
@@ -36,6 +38,7 @@ export default {
 </script>
 
 <style>
+
 #app {
     font-family: sans-serif;
     position: relative;
