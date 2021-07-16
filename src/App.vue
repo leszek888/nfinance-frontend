@@ -18,31 +18,10 @@ export default {
     computed: {
         auth_token() { return this.$store.getters.getAuthToken; },
     },
-    methods: {
-        async sendApiRequest(url, method, data) {
-            console.log('ApiRequest: ', url, ', ', method, ', ', data);
-            let headers = new Headers();
-            headers.append('x-access-token', this.auth_token);
-            headers.append('Content-Type', 'application/json');
+    async mounted() {
+        const params = new URLSearchParams(window.location.search.substring(1));
+        this.balance_id = params.get('balance_id');
 
-            let body = null;
-            if (method !== 'GET')
-                body = JSON.stringify(data);
-
-            const response = await fetch('http://127.0.0.1:5000/api/'+url,
-                {method: method, mode: 'cors', headers: headers, body: body})
-
-            const json = await response.json();
-
-            if ('message' in json || 'error' in json) {
-                console.log(json);
-            }
-            return json;
-        },
-    },
-
-    async created() {
-        this.balance_id = this.$route.query.balance_id;
         if (this.balance_id) {
             this.$store.commit('setBalanceId', this.balance_id);
         }
