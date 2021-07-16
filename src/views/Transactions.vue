@@ -34,14 +34,14 @@ export default {
 
     data() {
         return {
-            transactions: [],
             editedTransaction: null,
-            filters: '',
         }
     },
 
     computed: {
+        transactions() { return this.$store.getters.allTransactions; },
         authToken() { return this.$store.getters.getAuthToken; },
+        filters() { return this.$store.getter.getFilters; },
     },
 
     methods: {
@@ -58,7 +58,7 @@ export default {
         },
 
         async updateFilters(filters) {
-            this.filters = filters;
+            this.$store.commit('setFilters', filters);
             await this.fetchTransactions();
         },
 
@@ -100,11 +100,13 @@ export default {
         },
 
         async fetchTransactions() {
+            this.$store.dispatch('fetchTransactions');
+            /*
             const response = await this.sendApiRequest('transaction?'+this.filters, 'GET');
             this.transactions = response['transactions'];
             console.log(this.transactions);
+            */
         },
-
     },
 }
 

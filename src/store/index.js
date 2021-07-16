@@ -4,6 +4,7 @@ const store = createStore({
     state: {
         authToken: '',
         balanceId: '',
+        filters: '',
         name: 'Vue',
         transactions: [],
     },
@@ -12,18 +13,19 @@ const store = createStore({
         setTransactions: (state, transactions) => (state.transactions = transactions),
         setAuthToken: (state, token) => (state.authToken = token),
         setBalanceId: (state, balanceId) => (state.balanceId = balanceId),
+        setFilters: (state, filters) => (state.filters = filters),
     },
 
-    helpers: {
-        async sendApiRequest(url, method, data) {
-            console.log('ApiRequest: ', url, ', ', method, ', ', data);
+    actions: {
+        async sendApiRequest({getters}, {url, method, data = null}) {
             let headers = new Headers();
-            headers.append('x-access-token', this.auth_token);
+            headers.append('x-access-token', getters.getAuthToken);
             headers.append('Content-Type', 'application/json');
 
             let body = null;
-            if (method !== 'GET')
+            if (method !== 'GET') {
                 body = JSON.stringify(data);
+            }
 
             const response = await fetch('http://127.0.0.1:5000/api/'+url,
                 {method: method, mode: 'cors', headers: headers, body: body})
@@ -35,23 +37,15 @@ const store = createStore({
             }
             return json;
         },
-
-
-    },
-
-    actions: {
-        async fetchTransactions({ commit }) {
-            console.log('fetching transactions');
-            const response = await this.helpers.sendApiRequest('transaction?'+this.filters, 'GET');
+        async fetchTransactions({ commit, dispatch, getters }) {
+            const response = await dispatch('sendApiRequest', {url: 'transaction?'+getters.getFilters, method: 'GET'});
             commit('setTransactions', response['transactions']);
         },
         async getToken({ commit }) {
-            console.log('getting token');
             let headers = new Headers();
             headers.append('Authorization', 'Basic ' + btoa(this.state.balanceId + ':pw'))
             const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
             const data = await response.json();
-            console.log('setting token to: ', data['token']);
             commit('setAuthToken', data['token']);
         },
     },
@@ -59,6 +53,7 @@ const store = createStore({
     getters: {
         allTransactions: (state) => state.transactions,
         getAuthToken: (state) => state.authToken,
+        getFilters: (state) => state.filters,
     },
 });
 
