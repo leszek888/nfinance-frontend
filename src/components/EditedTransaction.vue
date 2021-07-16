@@ -258,7 +258,7 @@ export default {
 <style scoped>
     @keyframes display-animation {
         from { top: -100pt; opacity: 0.5; }
-        to { top: 30pt; opacity: 1; }
+        to { top: 5em; opacity: 1; }
     }
 
     .edited-transaction-container {
@@ -278,7 +278,7 @@ export default {
         padding-bottom: 4em;
         position: fixed;
         right: 0;
-        top: 30pt;
+        top: 5em;
         z-index: 99;
     }
 
