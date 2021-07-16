@@ -98,8 +98,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
     select {
         width: 110pt;
+        border: solid 1px #aaa;
+        font-size: 11pt;
+        padding: 4pt;
     }
 </style>
