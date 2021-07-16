@@ -1,5 +1,5 @@
 <template>
-    <NavBar />
+    <NavBar class="navbar-main" />
     <div v-if="auth_token">
         <router-view>
         </router-view>
@@ -39,10 +39,35 @@ export default {
 
 <style>
 
+body {
+    padding-top: 3.5em;
+}
+
 #app {
     font-family: sans-serif;
     position: relative;
     color: #555;
+}
+
+.navbar-main {
+    background-color: #555;
+    box-shadow: 0px 0px 5px #444;
+    left: 0;
+    padding: 1em;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 99;
+}
+
+.navbar-main a {
+    color: #eee;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.navbar-main a:hover {
+    color: #0ff;
 }
 
 </style>
