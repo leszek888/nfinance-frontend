@@ -1,67 +1,21 @@
 <template>
     <div v-if="auth_token">
-        <div v-if="!editedTransaction">
-            <button data-cy="btn-new-transaction"
-                    class="btn-new-transaction"
-                    @click="createNewTransaction">
-                New Transaction
-            </button>
-        </div>
-        <div v-if="editedTransaction">
-            <EditedTransaction
-                @close-transaction="closeEditedTransaction"
-                @save-transaction="saveEditedTransaction"
-                @delete-transaction="deleteEditedTransaction"
-                :key="editedTransaction.id"
-                :id="editedTransaction.id"
-                :date="editedTransaction.date"
-                :payee="editedTransaction.payee"
-                :entries="editedTransaction.entries"
-                :balance_id="balance_id"
-            />
-        </div>
-        <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
+        <router-view>
+        </router-view>
     </div>
 </template>
 
 <script>
-import TransactionsList from './components/TransactionsList.vue'
-import EditedTransaction from './components/EditedTransaction.vue'
-
 export default {
     name: 'App',
-    components: {
-        TransactionsList,
-        EditedTransaction,
-    },
 
     data() {
         return {
-            transactions: [],
-            editedTransaction: null,
             auth_token: null,
-            filters: '',
         }
     },
 
     methods: {
-        editTransaction(id) {
-            if (!this.editedTransaction) {
-                const index = (this.transactions.findIndex(transaction => transaction.id === id));
-                this.editedTransaction = this.transactions[index];
-            }
-        },
-
-        createNewTransaction() {
-            this.editedTransaction = { date: '', payee: '',
-                entries: [ {account: '', amount: ''}, {account: '', amount: ''} ] };
-        },
-
-        async updateFilters(filters) {
-            this.filters = filters;
-            await this.fetchTransactions();
-        },
-
         async sendApiRequest(url, method, data) {
             console.log('ApiRequest: ', url, ', ', method, ', ', data);
             let headers = new Headers();
@@ -81,28 +35,6 @@ export default {
                 console.log(json);
             }
             return json;
-        },
-
-        async closeEditedTransaction() {
-            this.editedTransaction = null;
-        },
-
-        async saveEditedTransaction(transaction) {
-            this.closeEditedTransaction();
-            await this.sendApiRequest('transaction', 'POST', transaction);
-            await this.fetchTransactions();
-        },
-
-        async deleteEditedTransaction(transaction) {
-            this.closeEditedTransaction();
-            await this.sendApiRequest('transaction', 'DELETE', transaction);
-            await this.fetchTransactions();
-        },
-
-        async fetchTransactions() {
-            const response = await this.sendApiRequest('transaction?'+this.filters, 'GET');
-            this.transactions = response['transactions'];
-            console.log(this.transactions);
         },
 
         async getTokenFromBalanceId(id) {
