@@ -71,8 +71,7 @@ describe('EditedTransaction.vue', () => {
     });
 
     it('should pass array with five last days to input date upon creation', () => {
-        expect(wrapper.findComponent({name: 'InputWithLabel'}).props().autoComplete).toBeTruthy();
-        expect(wrapper.findComponent({name: 'InputWithLabel'}).props().suggestionsList.length).toBeGreaterThan(0);
+        expect(wrapper.findComponent({name: 'InputWithAutocomplete'}).props().suggestionsList.length).toBeGreaterThan(0);
     });
 
     it('should not allow to save when there are empty inputs', async () => {
