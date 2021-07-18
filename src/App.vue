@@ -1,8 +1,10 @@
 <template>
     <NavBar class="navbar-main" />
     <div v-if="auth_token">
-        <router-view>
-        </router-view>
+        <div class="main-content">
+            <router-view>
+            </router-view>
+        </div>
     </div>
 </template>
 
@@ -68,6 +70,12 @@ body {
 
 .navbar-main a:hover {
     color: #0ff;
+}
+
+.main-content {
+    max-width: 1100px;
+    min-width: 320px;
+    margin: auto;
 }
 
 </style>

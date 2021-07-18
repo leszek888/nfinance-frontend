@@ -34,8 +34,6 @@ export default {
 
 <style>
     .container-transactions-list {
-        max-width: 1000pt;
-        min-width: 320pt;
-        margin: auto;
+        width: 100%;
     }
 </style>
