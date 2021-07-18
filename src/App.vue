@@ -1,6 +1,6 @@
 <template>
     <transition name="slide">
-        <div v-if="loggedIn">
+        <div v-if="$store.getters.isLoggedIn">
             <NavBar class="navbar-main" />
         </div>
     </transition>
@@ -21,10 +21,6 @@ export default {
 
     components: {
         NavBar,
-    },
-
-    computed: {
-        loggedIn() { return this.$store.getters.getAuthToken && this.$store.getters.getAuthToken.length > 0 },
     },
 
     mounted() {
