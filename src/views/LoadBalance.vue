@@ -42,7 +42,7 @@ export default {
     },
 
     created() {
-        if (this.$store.getters.isLoggedIn)
+        if (this.$store.getters.isLoggedIn && !this.getBalanceIdFromUrl)
             this.$router.push('/');
     },
 
