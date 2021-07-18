@@ -29,7 +29,7 @@ export default {
         }
         await this.$store.dispatch('getToken');
         await this.$store.dispatch('fetchTransactions');
-        this.$router.push({ path: '/', query: { balance_id: this.$store.getters.getBalanceId }});
+        this.$router.push('/');
     },
 }
 </script>

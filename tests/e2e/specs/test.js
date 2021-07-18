@@ -14,7 +14,7 @@ describe.only('Transactions List Test', () => {
 
   it('Creates transactions', () => {
     cy.clock(new Date(2021, 0, 1, 12, 0, 0), ['Date']);
-    cy.visit('/transactions');
+    cy.visit('/login');
     const debitAccountName = nanoid();
     const payeeName = nanoid();
     const transactionValue = Math.floor(Math.random()*10000);
