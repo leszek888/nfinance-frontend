@@ -35,6 +35,12 @@ export default {
             this.$store.commit('setBalanceId', balance_id);
             this.$store.commit('setAuthToken', auth_token);
         }
+
+        if (this.$store.getters.isLoggedIn) {
+            this.$nextTick(() => {
+                this.$store.dispatch('fetchTransactions');
+            });
+        }
     },
 }
 </script>

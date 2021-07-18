@@ -215,6 +215,7 @@ export default {
         padding: 4pt;
         cursor: pointer;
         font-size: 11pt;
+        text-align: left;
     }
     .pointer-cursor {
         cursor: pointer;
