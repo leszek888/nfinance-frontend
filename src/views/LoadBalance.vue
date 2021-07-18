@@ -1,14 +1,19 @@
 <template>
     <div class="container">
         <div v-if="!$store.getters.isLoggedIn">
-            <h1>Creating new balance...</h1>
+            <div v-if="getBalanceIdFromUrl">
+                <h1>Loading balance...</h1>
+            </div>
+            <div v-if="!getBalanceIdFromUrl">
+                <h1>Creating new balance...</h1>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'CreateBalance',
+    name: 'LoadBalance',
 
     computed: {
         getBalanceIdFromUrl() {
