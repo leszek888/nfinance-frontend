@@ -1,11 +1,9 @@
 <template>
     <div>
-        <center>
-            <h1>
-                You have been logged out.
-            </h1>
-            <router-link to="/login" class="link">Create New Balance</router-link>
-        </center>
+        <h1>
+            You have been logged out.
+        </h1>
+        <router-link to="/login" class="link">Create New Balance</router-link>
     </div>
 </template>
 
@@ -21,7 +19,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    div {
+        text-align: center;
+    }
     .link {
         color: #48a;
         text-decoration: none;

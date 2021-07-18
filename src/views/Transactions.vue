@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div v-if="!editedTransaction">
             <button data-cy="btn-new-transaction"
                     class="btn-new-transaction"
@@ -84,7 +84,7 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
    .btn-new-transaction {
         background-color: #4a9e56;
         border: 0px;

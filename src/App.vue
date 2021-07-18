@@ -4,8 +4,8 @@
     </div>
     <div class="main-content">
         <router-view v-slot="{ Component }">
-            <transition name="content" mode="out-in">
-                    <component :is="Component" />
+            <transition name="slide" mode="out-in">
+                <component :is="Component" />
             </transition>
         </router-view>
     </div>
@@ -55,18 +55,30 @@ body {
     margin: auto;
 }
 
-.content-enter {
-    opacity: 0;
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.2s ease-out;
 }
 
-.content-enter-active {
-    transition: opacity 1s ease;
+.slide-enter-to {
+  position: absolute;
+  top: 0;
+  opacity: 1;
 }
 
-.content-leave-active {
-    transition: opacity 1s ease;
-    opacity: 0;
+.slide-enter-from {
+  position: absolute;
+  top: -50pt;
+  opacity: 0;
 }
 
+.slide-leave-to {
+  position: absolute;
+  opacity: 0;
+}
 
+.slide-leave-from {
+  position: absolute;
+  opacity: 1;
+}
 </style>

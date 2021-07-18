@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div v-for="account, index in accounts" :key="index">
             <account-row :account="account" />
         </div>
@@ -49,3 +49,9 @@ export default {
     },
 }
 </script>
+
+<style>
+    .container {
+        position: relative;
+    }
+</style>

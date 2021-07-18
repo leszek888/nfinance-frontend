@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .container-transactions-list {
         width: 100%;
     }
