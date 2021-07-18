@@ -79,6 +79,7 @@ const store = createStore({
         getAuthToken: (state) => state.authToken,
         getBalanceId: (state) => state.balanceId,
         getFilters: (state) => state.filters,
+        isLoggedIn: (state) => { return state.authToken && state.balanceId }
     },
 });
 

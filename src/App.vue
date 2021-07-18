@@ -83,4 +83,13 @@ body {
   position: absolute;
   opacity: 1;
 }
+
+.link {
+    color: #48a;
+    text-decoration: none;
+}
+.link:hover {
+    color: #157;
+}
+
 </style>

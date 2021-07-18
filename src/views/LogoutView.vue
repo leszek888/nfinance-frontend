@@ -23,11 +23,4 @@ export default {
     .container {
         text-align: center;
     }
-    .link {
-        color: #48a;
-        text-decoration: none;
-    }
-    .link:hover {
-        color: #157;
-    }
 </style>
