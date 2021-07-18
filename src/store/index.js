@@ -11,9 +11,10 @@ const store = createStore({
 
     mutations: {
         setTransactions: (state, transactions) => (state.transactions = transactions),
-        setAuthToken: (state, token) => (state.authToken = token),
-        setBalanceId: (state, balanceId) => (state.balanceId = balanceId),
         setFilters: (state, filters) => (state.filters = filters),
+
+        setAuthToken: (state, token) => {state.authToken = token; localStorage.setItem('auth_token', token);},
+        setBalanceId: (state, balanceId) => {state.balanceId = balanceId; localStorage.setItem('balance_id', balanceId);},
     },
 
     actions: {

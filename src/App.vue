@@ -29,6 +29,11 @@ export default {
         if (this.balance_id) {
             this.$store.commit('setBalanceId', this.balance_id);
         }
+        else if (localStorage.getItem('balance_id') && localStorage.getItem('auth_token')) {
+            this.$store.commit('setBalanceId', localStorage.getItem('balance_id'));
+            this.$store.commit('setAuthToken', localStorage.getItem('auth_token'));
+            return;
+        }
         else {
             await this.$store.dispatch('createNewBalance');
         }
