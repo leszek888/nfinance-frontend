@@ -39,6 +39,9 @@ export default {
                 this.$store.dispatch('fetchTransactions');
             });
         }
+        else {
+            this.$store.commit('setInitialized', true);
+        }
     },
 }
 </script>

@@ -1,8 +1,13 @@
 <template>
     <div data-cy="container-transactions-list" class="container-transactions-list">
         <Filters @filters-update="$emit('filters-update', $event)" />
-        <div v-bind:key="transaction.id" v-for="transaction in transactions">
-            <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
+        <div v-if="transactions && transactions.length > 0">
+            <div v-bind:key="transaction.id" v-for="transaction in transactions">
+                <Transaction @edit-transaction="$emit('edit-transaction', transaction.id)" :transaction="transaction" />
+            </div>
+        </div>
+        <div v-if="transactions && transactions.length === 0">
+            No transactions found.
         </div>
     </div>
 </template>

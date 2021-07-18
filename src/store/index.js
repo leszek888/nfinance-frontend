@@ -7,7 +7,7 @@ const store = createStore({
         filters: '',
         initialized: false,
         name: 'Vue',
-        transactions: [],
+        transactions: '',
     },
 
     mutations: {
@@ -57,7 +57,7 @@ const store = createStore({
         async fetchTransactions({ commit, dispatch, getters }) {
             const response = await dispatch('sendApiRequest', {url: 'transaction?'+getters.getFilters, method: 'GET'});
 
-            if (!getters.isInitialized && 'transactions' in response)
+            if (!getters.isInitialized)
                 commit('setInitialized', true);
 
             commit('setTransactions', response['transactions']);

@@ -20,12 +20,7 @@
                 :entries="editedTransaction.entries"
             />
         </div>
-        <div v-if="transactions && transactions.length > 0">
-            <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
-        </div>
-        <div v-if="!transactions || transactions.length === 0">
-            There are no transactions.
-        </div>
+        <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
     </div>
 </template>
 
