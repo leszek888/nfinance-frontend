@@ -1,5 +1,7 @@
 <template>
-    Logging In...
+    <div>
+        Logging In...
+    </div>
 </template>
 
 <script>

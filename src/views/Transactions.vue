@@ -1,25 +1,27 @@
 <template>
-    <div v-if="!editedTransaction">
-        <button data-cy="btn-new-transaction"
-                class="btn-new-transaction"
-                @click="createNewTransaction">
-            New Transaction
-        </button>
-    </div>
+    <div>
+        <div v-if="!editedTransaction">
+            <button data-cy="btn-new-transaction"
+                    class="btn-new-transaction"
+                    @click="createNewTransaction">
+                New Transaction
+            </button>
+        </div>
 
-    <div v-if="editedTransaction">
-        <EditedTransaction
-            @close-transaction="closeEditedTransaction"
-            @save-transaction="saveEditedTransaction"
-            @delete-transaction="deleteEditedTransaction"
-            :key="editedTransaction.id"
-            :id="editedTransaction.id"
-            :date="editedTransaction.date"
-            :payee="editedTransaction.payee"
-            :entries="editedTransaction.entries"
-        />
+        <div v-if="editedTransaction">
+            <EditedTransaction
+                @close-transaction="closeEditedTransaction"
+                @save-transaction="saveEditedTransaction"
+                @delete-transaction="deleteEditedTransaction"
+                :key="editedTransaction.id"
+                :id="editedTransaction.id"
+                :date="editedTransaction.date"
+                :payee="editedTransaction.payee"
+                :entries="editedTransaction.entries"
+            />
+        </div>
+        <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
     </div>
-    <TransactionsList @edit-transaction="editTransaction" @filters-update="updateFilters" :transactions="transactions" />
 </template>
 
 <script>

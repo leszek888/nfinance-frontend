@@ -1,6 +1,8 @@
 <template>
-    <div v-for="account, index in accounts" :key="index">
-        <account-row :account="account" />
+    <div>
+        <div v-for="account, index in accounts" :key="index">
+            <account-row :account="account" />
+        </div>
     </div>
 </template>
 

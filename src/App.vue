@@ -3,7 +3,10 @@
         <NavBar class="navbar-main" />
     </div>
     <div class="main-content">
-        <router-view>
+        <router-view v-slot="{ Component }">
+            <transition name="content" mode="out-in">
+                    <component :is="Component" />
+            </transition>
         </router-view>
     </div>
 </template>
@@ -51,5 +54,19 @@ body {
     min-width: 320px;
     margin: auto;
 }
+
+.content-enter {
+    opacity: 0;
+}
+
+.content-enter-active {
+    transition: opacity 1s ease;
+}
+
+.content-leave-active {
+    transition: opacity 1s ease;
+    opacity: 0;
+}
+
 
 </style>
