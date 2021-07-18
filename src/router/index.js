@@ -26,7 +26,7 @@ const routes = [
         name: 'Login',
     },
     {
-        path: '/create',
+        path: '/load',
         component: LoadBalance,
         name: 'LoadBalance',
     },
