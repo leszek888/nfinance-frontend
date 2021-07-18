@@ -1,7 +1,9 @@
 <template>
-    <div v-if="loggedIn">
-        <NavBar class="navbar-main" />
-    </div>
+    <transition name="slide">
+        <div v-if="loggedIn">
+            <NavBar class="navbar-main" />
+        </div>
+    </transition>
     <div class="main-content">
         <router-view v-slot="{ Component }">
             <transition name="slide" mode="out-in">

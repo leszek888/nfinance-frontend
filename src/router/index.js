@@ -7,7 +7,7 @@ import Transactions from '@/views/Transactions.vue'
 const routes = [
     {
         path: '/',
-        redirect: '/transactions',
+        redirect: '/accounts',
     },
     {
         path: '/logout',
