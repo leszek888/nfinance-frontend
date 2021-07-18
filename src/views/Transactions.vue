@@ -6,6 +6,7 @@
             New Transaction
         </button>
     </div>
+
     <div v-if="editedTransaction">
         <EditedTransaction
             @close-transaction="closeEditedTransaction"
@@ -82,8 +83,7 @@ export default {
 
 </script>
 <style>
-
-    .btn-new-transaction {
+   .btn-new-transaction {
         background-color: #4a9e56;
         border: 0px;
         border-radius: 25pt;
@@ -100,5 +100,4 @@ export default {
     .btn-new-transaction:hover {
         filter: brightness(0.9);
     }
-
 </style>

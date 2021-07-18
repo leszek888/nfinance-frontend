@@ -257,14 +257,14 @@ export default {
 </script>
 
 <style scoped>
-    @keyframes display-animation {
+    @keyframes slide-in-animation {
         from { top: -100pt; opacity: 0.5; }
         to { top: 5em; opacity: 1; }
     }
 
     .edited-transaction-container {
         animation-duration: 0.3s;
-        animation-name: display-animation;
+        animation-name: slide-in-animation;
         background-color: #fefefe;
         border: solid 1px #bbb;
         border-radius: 10px;
@@ -327,5 +327,4 @@ export default {
         position: absolute;
         right: 3.5em;
     }
-
 </style>
