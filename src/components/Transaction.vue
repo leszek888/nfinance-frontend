@@ -1,9 +1,10 @@
 <template>
-    <div data-cy="container-transaction" class="container">
+    <div data-cy="container-transaction" class="container-transaction">
         <div class="header">{{ transaction.date }}, {{ transaction.payee }}</div>
         <div :class="[assetValue > 0 && 'positive-balance',
                   assetValue < 0 && 'negative-balance']"
-            v-for="(entry, index) in transaction.entries" :key="index">
+            v-for="(entry, index) in transaction.entries"
+            :key="index">
             <Entry :account="entry.account" :amount="entry.amount" />
         </div>
         <button data-cy="btn-edit-transaction" @click="$emit('edit-transaction', transaction.id)" class="btn-edit-transaction">Edit</button>
@@ -42,7 +43,7 @@ export default {
 </script>
 
 <style scoped>
-    .container {
+    .container-transaction {
         background-color: #fefefe;
         border-top: solid 1px #ddd;
         margin-top: 1em;
@@ -52,7 +53,7 @@ export default {
         box-shadow: 0px 0px 5px transparent;
     }
 
-    .container:hover {
+    .container-transaction:hover {
         background-color: #fcfcfc;
         box-shadow: 0px 0px 5px #444;
     }
@@ -62,7 +63,7 @@ export default {
         padding-bottom: 0.3em;
     }
 
-    .container .btn-edit-transaction {
+    .container-transaction .btn-edit-transaction {
         background-color: #f0f0f0;
         border: 0px;
         border-radius: 10px;
@@ -74,7 +75,7 @@ export default {
         width: 100px;
     }
 
-    .container:hover .btn-edit-transaction {
+    .container-transaction:hover .btn-edit-transaction {
         display: initial;
     }
 
