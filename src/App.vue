@@ -1,10 +1,10 @@
 <template>
-    <NavBar class="navbar-main" />
-    <div v-if="auth_token">
-        <div class="main-content">
-            <router-view>
-            </router-view>
-        </div>
+    <div v-if="loggedIn">
+        <NavBar class="navbar-main" />
+    </div>
+    <div class="main-content">
+        <router-view>
+        </router-view>
     </div>
 </template>
 
@@ -19,27 +19,17 @@ export default {
     },
 
     computed: {
-        auth_token() { return this.$store.getters.getAuthToken; },
+        loggedIn() { return this.$store.getters.getAuthToken && this.$store.getters.getAuthToken.length > 0 },
     },
 
-    async mounted() {
-        const params = new URLSearchParams(window.location.search.substring(1));
-        this.balance_id = params.get('balance_id');
+    mounted() {
+        const balance_id = localStorage.getItem('balance_id');
+        const auth_token = localStorage.getItem('auth_token');
 
-        if (this.balance_id) {
-            this.$store.commit('setBalanceId', this.balance_id);
+        if (balance_id && auth_token) {
+            this.$store.commit('setBalanceId', balance_id);
+            this.$store.commit('setAuthToken', auth_token);
         }
-        else if (localStorage.getItem('balance_id') && localStorage.getItem('auth_token')) {
-            this.$store.commit('setBalanceId', localStorage.getItem('balance_id'));
-            this.$store.commit('setAuthToken', localStorage.getItem('auth_token'));
-            return;
-        }
-        else {
-            await this.$store.dispatch('createNewBalance');
-        }
-        await this.$store.dispatch('getToken');
-        await this.$store.dispatch('fetchTransactions');
-        this.$router.push({ path: '/', query: { balance_id: this.$store.getters.getBalanceId }});
     },
 }
 </script>
@@ -54,27 +44,6 @@ body {
     font-family: sans-serif;
     position: relative;
     color: #555;
-}
-
-.navbar-main {
-    background-color: #555;
-    box-shadow: 0px 0px 5px #444;
-    left: 0;
-    padding: 1em;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 99;
-}
-
-.navbar-main a {
-    color: #eee;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-
-.navbar-main a:hover {
-    color: #0ff;
 }
 
 .main-content {

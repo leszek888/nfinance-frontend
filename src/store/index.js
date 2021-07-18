@@ -13,8 +13,21 @@ const store = createStore({
         setTransactions: (state, transactions) => (state.transactions = transactions),
         setFilters: (state, filters) => (state.filters = filters),
 
-        setAuthToken: (state, token) => {state.authToken = token; localStorage.setItem('auth_token', token);},
-        setBalanceId: (state, balanceId) => {state.balanceId = balanceId; localStorage.setItem('balance_id', balanceId);},
+        setAuthToken: (state, token) => {
+            state.authToken = token;
+            if (token.length === 0)
+                localStorage.removeItem('auth_token');
+            else
+                localStorage.setItem('auth_token', token);
+        },
+
+        setBalanceId: (state, balanceId) => {
+            state.balanceId = balanceId;
+            if (balanceId.length === 0)
+                localStorage.removeItem('balance_id', balanceId);
+            else
+                localStorage.setItem('balance_id', balanceId);
+        },
     },
 
     actions: {
