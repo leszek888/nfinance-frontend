@@ -23,24 +23,36 @@ describe('Filter.vue', () => {
             }
         });
 
-        wrapper.find('[data-cy="container-filter"] input').setValue('filter value');
+        wrapper.find('[data-cy="container-filter"] input').setValue('filtervalue');
         wrapper.find('[data-cy="container-filter"] input').trigger('keydown.enter');
         expect(wrapper.emitted('filter-update')).toBeTruthy();
         expect(wrapper.emitted('filter-update')[0][0].name).toEqual('test-filter');
-        expect(wrapper.emitted('filter-update')[0][0].value).toEqual('filter value');
+        expect(wrapper.emitted('filter-update')[0][0].value).toEqual('filtervalue');
+    });
+
+    it('emits encoded values', async () => {
+        const wrapper = mount(Filter, {
+            props: {
+                name: 'test-filter',
+                value: 'Test&Test: Co.',
+            }
+        });
+
+        await wrapper.find('[data-cy="container-filter"] input').trigger('keydown.enter');
+        expect(wrapper.emitted('filter-update')[0][0].value).toEqual('Test%26Test%3A%20Co.');
     });
 
     it('emits filter event on blur', () => {
         const wrapper = mount(Filter, {
             props: {
                 name: 'test-filter',
-                value: 'blur filter',
+                value: 'blurfilter',
             }
         });
 
         wrapper.find('[data-cy="container-filter"] input').trigger('blur');
         expect(wrapper.emitted('filter-update')).toBeTruthy();
         expect(wrapper.emitted('filter-update')[0][0].name).toEqual('test-filter');
-        expect(wrapper.emitted('filter-update')[0][0].value).toEqual('blur filter');
+        expect(wrapper.emitted('filter-update')[0][0].value).toEqual('blurfilter');
     });
 });

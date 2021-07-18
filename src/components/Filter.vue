@@ -19,7 +19,7 @@ export default {
                 this.emitFilter();
         },
         emitFilter() {
-            this.$emit('filter-update', { name: this.name, value: this.$refs.filterinput.value });
+            this.$emit('filter-update', { name: this.name, value: encodeURIComponent(this.$refs.filterinput.value) });
         },
     },
 
