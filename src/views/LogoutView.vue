@@ -3,7 +3,7 @@
         <h1>
             You have been logged out.
         </h1>
-        <router-link to="/login" class="link">Create New Balance</router-link>
+        <router-link to="/login" class="link">Home Page</router-link>
     </div>
 </template>
 
