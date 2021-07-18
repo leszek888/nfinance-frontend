@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>
             You have been logged out.
         </h1>
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-    div {
+    .container {
         text-align: center;
     }
     .link {
