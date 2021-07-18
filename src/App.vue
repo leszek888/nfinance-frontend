@@ -1,16 +1,18 @@
 <template>
-    <transition name="slide">
-        <div v-if="$store.getters.isLoggedIn">
-            <NavBar class="navbar-main" />
+        <transition name="slide">
+            <div v-if="$store.getters.isLoggedIn">
+                <NavBar class="navbar-main" />
+            </div>
+        </transition>
+        <div class="main-content">
+            <div v-if="$store.getters.isInitialized">
+                <router-view v-slot="{ Component }">
+                    <transition name="slide" mode="out-in">
+                        <component :is="Component" />
+                    </transition>
+                </router-view>
+            </div>
         </div>
-    </transition>
-    <div class="main-content">
-        <router-view v-slot="{ Component }">
-            <transition name="slide" mode="out-in">
-                <component :is="Component" />
-            </transition>
-        </router-view>
-    </div>
 </template>
 
 <script>

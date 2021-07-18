@@ -5,6 +5,7 @@ const store = createStore({
         authToken: '',
         balanceId: '',
         filters: '',
+        initialized: false,
         name: 'Vue',
         transactions: [],
     },
@@ -28,6 +29,8 @@ const store = createStore({
             else
                 localStorage.setItem('balance_id', balanceId);
         },
+
+        setInitialized: (state, isInitialized) => state.initialized = isInitialized,
     },
 
     actions: {
@@ -53,6 +56,10 @@ const store = createStore({
         },
         async fetchTransactions({ commit, dispatch, getters }) {
             const response = await dispatch('sendApiRequest', {url: 'transaction?'+getters.getFilters, method: 'GET'});
+
+            if (!getters.isInitialized && 'transactions' in response)
+                commit('setInitialized', true);
+
             commit('setTransactions', response['transactions']);
         },
         async getToken({ commit }) {
@@ -79,6 +86,7 @@ const store = createStore({
         getAuthToken: (state) => state.authToken,
         getBalanceId: (state) => state.balanceId,
         getFilters: (state) => state.filters,
+        isInitialized: (state) => state.initialized,
         isLoggedIn: (state) => { return state.authToken && state.balanceId }
     },
 });
