@@ -66,19 +66,19 @@ export default {
 
         async updateFilters(filters) {
             this.$store.commit('setFilters', filters);
-            await this.$store.dispatch('fetchTransactions');
+            await this.$store.dispatch('fetchData');
         },
 
         async saveEditedTransaction(transaction) {
             this.closeEditedTransaction();
             await this.$store.dispatch('saveTransaction', transaction);
-            await this.$store.dispatch('fetchTransactions');
+            await this.$store.dispatch('fetchData');
         },
 
         async deleteEditedTransaction(transaction) {
             this.closeEditedTransaction();
             await this.$store.dispatch('deleteTransaction', transaction);
-            await this.$store.dispatch('fetchTransactions');
+            await this.$store.dispatch('fetchData');
         },
     },
 }

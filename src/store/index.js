@@ -56,6 +56,10 @@ const store = createStore({
             }
             return json;
         },
+        async fetchData({ dispatch }) {
+            await dispatch('fetchTransactions');
+            await dispatch('loadAccounts');
+        },
         async fetchTransactions({ commit, dispatch, getters }) {
             const response = await dispatch('sendApiRequest', {url: 'transaction?'+getters.getFilters, method: 'GET'});
 

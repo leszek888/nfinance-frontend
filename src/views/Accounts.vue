@@ -63,7 +63,7 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('loadAccounts');
+        this.$store.dispatch('fetchData');
     },
 }
 </script>
