@@ -19,7 +19,7 @@
                 <div
                     :class="[index === currentSelection && 'selected', 'suggestion']"
                     data-cy="ac-suggestion"
-                    @click="selectSuggestion(index)"
+                    @click="handleClick(index)"
                     @mouseover="currentSelection = index"
                 >
                     {{ suggestion }}
@@ -96,6 +96,11 @@ export default {
 
         isValid() {
             return this.input_value.trim().length > 0 ? true : false;
+        },
+
+        handleClick(index) {
+            this.selectSuggestion(index);
+            this.$refs.input.focus();
         },
 
         handleBlur() {
