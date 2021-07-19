@@ -1,7 +1,12 @@
 <template>
     <div class="container" data-cy="container-accounts">
-        <div v-for="account, index in accounts" :key="index">
-            <account-row :account="account" />
+        <div v-if="accounts && accounts.length > 0">
+            <div v-for="account, index in accounts" :key="index">
+                <account-row :account="account" />
+            </div>
+        </div>
+        <div v-if="!accounts || accounts.length === 0">
+            No accounts found.
         </div>
     </div>
 </template>

@@ -16,9 +16,9 @@ describe('Transactions List Test', () => {
     cy.clock(new Date(2021, 0, 1, 12, 0, 0), ['Date']);
     cy.visit('/load');
     cy.wait(5500);
-    const debitAccountName = nanoid();
     const payeeName = nanoid();
     const transactionValue = Math.floor(Math.random()*10000);
+    const accountNames = [ 'Assets', 'Equity', 'Liabilities' ];
 
     cy.get('[data-cy="nav-link-transactions"]').click();
     
@@ -51,14 +51,25 @@ describe('Transactions List Test', () => {
       cy.wrap(entry).find('[data-cy="input-account"]').as('inputAccount');
       cy.wrap(entry).find('[data-cy="input-amount"]').as('inputAmount');
 
+      cy.get('@inputAccount').type(accountNames[index]);
+
       if (index === 0) {
-        cy.get('@inputAccount').type(debitAccountName);
         cy.get('@inputAmount').type(transactionValue.toString());
       }
       if (index === 1) {
+        cy.get('@inputAmount').type((-1*(transactionValue-100)).toString());
+        cy.get('@inputAmount').blur();
+        cy.get('[data-cy="field-unbalanced-amount"]').contains('-100,00');
+      }
+      if (index === 2) {
+        cy.get('@inputAmount').type((-100).toString());
+        cy.get('@inputAmount').blur();
+      }
+      /*
+      if (index === 1) {
         cy.get('@inputAccount').focus();
         cy.get('@inputAccount').type('{enter}');
-        cy.get('@inputAccount').type('f');
+        cy.get('@inputAccount').type('l');
         cy.get('@inputAccount').type('{enter}');
         cy.get('@inputAmount').type((-1*(transactionValue-100)).toString());
         cy.get('@inputAmount').blur();
@@ -70,12 +81,15 @@ describe('Transactions List Test', () => {
         cy.get('@inputAmount').type((-100).toString());
         cy.get('@inputAmount').blur();
       }
+      */
     });
 
     // Save and display the transaction
     cy.get('[data-cy="btn-save-transaction"]').click();
     cy.get('[data-cy="container-transactions-list"]').contains(payeeName);
-    cy.get('[data-cy="container-transactions-list"]').contains(debitAccountName);
+    cy.get('[data-cy="container-transactions-list"]').contains(accountNames[0]);
+    cy.get('[data-cy="container-transactions-list"]').contains(accountNames[1]);
+    cy.get('[data-cy="container-transactions-list"]').contains(accountNames[2]);
     cy.get('[data-cy="container-transactions-list"]').contains('-'+formatNumber(transactionValue-100));
   })
 
@@ -93,7 +107,7 @@ describe('It filters transactions on the list', () => {
 
 });
 
-describe.only('Displays accounts with balances on /accounts page', () => {
+describe('Displays accounts with balances on /accounts page', () => {
   it('Filters transactions by date, account and payee name', () => {
     cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
     cy.wait(4000);
