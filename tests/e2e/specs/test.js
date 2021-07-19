@@ -81,7 +81,7 @@ describe('Transactions List Test', () => {
 
 })
 
-describe.only('It filters transactions on the list', () => {
+describe('It filters transactions on the list', () => {
   it('Filters transactions by date, account and payee name', () => {
     cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
     cy.wait(4000);
@@ -93,3 +93,13 @@ describe.only('It filters transactions on the list', () => {
 
 });
 
+describe.only('Displays accounts with balances on /accounts page', () => {
+  it('Filters transactions by date, account and payee name', () => {
+    cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+    cy.wait(4000);
+    cy.get('[data-cy="nav-link-accounts"]').click();
+
+    cy.get('[data-cy="container-accounts"]').find('[data-cy="account-row"]').should('have.length', 12);
+  });
+
+});

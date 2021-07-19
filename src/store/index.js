@@ -3,15 +3,17 @@ import { createStore } from 'vuex'
 const store = createStore({
     state: {
         authToken: '',
+        accounts: [],
         balanceId: '',
         filters: '',
         initialized: false,
         name: 'Vue',
-        transactions: '',
+        transactions: [],
     },
 
     mutations: {
         setTransactions: (state, transactions) => (state.transactions = transactions),
+        setAccounts: (state, accounts) => (state.accounts = accounts),
         setFilters: (state, filters) => (state.filters = filters),
 
         setAuthToken: (state, token) => {
@@ -62,6 +64,22 @@ const store = createStore({
 
             commit('setTransactions', response['transactions']);
         },
+        async loadAccounts({ commit, dispatch }) {
+            const response = await dispatch('sendApiRequest', {url: 'accounts', method: 'POST'});
+            let parsedAccounts = [];
+
+            console.log('before: ', parsedAccounts);
+
+            response['accounts'].forEach(account => {
+                let sub_accounts = account['name'].split(':');
+
+                parseSubAccounts(sub_accounts, parseFloat(account['balance']), parsedAccounts, 0);
+            });
+
+            console.log('after: ', parsedAccounts);
+
+            commit('setAccounts', parsedAccounts);
+        },
         async getToken({ commit }) {
             let headers = new Headers();
             headers.append('Authorization', 'Basic ' + btoa(this.state.balanceId + ':pw'))
@@ -84,11 +102,37 @@ const store = createStore({
     getters: {
         allTransactions: (state) => state.transactions,
         getAuthToken: (state) => state.authToken,
+        getAccounts: (state) => state.accounts,
         getBalanceId: (state) => state.balanceId,
         getFilters: (state) => state.filters,
         isInitialized: (state) => state.initialized,
         isLoggedIn: (state) => { return state.authToken && state.balanceId }
     },
 });
+
+let parseSubAccounts = (accounts, balance, array, depth) => {
+    let account = {};
+    let account_found = false;
+
+    account['name'] = accounts.shift();
+    account['balance'] = balance;
+    account['sub_accounts'] = [];
+
+    array.forEach(element => {
+        if (element['name'] == account['name']) {
+            account_found = true;
+            element['balance'] += account['balance'];
+            parseSubAccounts(accounts, balance, element['sub_accounts'], depth+1);
+        }
+    });
+
+    if (!account_found) {
+        array.push(account);
+        if (accounts.length > 0)
+            parseSubAccounts(accounts, balance, account['sub_accounts'], depth+1);
+    }
+}
+
+
 
 export default store;

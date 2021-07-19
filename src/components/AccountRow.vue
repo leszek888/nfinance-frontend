@@ -1,5 +1,5 @@
 <template>
-    <div class="account_row">
+    <div class="account_row" data-cy="account-row">
         <span>
             <div v-if="subAccountsArePresent">&nbsp;+&nbsp;</div>
             <div v-if="!subAccountsArePresent">&nbsp;&nbsp;&nbsp;</div>
