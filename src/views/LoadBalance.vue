@@ -6,6 +6,7 @@
             </div>
             <div v-if="!getBalanceIdFromUrl">
                 <h1>Creating new balance...</h1>
+                {{ currentStatus }}
             </div>
         </div>
     </div>
@@ -22,17 +23,21 @@ export default {
         },
     },
 
+    data() {
+        return {
+            currentStatus: '',
+        }
+    },
+
     methods: {
         async createBalance() {
             const params = new URLSearchParams(window.location.search.substring(1));
             const balance_id = params.get('balance_id');
 
             if (balance_id) {
-                console.log('balance_id :D', balance_id);
                 this.$store.commit('setBalanceId', balance_id);
             }
             else {
-                console.log('no balance_id :(', balance_id);
                 await this.$store.dispatch('createNewBalance');
             }
             await this.$store.dispatch('getToken');

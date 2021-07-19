@@ -46,7 +46,7 @@ const store = createStore({
                 body = JSON.stringify(data);
             }
 
-            const response = await fetch('http://127.0.0.1:5000/api/'+url,
+            const response = await fetch('http://192.168.0.222:5000/api/'+url,
                 {method: method, mode: 'cors', headers: headers, body: body})
 
             const json = await response.json();
@@ -73,7 +73,7 @@ const store = createStore({
         async getToken({ commit }) {
             let headers = new Headers();
             headers.append('Authorization', 'Basic ' + btoa(this.state.balanceId + ':pw'))
-            const response = await fetch('http://127.0.0.1:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
+            const response = await fetch('http://192.168.0.222:5000/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
             const data = await response.json();
             commit('setAuthToken', data['token']);
         },
