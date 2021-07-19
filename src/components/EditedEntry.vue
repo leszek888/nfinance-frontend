@@ -5,7 +5,7 @@
             data-cy="input-account"
             label="Account"
             ref="account"
-            :suggestions-list="['Assets:Current:Bank', 'Assets:Fixed:Cash', 'Equity', 'Liabilities']"
+            :suggestions-list="getAccounts"
             :value="entry.account"
             @change="updateAccount"
             @focusout="updateEntry"
@@ -33,6 +33,18 @@ export default {
     components: {
         InputWithAutoComplete,
         InputWithLabel,
+    },
+
+    computed: {
+        getAccounts() {
+            let accounts = [];
+
+            this.$store.getters.getAccounts.forEach(account => {
+                accounts.push(account.name);
+            });
+
+            return accounts;
+        },
     },
 
     props: {

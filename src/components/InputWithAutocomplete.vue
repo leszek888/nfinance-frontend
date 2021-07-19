@@ -145,6 +145,9 @@ export default {
         },
 
         selectSuggestion(index) {
+            if (index < 0 || index > this.currentSuggestions.length)
+                return;
+
             if (this.autoCompleteType === 'splitted' && this.currentSuggestions.length > 0) {
                 let splittedParts = this.input_value.split(':');
                 let updatedValue = "";
@@ -160,6 +163,8 @@ export default {
             else if (this.currentSuggestions.length > 0) {
                 this.input_value = this.currentSuggestions[index];
             }
+
+            this.currentSelection = 0;
 
             this.handleChange();
         },
