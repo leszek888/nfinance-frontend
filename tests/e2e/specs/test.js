@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { formatNumber } from '../../../src/helpers';
  
-describe.only('Transactions List Test', () => {
+describe('Transactions List Test', () => {
   const fillOutWithAutocomplete = (selectionType, parent) => {
     if (selectionType === 'enter') {
       parent.find('[data-cy="input-account"]').type('{enter}');
@@ -81,9 +81,11 @@ describe.only('Transactions List Test', () => {
 
 })
 
-describe('It filters transactions on the list', () => {
+describe.only('It filters transactions on the list', () => {
   it('Filters transactions by date, account and payee name', () => {
-    cy.visit('/?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+    cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+    cy.wait(4000);
+    cy.get('[data-cy="nav-link-transactions"]').click();
 
     cy.get('[data-cy="filter-payee"]').find('input').type('Shop A').type('{enter}');
     cy.get('[data-cy="container-transaction"]').should('have.length', 1);
