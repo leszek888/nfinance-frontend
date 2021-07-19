@@ -1,8 +1,8 @@
 <template>
     <nav>
         <ul>
-            <li><router-link to="/accounts">Accounts</router-link></li>
-            <li><router-link to="/transactions">Transactions</router-link></li>
+            <li><router-link data-cy="nav-link-accounts" to="/accounts">Accounts</router-link></li>
+            <li><router-link data-cy="nav-link-transactions" to="/transactions">Transactions</router-link></li>
         </ul>
         <ul>
             <li><router-link to="/logout">Log out</router-link></li>

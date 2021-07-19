@@ -15,6 +15,7 @@ describe.only('Transactions List Test', () => {
   it('Creates transactions', () => {
     cy.clock(new Date(2021, 0, 1, 12, 0, 0), ['Date']);
     cy.visit('/load');
+    cy.wait(5500);
     const debitAccountName = nanoid();
     const payeeName = nanoid();
     const transactionValue = Math.floor(Math.random()*10000);
@@ -24,9 +25,6 @@ describe.only('Transactions List Test', () => {
     // There should be no transactions in the list
     cy.wait(3000);
     cy.get('[data-cy="container-transactions-list"]').find('[data-cy="container-transaction"]').should('have.length', 0);
-
-    // Link should contain balance_id
-    cy.location('search').should('contain', 'balance_id');
 
     // Display Transaction Edit Window when clicking "New Transaction"
     cy.contains('button', 'New Transaction');
