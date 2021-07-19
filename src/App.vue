@@ -37,6 +37,7 @@ export default {
         if (this.$store.getters.isLoggedIn) {
             this.$nextTick(() => {
                 this.$store.dispatch('fetchTransactions');
+                this.$store.dispatch('loadAccounts');
             });
         }
         else {
