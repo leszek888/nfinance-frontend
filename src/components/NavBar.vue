@@ -1,12 +1,14 @@
 <template>
-    <nav>
-        <ul>
-            <li><router-link data-cy="nav-link-accounts" to="/accounts">Accounts</router-link></li>
-            <li><router-link data-cy="nav-link-transactions" to="/transactions">Transactions</router-link></li>
-        </ul>
-        <ul>
-            <li><router-link to="/logout">Log out</router-link></li>
-        </ul>
+    <nav class="navbar-main">
+        <div class="container-nav">
+            <ul>
+                <li><router-link data-cy="nav-link-accounts" to="/accounts">Accounts</router-link></li>
+                <li><router-link data-cy="nav-link-transactions" to="/transactions">Transactions</router-link></li>
+            </ul>
+            <ul>
+                <li><router-link to="/logout">Log out</router-link></li>
+            </ul>
+        </div>
     </nav>
 </template>
 
@@ -31,10 +33,7 @@ export default {
     .navbar-main {
         background-color: #555;
         box-shadow: 0px 0px 5px #444;
-        display: flex;
-        justify-content: space-between;
         left: 0;
-        padding: 1em;
         position: fixed;
         right: 0;
         top: 0;
@@ -49,6 +48,15 @@ export default {
 
     .navbar-main a:hover {
         color: #0ff;
+    }
+
+    .container-nav {
+        display: flex;
+        height: 100%;
+        justify-content: space-between;
+        margin: auto;
+        max-width: 1100px;
+        padding: 1em;
     }
 
 </style>

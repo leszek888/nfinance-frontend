@@ -1,7 +1,7 @@
 <template>
         <transition name="slide">
             <div v-if="$store.getters.isLoggedIn">
-                <NavBar class="navbar-main" />
+                <NavBar />
             </div>
         </transition>
         <div class="main-content">
