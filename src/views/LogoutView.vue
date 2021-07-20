@@ -15,6 +15,9 @@ export default {
         console.log('LogoutView...');
         this.$store.commit('setBalanceId', '');
         this.$store.commit('setAuthToken', '');
+        this.$store.commit('setTransactions', []);
+        this.$store.commit('setAccounts', []);
+        this.$store.commit('setFilters', '');
     },
 }
 </script>

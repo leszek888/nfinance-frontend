@@ -66,7 +66,8 @@ const store = createStore({
             if (!getters.isInitialized)
                 commit('setInitialized', true);
 
-            commit('setTransactions', response['transactions']);
+            if ('transactions' in response)
+                commit('setTransactions', response['transactions']);
         },
         async loadAccounts({ commit, dispatch }) {
             const response = await dispatch('sendApiRequest', {url: 'accounts', method: 'POST'});
@@ -78,12 +79,14 @@ const store = createStore({
             let headers = new Headers();
             headers.append('Authorization', 'Basic ' + btoa(this.state.balanceId + ':pw'))
             const response = await fetch(process.env.VUE_APP_ROOT_API+'/api/auth', {method: 'GET', headers: headers, mode: 'cors'});
-            const data = await response.json();
-            commit('setAuthToken', data['token']);
+            let data = await response.json();
+            if ('token' in data)
+                commit('setAuthToken', data['token']);
         },
         async createNewBalance({ commit, dispatch }) {
             const response = await dispatch('sendApiRequest', {url: 'balance/new', method: 'GET'});
-            commit('setBalanceId', response['balance_id']);
+            if ('balance_id' in response)
+                commit('setBalanceId', response['balance_id']);
         },
         async saveTransaction({ dispatch }, transaction) {
             await dispatch('sendApiRequest', {url: 'transaction', method: 'POST', data: transaction});
