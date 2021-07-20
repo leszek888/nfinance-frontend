@@ -18,6 +18,9 @@
             />
         </div>
         <div class="entries">
+            <span v-if="unbalancedAmount != 0" class="span-unbalanced-amount">
+                Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ formattedUnbalancedAmount }}</span>
+            </span>
             <div v-for="(entry, index) in transaction.entries" :key="entry.id">
                 <EditedEntry
                     :account="entry.account"
@@ -32,9 +35,6 @@
                 />
             </div>
             <button data-cy="btn-add-entry" class="btn-add-entry" @click="addEntry">Add Entry</button>
-            <span v-if="unbalancedAmount != 0" class="span-unbalanced-amount">
-                Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ formattedUnbalancedAmount }}</span>
-            </span>
         </div>
         <br />
         <div class="buttons">
@@ -316,10 +316,6 @@ export default {
         width: 100px;
     }
 
-    .btn-add-entry {
-        width: 100%;
-    }
-
     .span-unbalanced-amount {
         bottom: 2em;
         color: #a44;
@@ -327,4 +323,40 @@ export default {
         position: absolute;
         right: 3.5em;
     }
+
+    .btn-add-entry {
+        box-sizing: border-box;
+        width: 90%;
+    }
+
+@media only screen and (max-width: 640px) {
+    .edited-transaction-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes slide-in {
+        from { left: -100%; right: 100% }
+        to { left: 0; right: 0 }
+    }
+
+    .edited-transaction-container {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 10px;
+        z-index: 99;
+        animation-name: slide-in;
+        animation-duration: 0.3s;
+    }
+
+    .entries {
+        border: solid 1px red;
+        overflow-y: auto;
+    }
+
+}
+
 </style>
