@@ -353,10 +353,8 @@ export default {
     }
 
     .entries {
-        border: solid 1px red;
         overflow-y: auto;
     }
-
 }
 
 </style>
