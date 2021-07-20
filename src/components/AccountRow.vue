@@ -45,6 +45,6 @@ export default {
         border: solid 1px red;
     }
     .sub_account {
-        padding-left: 1.5em;
+        padding-left: 1em;
     }
 </style>
