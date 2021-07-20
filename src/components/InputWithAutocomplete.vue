@@ -242,7 +242,7 @@ export default {
         position: absolute;
         right: 4pt;
         top: 24pt;
-        z-index: 1000;
+        z-index: 900;
     }
     .shown {
         animation-duration: 0.2s;

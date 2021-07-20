@@ -16,11 +16,12 @@
                 :value="transaction.payee"
                 @change="updatePayee"
             />
-        </div>
-        <div class="entries">
             <span v-if="unbalancedAmount != 0" class="span-unbalanced-amount">
                 Unbalanced amount: <span data-cy="field-unbalanced-amount">{{ formattedUnbalancedAmount }}</span>
             </span>
+
+        </div>
+        <div class="entries">
             <div v-for="(entry, index) in transaction.entries" :key="entry.id">
                 <EditedEntry
                     :account="entry.account"
@@ -286,6 +287,7 @@ export default {
     .header {
         display: flex;
         flex-direction: column;
+        position: relative;
     }
 
     .header p {
@@ -317,11 +319,8 @@ export default {
     }
 
     .span-unbalanced-amount {
-        bottom: 2em;
         color: #a44;
         font-size: 10pt;
-        position: absolute;
-        right: 3.5em;
     }
 
     .btn-add-entry {
@@ -354,6 +353,8 @@ export default {
 
     .entries {
         overflow-y: auto;
+        padding-bottom: 6em;
+        position: relative;
     }
 }
 
