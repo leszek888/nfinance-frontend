@@ -92,7 +92,7 @@ export default {
     }
     .input-with-label-container {
         background-color: #fefefe;
-        padding: 4pt;
+        padding-top: 0.3rem;
         position: relative;
         color: #aaa;
     }
@@ -100,7 +100,6 @@ export default {
         border: solid 1px #ddd;
         box-sizing: border-box;
         font-size: 11pt;
-        padding: 4pt;
         width: 100%;
     }
     .input-with-label-container input:focus {

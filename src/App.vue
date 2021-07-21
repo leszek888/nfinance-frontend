@@ -100,4 +100,13 @@ body {
     color: #157;
 }
 
+input {
+    padding: 0.5em 0.5em;
+}
+
+@media only screen and (max-width: 640px) {
+    input {
+        padding: 0.75em 0.5em;
+    }
+}
 </style>

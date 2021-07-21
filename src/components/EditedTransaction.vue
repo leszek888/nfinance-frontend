@@ -5,7 +5,7 @@
                 data-cy="input-date"
                 label="Date"
                 ref="date"
-                :suggestions-list="getLastDays(4)"
+                :suggestions-list="dateSuggestions"
                 :value="transaction.date"
                 @change="updateDate"
             />
@@ -75,6 +75,7 @@ export default {
             shouldValidate: false,
             suggestions: ['Assets', 'Equity'],
             transaction: {},
+            dateSuggestions: [],
         }
     },
 
@@ -244,12 +245,13 @@ export default {
             return lastDaysArray;
         },
     },
-
+    
     created() {
         this.transaction.id = this.id;
         this.transaction.date = this.date;
         this.transaction.payee = this.payee;
         this.transaction.entries = this.entries.map((entry) => {return this.parseEntry(entry)});
+        this.dateSuggestions = this.getLastDays(4);
     },
 
     emits: [ 'close-transaction', 'save-transaction', 'delete-transaction' ]

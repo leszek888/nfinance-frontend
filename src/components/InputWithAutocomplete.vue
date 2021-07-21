@@ -199,7 +199,7 @@ export default {
     }
     .input-with-label-container {
         background-color: #fefefe;
-        padding: 4pt;
+        padding-top: 0.3rem;
         position: relative;
         color: #aaa;
     }
@@ -207,7 +207,6 @@ export default {
         border: solid 1px #ddd;
         box-sizing: border-box;
         font-size: 11pt;
-        padding: 4pt;
         width: 100%;
     }
     .input-with-label-container input:focus {
@@ -222,7 +221,7 @@ export default {
         position: absolute;
     }
     .suggestion {
-        padding: 4pt;
+        padding: 0.5em;
         cursor: pointer;
         font-size: 11pt;
         text-align: left;
@@ -236,12 +235,12 @@ export default {
     }
     .autocomplete-container {
         background-color: #fefefe;
-        left: 4pt;
+        left: 0;
         max-height: 0pt;
         overflow: auto;
         position: absolute;
-        right: 4pt;
-        top: 24pt;
+        right: 0;
+        top: 100%;
         z-index: 900;
     }
     .shown {
@@ -261,4 +260,10 @@ export default {
     .has-error {
         border-color: red !important;
     }
+
+@media only screen and (max-width: 640px) {
+    .suggestion {
+        padding: 0.7em 0.5em;
+    }
+}
 </style>

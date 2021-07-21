@@ -1,26 +1,29 @@
 <template>
     <div data-cy="container-edited-entry" class="edited-entry-container">
-        <InputWithAutoComplete
-            auto-complete-type="splitted"
-            data-cy="input-account"
-            label="Account"
-            ref="account"
-            :suggestions-list="getAccounts"
-            :value="entry.account"
-            @change="updateAccount"
-            @focusout="updateEntry"
-        />
-        <InputWithLabel
-            data-cy="input-amount"
-            label="Amount"
-            ref="amount"
-            type="number"
-            :value="entry.amount"
-            @change="updateAmount"
-            @focusout="updateEntry"
-        />
+        <div class="entry-row">
+            <InputWithAutoComplete
+                auto-complete-type="splitted"
+                data-cy="input-account"
+                label="Account"
+                ref="account"
+                :suggestions-list="getAccounts"
+                :value="entry.account"
+                @change="updateAccount"
+                @focusout="updateEntry"
+            />
+            <InputWithLabel
+                data-cy="input-amount"
+                label="Amount"
+                ref="amount"
+                type="number"
+                :value="entry.amount"
+                @change="updateAmount"
+                @focusout="updateEntry"
+            />
+        </div>
         <button @click="$emit('remove-entry', id)">X</button>
     </div>
+
 </template>
 
 <script>
@@ -86,7 +89,12 @@ export default {
 <style scoped>
 .edited-entry-container {
     display: grid;
-    grid-template-columns: 1fr 125px 25px;
+    grid-template-columns: 1fr 25px;
+}
+
+.entry-row {
+    display: grid;
+    grid-template-columns: 1fr 125px;
 }
 
 .edited-entry-container button {
@@ -99,5 +107,12 @@ export default {
 .edited-entry-container button:hover {
     color: white;
     background-color: red;
+ }
+
+@media only screen and (max-width: 640px) {
+    .entry-row {
+        display: flex;
+        flex-direction: column;
+    }
 }
 </style>
