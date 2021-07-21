@@ -217,6 +217,7 @@ describe('InputWithAutocomplete.vue', () => {
         await wrapper.find('input').trigger('focus');
         expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeFalsy();
         await wrapper.find('input').trigger('blur');
+        await new Promise((r) => setTimeout(r, 151));
         expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeTruthy();
     });
 

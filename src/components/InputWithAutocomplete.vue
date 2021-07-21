@@ -5,8 +5,8 @@
                 :data-cy="dataCy"
                 ref="input"
                 v-model="input_value"
-                @blur="handleBlur"
                 @change="handleChange"
+                @blur="handleBlur"
                 @focus="handleFocus"
                 name="input"
             />
@@ -103,8 +103,8 @@ export default {
             this.$refs.input.focus();
         },
 
-        handleBlur() {
-            this.isFocused = false;
+        async handleBlur() {
+            setTimeout(() => this.isFocused = false, 150);
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
         },
