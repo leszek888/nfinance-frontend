@@ -2,24 +2,37 @@ import { mount } from '@vue/test-utils'
 import EditedEntry from '@/components/EditedEntry.vue'
 
 describe('EditedEntry.vue', () => {
-    it('renders correctly', () => {
-        const wrapper = mount(EditedEntry, {
-            props: {
+
+    const mountEntry = (props) => {
+        return mount(EditedEntry, {
+            props: props ? props :
+            {
                 account: '',
                 amount: '',
             },
+            global: {
+                mocks: {
+                    $store: {
+                        getters: {
+                            getAccounts: [
+                                { name: 'Assets' },
+                                { name: 'Liabilities' },
+                                { name: 'Equity' },
+                            ],
+                        },
+                    },
+                },
+            },
         });
+    };
 
+    it('renders correctly', () => {
+        const wrapper = mountEntry(null);
         expect(wrapper.findAll('input')).toHaveLength(2);
     });
 
     it('should emit update-entry on blur', async () => {
-        const wrapper = mount(EditedEntry, {
-            props: {
-                account: 'Assets',
-                amount: '100',
-            },
-        });
+        const wrapper = mountEntry({ account: 'Assets', amount: '100' });
 
         wrapper.find('[data-cy="input-account"]').trigger('focusout');
         await wrapper.vm.$nextTick();
