@@ -104,7 +104,7 @@ export default {
         },
 
         async handleBlur() {
-            setTimeout(() => this.isFocused = false, 150);
+            setTimeout(() => {if (this.$refs.input !== document.activeElement) this.isFocused = false; }, 100);
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
         },

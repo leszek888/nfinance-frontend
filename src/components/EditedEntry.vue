@@ -90,6 +90,7 @@ export default {
 .edited-entry-container {
     display: grid;
     grid-template-columns: 1fr 25px;
+    grid-column-gap: 0.3rem;
 }
 
 .entry-row {
@@ -98,9 +99,11 @@ export default {
 }
 
 .edited-entry-container button {
-    border: 0px;
+    border: 1px solid #f4d9d9;
+    border-radius: 5px;
     color: red;
     background-color: transparent;
+    margin-top: 0.3rem;
     transition: all 0.3s;
 }
 
