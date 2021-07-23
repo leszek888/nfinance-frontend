@@ -120,7 +120,7 @@ describe('InputWithAutocomplete.vue', () => {
         });
 
         await wrapper.find('input').setValue('1234,5');
-        await wrapper.find('input').trigger('blur');
+        await wrapper.find('input').trigger('keydown.tab');
         expect(wrapper.find('input').element.value).toEqual('1.234,50');
     });
 
@@ -155,7 +155,7 @@ describe('InputWithAutocomplete.vue', () => {
     });
 
     it('should set input value to clicked suggestion', async () => {
-         const wrapper = mount(InputWithAutocomplete, {
+        const wrapper = mount(InputWithAutocomplete, {
             props: {
                 value: '',
                 autoComplete: true,
@@ -216,7 +216,7 @@ describe('InputWithAutocomplete.vue', () => {
         expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeTruthy();
         await wrapper.find('input').trigger('focus');
         expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeFalsy();
-        await wrapper.find('input').trigger('blur');
+        await wrapper.find('input').trigger('keydown.tab');
         await new Promise((r) => setTimeout(r, 151));
         expect(wrapper.find('[data-cy="container-autocomplete"]').element.classList.contains('hidden')).toBeTruthy();
     });

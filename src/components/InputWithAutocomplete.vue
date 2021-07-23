@@ -6,20 +6,20 @@
                 ref="input"
                 v-model="input_value"
                 @change="handleChange"
-                @blur="handleBlur"
                 @focus="handleFocus"
                 name="input"
             />
         <div
             :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
             data-cy="container-autocomplete"
+            tabindex="-1"
             v-if="currentSuggestions.length > 0"
         >
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
+                    tabindex="-1"
                     :class="[index === currentSelection && 'selected', 'suggestion']"
                     data-cy="ac-suggestion"
-                    @click="handleClick(index)"
                     @mouseover="currentSelection = index"
                 >
                     {{ suggestion }}
@@ -98,20 +98,31 @@ export default {
             return this.input_value.trim().length > 0 ? true : false;
         },
 
-        handleClick(index) {
-            this.selectSuggestion(index);
-            this.$refs.input.focus();
-        },
-
-        async handleBlur() {
-            setTimeout(() => {if (this.$refs.input !== document.activeElement) this.isFocused = false; }, 100);
+        handleBlur() {
+            this.isFocused = false;
+            document.removeEventListener('click', this.checkClicks);
             if (this.type === 'number' && formatNumber(this.input_value))
                 this.input_value = formatNumber(this.input_value);
+        },
+
+        checkClicks(e) {
+            if (this.$el.contains(e.target) && e.target.classList.contains('suggestion')) {
+                this.isFocused = true;
+                this.$refs.input.focus();
+
+                let selectionIndex = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
+                this.selectSuggestion(selectionIndex);
+            }
+            else if (!this.$el.contains(e.target)) {
+                this.isFocused = false;
+            }
         },
 
         handleFocus() {
             this.isFocused = true;
             this.$refs.input.classList.remove('has-error');
+
+            document.addEventListener('click', this.checkClicks);
         },
 
         handleChange() {
@@ -138,6 +149,9 @@ export default {
                     break;
                 case 13:
                     this.selectSuggestion(this.currentSelection);
+                    return;
+                case 9:
+                    this.handleBlur();
                     return;
                 default:
                     return;
@@ -170,7 +184,6 @@ export default {
             }
 
             this.currentSelection = 0;
-
             this.handleChange();
         },
     },
