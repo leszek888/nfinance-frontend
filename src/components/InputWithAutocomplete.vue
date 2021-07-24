@@ -60,13 +60,13 @@ export default {
                 if (this.autoCompleteType === 'splitted') {
                     const depth = this.input_value.split(':').length;
 
-                    this.suggestionsList.forEach(suggestion => {
+                    this.suggestionsList.forEach((suggestion) => {
                         if (suggestion.toLowerCase().startsWith(this.input_value.toLowerCase())) {
-                            let splittedSuggestion = suggestion.split(':')[depth-1];
-                            if (suggestion.split(':').length > depth)
-                                splittedSuggestion += ':';
+                            let splittedSuggestion = suggestion.split(':')[depth-1] + ':';
+
                             if (!updatedSuggestions.includes(splittedSuggestion) &&
-                                this.input_value.split(':')[depth-1] !== splittedSuggestion) {
+                                this.input_value.split(':')[depth-1].replace(':', '') !== splittedSuggestion.replace(':', '')) {
+
                                 updatedSuggestions.push(splittedSuggestion);
                             }
                         }
