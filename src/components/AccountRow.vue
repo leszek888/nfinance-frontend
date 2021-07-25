@@ -1,19 +1,19 @@
 <template>
-    <div @click="collapsed = !collapsed" class="account_row" data-cy="account-row">
+    <div @click="isCollapsed = !isCollapsed" class="account_row" data-cy="account-row">
         <span>
             <div v-if="subAccountsArePresent">
-                <div v-if="collapsed"><font-awesome-icon icon="plus-square" class="icons" />&nbsp;</div>
-                <div v-if="!collapsed"><font-awesome-icon icon="minus-square" class="icons" />&nbsp;</div>
+                <div v-if="isCollapsed"><font-awesome-icon icon="plus-square" class="icons" />&nbsp;</div>
+                <div v-if="!isCollapsed"><font-awesome-icon icon="minus-square" class="icons" />&nbsp;</div>
             </div>
             <div v-if="!subAccountsArePresent">&nbsp;&nbsp;&nbsp;</div>
             {{ account.name }}
         </span>
         <span>{{ formattedBalance }}</span>
     </div>
-    <div v-if="!collapsed">
+    <div v-if="!isCollapsed">
         <div v-for="sub_account, index in account.sub_accounts" :key="index">
             <div class="sub_account">
-                <account-row :account="sub_account" />
+                <account-row :account="sub_account" :collapsed="collapsed" />
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@ export default {
 
     data() {
         return {
-            collapsed: true,
+            isCollapsed: this.collapsed,
         }
     },
 
@@ -37,6 +37,7 @@ export default {
 
     props: {
         account: { type: Object, required: true },
+        collapsed: { type: Boolean, default: false, required: false },
     },
 }
 </script>

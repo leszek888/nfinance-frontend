@@ -2,7 +2,7 @@
     <div class="container" data-cy="container-accounts">
         <div v-if="accounts && accounts.length > 0">
             <div v-for="account, index in accounts" :key="index">
-                <account-row :account="account" />
+                <account-row :account="account" :collapsed="false" />
             </div>
         </div>
         <div v-if="!accounts || accounts.length === 0">
