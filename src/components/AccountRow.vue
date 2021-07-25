@@ -1,15 +1,20 @@
 <template>
-    <div class="account_row" data-cy="account-row">
+    <div @click="collapsed = !collapsed" class="account_row" data-cy="account-row">
         <span>
-            <div v-if="subAccountsArePresent">&nbsp;+&nbsp;</div>
+            <div v-if="subAccountsArePresent">
+                <div v-if="collapsed">&nbsp;+&nbsp;</div>
+                <div v-if="!collapsed">&nbsp;-&nbsp;</div>
+            </div>
             <div v-if="!subAccountsArePresent">&nbsp;&nbsp;&nbsp;</div>
             {{ account.name }}
         </span>
         <span>{{ formattedBalance }}</span>
     </div>
-    <div v-for="sub_account, index in account.sub_accounts" :key="index">
-        <div class="sub_account">
-            <account-row :account="sub_account" />
+    <div v-if="!collapsed">
+        <div v-for="sub_account, index in account.sub_accounts" :key="index">
+            <div class="sub_account">
+                <account-row :account="sub_account" />
+            </div>
         </div>
     </div>
 </template>
@@ -18,6 +23,12 @@
 import { numberToString } from '@/helpers.js'
 export default {
     name: 'AccountRow',
+
+    data() {
+        return {
+            collapsed: false,
+        }
+    },
 
     computed: {
         formattedBalance() { return numberToString(this.account.balance); },
@@ -40,6 +51,12 @@ export default {
         display: flex;
         justify-content: space-between;
         padding: 0.3em;
+        transition: all 0.2s;
+    }
+    .account_row:hover {
+        background-color: #eee;
+        cursor: pointer;
+        font-weight: bold;
     }
     .sub_arrow {
         border: solid 1px red;
