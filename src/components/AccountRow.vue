@@ -2,8 +2,8 @@
     <div @click="collapsed = !collapsed" class="account_row" data-cy="account-row">
         <span>
             <div v-if="subAccountsArePresent">
-                <div v-if="collapsed">&nbsp;+&nbsp;</div>
-                <div v-if="!collapsed">&nbsp;-&nbsp;</div>
+                <div v-if="collapsed"><font-awesome-icon icon="plus-square" class="icons" />&nbsp;</div>
+                <div v-if="!collapsed"><font-awesome-icon icon="minus-square" class="icons" />&nbsp;</div>
             </div>
             <div v-if="!subAccountsArePresent">&nbsp;&nbsp;&nbsp;</div>
             {{ account.name }}
@@ -63,5 +63,8 @@ export default {
     }
     .sub_account {
         padding-left: 1em;
+    }
+    .icons {
+        color: #aaa;
     }
 </style>
