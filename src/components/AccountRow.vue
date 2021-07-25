@@ -26,7 +26,7 @@ export default {
 
     data() {
         return {
-            collapsed: false,
+            collapsed: true,
         }
     },
 
@@ -66,5 +66,14 @@ export default {
     }
     .icons {
         color: #aaa;
+    }
+
+    @media only screen and (max-width: 640px) {
+        .account_row {
+            padding: 0.6em 0em;
+        }
+        .sub_account {
+            padding-left: 0.5em;
+        }
     }
 </style>
