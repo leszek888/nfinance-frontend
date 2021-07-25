@@ -48,7 +48,7 @@ describe('InputWithAutocomplete.vue', () => {
         expect(wrapper.find('input').element.value).toEqual('Assets:');
         await wrapper.find('input').setValue('L');
         await wrapper.find('input').trigger('keydown.enter');
-        expect(wrapper.find('input').element.value).toEqual('Liabilities');
+        expect(wrapper.find('input').element.value).toEqual('Liabilities:');
         await wrapper.find('input').setValue('L');
     });
 
@@ -164,7 +164,9 @@ describe('InputWithAutocomplete.vue', () => {
         });
 
         await wrapper.find('input').trigger('focus');
-        await wrapper.findAll('[data-cy="ac-suggestion"]')[2].trigger('click');
+        wrapper.vm.checkClicks({ target: wrapper.findAll(
+            '[data-cy="ac-suggestion"]')[2].element });
+        await wrapper.vm.$nextTick();
         expect(wrapper.find('input').element.value).toEqual('Liabilities');
     });
 
