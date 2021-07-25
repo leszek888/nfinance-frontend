@@ -20,7 +20,12 @@
                 </router-link></li>
             </ul>
             <ul>
-                <li><router-link to="/logout">Log out</router-link></li>
+                <li><router-link
+                        to="/logout"
+                        class="nav-link"
+                    >
+                    Log out
+                </router-link></li>
             </ul>
         </div>
     </nav>
