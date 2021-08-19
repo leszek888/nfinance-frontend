@@ -7,6 +7,7 @@
                 v-model="input_value"
                 @change="handleChange"
                 @focus="handleFocus"
+                @blur="removeRedundantColonsWhenSplitted"
                 name="input"
             />
         <div
@@ -123,6 +124,15 @@ export default {
             this.$refs.input.classList.remove('has-error');
 
             document.addEventListener('click', this.checkClicks);
+        },
+
+        removeRedundantColonsWhenSplitted() {
+            if (this.autoCompleteType === 'splitted') {
+                while (this.input_value[this.input_value.length-1] === ':') {
+                    let length = this.input_value.length;
+                    this.input_value = this.input_value.substring(0, length - 1);
+                }
+            }
         },
 
         handleChange() {
