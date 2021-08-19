@@ -3,8 +3,10 @@
         <select ref="periodselect" @change="updatePeriod">
             <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
         </select>
-        <Filter ref="from" name="date_from" :value="value_from" @filter-update="updateFilter"/>
-        <Filter ref="to" name="date_to" :value="value_to" @filter-update="updateFilter"/>
+        <div v-if="currentPeriod == 'Custom'">
+            <Filter ref="from" name="date_from" :value="value_from" @filter-update="updateFilter"/>
+            <Filter ref="to" name="date_to" :value="value_to" @filter-update="updateFilter"/>
+        </div>
     </FilterBox>
 </template>
  
