@@ -88,6 +88,11 @@ const store = createStore({
             if ('balance_id' in response)
                 commit('setBalanceId', response['balance_id']);
         },
+        async createDemoBalance({ commit, dispatch }) {
+            const response = await dispatch('sendApiRequest', {url: 'balance/new?template=demo', method: 'GET'});
+            if ('balance_id' in response)
+                commit('setBalanceId', response['balance_id']);
+        },
         async saveTransaction({ dispatch }, transaction) {
             await dispatch('sendApiRequest', {url: 'transaction', method: 'POST', data: transaction});
         },

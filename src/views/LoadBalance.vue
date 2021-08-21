@@ -33,12 +33,16 @@ export default {
         async createBalance() {
             const params = new URLSearchParams(window.location.search.substring(1));
             const balance_id = params.get('balance_id');
+            const template = params.get('template')
 
             if (balance_id) {
                 this.$store.commit('setBalanceId', balance_id);
             }
             else {
-                await this.$store.dispatch('createNewBalance');
+                if (template && template === 'demo')
+                    await this.$store.dispatch('createDemoBalance')
+                else
+                    await this.$store.dispatch('createNewBalance');
             }
             await this.$store.dispatch('getToken');
             await this.$store.dispatch('fetchTransactions');
