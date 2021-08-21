@@ -4,8 +4,8 @@
             <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
         </select>
         <div v-if="currentPeriod == 'Custom'">
-            <Filter ref="from" name="date_from" :value="value_from" @filter-update="updateFilter"/>
-            <Filter ref="to" name="date_to" :value="value_to" @filter-update="updateFilter"/>
+            <Filter name="date_from" :value="value_from" @filter-update="updateFilter"/>
+            <Filter name="date_to" :value="value_to" @filter-update="updateFilter"/>
         </div>
     </FilterBox>
 </template>
@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             periodes: [ 'This Month', 'Last Month', 'This Year', 'All Time', 'Custom' ],
-            currentPeriod: '',
+            currentPeriod: 'This Month',
         }
     },
     computed: {
@@ -91,7 +91,6 @@ export default {
     },
     emits: [ 'filter-update', 'filters-update' ],
     mounted() {
-        this.currentPeriod = 'This Month';
         this.$nextTick(function() {this.emitAll();});
     },
 };
