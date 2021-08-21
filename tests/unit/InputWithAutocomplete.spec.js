@@ -52,23 +52,6 @@ describe('InputWithAutocomplete.vue', () => {
         await wrapper.find('input').setValue('L');
     });
 
-    it('should remove redundant colons from splitted input on blur', async() => {
-         const wrapper = mount(InputWithAutocomplete, {
-            props: {
-                value: '',
-                autoComplete: true,
-                autoCompleteType: 'splitted',
-                suggestionsList: ['Assets:Current:Bank', 'Assets:Fixed:House', 'Liabilities'],
-            },
-        });
-
-        await wrapper.find('input').trigger('focus');
-        await wrapper.find('input').setValue('Assets:');
-        await wrapper.find('input').trigger('blur');
-        expect(wrapper.find('input').element.value).toEqual('Assets');
-    });
-
-
     it('should append sub-suggestion to input value', async() => {
          const wrapper = mount(InputWithAutocomplete, {
             props: {
