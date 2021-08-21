@@ -1,13 +1,13 @@
 <template>
     <div ref="container" data-cy="container-edit-transaction" class="edited-transaction-container">
         <div class="header">
-            <InputWithAutocomplete
+            <InputWithLabel
                 data-cy="input-date"
                 label="Date"
                 ref="date"
-                :suggestions-list="dateSuggestions"
                 :value="transaction.date"
                 @change="updateDate"
+                input-type="date"
             />
             <InputWithLabel
                 data-cy="input-payee"
@@ -49,7 +49,6 @@
 <script>
 import EditedEntry from './EditedEntry.vue'
 import InputWithLabel from './InputWithLabel.vue'
-import InputWithAutocomplete from './InputWithAutocomplete.vue'
 import { nanoid } from 'nanoid'
 import { numberToString } from '../helpers.js'
 import Decimal from 'decimal.js'
@@ -59,7 +58,6 @@ export default {
 
     components: {
         EditedEntry,
-        InputWithAutocomplete,
         InputWithLabel,
     },
 

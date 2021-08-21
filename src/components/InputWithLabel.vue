@@ -8,6 +8,7 @@
                 @blur="handleBlur"
                 @change="handleChange"
                 @focus="handleFocus"
+                :type="inputType ? inputType : 'text'"
                 name="input"
             />
     </div>
@@ -28,6 +29,7 @@ export default {
     props: {
         dataCy: String,
         label: String,
+        inputType: String,
         type: String,
         value: String,
     },
