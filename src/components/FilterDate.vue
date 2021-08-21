@@ -82,6 +82,9 @@ export default {
        },
 
         emitAll() {
+            if (this.currentPeriod === 'Custom' && (!this.value_from || !this.value_to))
+                return;
+
             this.$emit('filter-update', [{name: 'date_from', value: this.value_from},
                                           {name: 'date_to', value: this.value_to}]);
         },
