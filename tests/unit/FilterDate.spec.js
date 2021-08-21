@@ -22,15 +22,15 @@ describe('FilterDate.vue', () => {
  
         const dateStub = jest.spyOn(Date, 'now').mockImplementation(() => 1625517407660); // 2021-07-05
         wrapper.vm.currentPeriod = 'This Month';
-        await wrapper.vm.updatePeriod();
+        await wrapper.vm.emitAll();
         expect(wrapper.vm.value_from).toEqual('2021-07-01');
         expect(wrapper.vm.value_to).toEqual('2021-07-05');
         wrapper.vm.currentPeriod = 'Last Month';
-        await wrapper.vm.updatePeriod();
+        await wrapper.vm.emitAll();
         expect(wrapper.vm.value_from).toEqual('2021-06-01');
         expect(wrapper.vm.value_to).toEqual('2021-06-30');
         wrapper.vm.currentPeriod = 'This Year';
-        await wrapper.vm.updatePeriod();
+        await wrapper.vm.emitAll();
         expect(wrapper.vm.value_from).toEqual('2021-01-01');
         expect(wrapper.vm.value_to).toEqual('2021-07-05');
         dateStub.mockRestore();
@@ -42,7 +42,7 @@ describe('FilterDate.vue', () => {
                 title: 'FilterDate',
             },
         });
-        wrapper.vm.updatePeriod();
+        wrapper.vm.emitAll();
         expect(Array.isArray(wrapper.emitted('filter-update')[0][0])).toBeTruthy();
     });
 
