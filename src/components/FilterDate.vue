@@ -1,6 +1,6 @@
 <template>
     <FilterBox :title="title">
-        <select ref="periodselect" @change="updatePeriod">
+        <select v-model="currentPeriod" @change="updatePeriod">
             <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
         </select>
         <div v-if="currentPeriod == 'Custom'">
@@ -85,7 +85,7 @@ export default {
            this.$emit('filter-update', data);
         },
         updatePeriod() {
-            this.currentPeriod = this.$refs.periodselect.value;
+            // this.currentPeriod = this.$refs.periodselect.value;
             this.emitAll();
         },
         emitAll() {
