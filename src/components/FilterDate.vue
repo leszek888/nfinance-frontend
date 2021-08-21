@@ -96,22 +96,4 @@ export default {
 };
 </script>
 
-<style scoped>
-    select {
-        background: #fff;
-        border: solid 1px #aaa;
-        font-size: 11pt;
-        padding: 4pt;
-        width: 110pt;
-    }
 
-    input[type="date"] {
-        appearance: none;
-        background: #fff;
-        border: solid 1px #888;
-        color: #000;
-        font-family: "Helvetica", arial, sans-serif;
-        font-size: 11pt;
-        margin: 2pt;
-    }
-</style>

@@ -104,16 +104,6 @@ input {
     padding: 0.5em 0.5em;
 }
 
-input[type="date"] {
-    appearance: none;
-    background: #fff;
-    border: solid 1px #888;
-    color: #000;
-    font-family: "Helvetica", arial, sans-serif;
-    font-size: 11pt;
-    margin: 2pt;
-}
-
 @media only screen and (max-width: 640px) {
     input {
         padding: 0.75em 0.5em;
