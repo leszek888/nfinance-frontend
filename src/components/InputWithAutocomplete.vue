@@ -7,6 +7,7 @@
                 v-model="input_value"
                 @change="handleChange"
                 @focus="handleFocus"
+                autocomplete="off"
                 name="input"
             />
         <div

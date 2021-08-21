@@ -283,7 +283,7 @@ export default {
         top: 5em;
         z-index: 99;
     }
-
+ 
     .header {
         display: flex;
         flex-direction: column;

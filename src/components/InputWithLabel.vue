@@ -10,6 +10,7 @@
                 @focus="handleFocus"
                 :type="inputType ? inputType : 'text'"
                 name="input"
+                autocomplete="off"
             />
     </div>
 </template>
@@ -104,6 +105,14 @@ export default {
         font-size: 11pt;
         width: 100%;
     }
+    .input-with-label-container input[type="date"] {
+        appearance: none;
+        border: solid 1px #ddd;
+        box-sizing: border-box;
+        font-size: 11pt;
+        width: 100%;
+    }
+ 
     .input-with-label-container input:focus {
         border-color: #666;
     }
