@@ -1,6 +1,6 @@
 <template>
     <div data-cy="container-filter" :name="name" class="container-filter">
-        <input ref="filterinput" @keydown="handleKeyDown" @blur="emitFilter" :value="value" />
+        <input ref="filterinput" :placeholder="placeholder" @keydown="handleKeyDown" @blur="emitFilter" :value="value" />
     </div>
 </template>
 
@@ -11,6 +11,7 @@ export default {
     props: {
         name: String,
         value: String,
+        placeholder: String,
     },
 
     methods: {

@@ -1,18 +1,17 @@
 <template>
     <FilterBox :title="title">
-        <select v-model="currentPeriod" @change="emitAll">
+        <select v-model="currentPeriod" @change="updateSelection">
             <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
         </select>
         <div v-if="currentPeriod == 'Custom'">
-            <Filter name="date_from" :value="value_from" @filter-update="updateFilter"/>
-            <Filter name="date_to" :value="value_to" @filter-update="updateFilter"/>
+            <input type="date" name="date_from" v-model="value_from" @change="emitAll"/>
+            <input type="date" name="date_to" v-model="value_to" @change="emitAll"/>
         </div>
     </FilterBox>
 </template>
  
 <script>
 import FilterBox from './FilterBox.vue'
-import Filter from './Filter.vue'
 
 export default {
     name: 'FilterDate',
@@ -20,10 +19,20 @@ export default {
         return {
             periodes: [ 'This Month', 'Last Month', 'This Year', 'All Time', 'Custom' ],
             currentPeriod: 'This Month',
+            value_from: '',
+            value_to: '',
         }
     },
-    computed: {
-        value_from: function() {
+    props: {
+        value: String,
+        title: String,
+        name: String,
+    },
+    components: {
+        FilterBox,
+    },
+    methods: {
+       updateSelection() {
             let date_from = new Date(Date.now());
             switch (this.currentPeriod) {
                 case 'This Month':
@@ -46,9 +55,9 @@ export default {
                 date_from = date_from.toLocaleDateString('en-CA');
             else
                 date_from = '';
-            return date_from;
-        },
-        value_to: function() {
+
+           this.value_from = date_from;
+
             let date_to = new Date(Date.now());
             switch (this.currentPeriod) {
                 case 'This Month':
@@ -68,22 +77,10 @@ export default {
                 date_to = date_to.toLocaleDateString('en-CA');
             else
                 date_to = '';
-            return date_to;
-        }
-    },
-    props: {
-        value: String,
-        title: String,
-        name: String,
-    },
-    components: {
-        Filter,
-        FilterBox,
-    },
-    methods: {
-       updateFilter(data) {
-           this.$emit('filter-update', data);
-        },
+           this.value_to = date_to;
+           this.emitAll();
+       },
+
         emitAll() {
             this.$emit('filter-update', [{name: 'date_from', value: this.value_from},
                                           {name: 'date_to', value: this.value_to}]);
@@ -91,7 +88,7 @@ export default {
     },
     emits: [ 'filter-update', 'filters-update' ],
     mounted() {
-        this.$nextTick(function() {this.emitAll();});
+        this.$nextTick(function() {this.updateSelection();});
     },
 };
 </script>
