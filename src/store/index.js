@@ -70,7 +70,7 @@ const store = createStore({
                 commit('setTransactions', response['transactions']);
         },
         async loadAccounts({ commit, dispatch }) {
-            const response = await dispatch('sendApiRequest', {url: 'accounts', method: 'POST'});
+            const response = await dispatch('sendApiRequest', {url: 'accounts', method: 'GET'});
             if ('accounts' in response) {
                 commit('setAccounts', response['accounts']);
             }
