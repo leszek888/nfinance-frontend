@@ -1,11 +1,17 @@
 <template>
     <FilterBox :title="title">
-        <select v-model="currentPeriod" @change="updateSelection">
-            <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
-        </select>
-        <div v-if="currentPeriod == 'Custom'">
-            <input type="date" name="date_from" v-model="value_from" @change="emitAll" autocomplete="off"/>
-            <input type="date" name="date_to" v-model="value_to" @change="emitAll" autocomplete="off" />
+        <div>
+            <select v-model="currentPeriod" @change="updateSelection">
+                <option v-for="period, index in periodes" v-bind:key="index">{{ period }}</option>
+            </select>
+            <div v-if="currentPeriod == 'Custom'">
+                <div class="date-selector">
+                    From: <input type="date" name="date_from" v-model="value_from" @change="emitAll" autocomplete="off"/>
+                </div>
+                <div class="date-selector">
+                    To: <input type="date" name="date_to" v-model="value_to" @change="emitAll" autocomplete="off" />
+                </div>
+            </div>
         </div>
     </FilterBox>
 </template>
@@ -96,4 +102,14 @@ export default {
 };
 </script>
 
-
+<style>
+    .date-selector {
+        align-items: center;
+        display: grid;
+        grid-template-columns: 40pt 1fr;
+        font-size: 10pt;
+        padding-left: 0.2em;
+        padding-top: 0.2em;
+        text-align: left;
+    }
+</style>
