@@ -69,6 +69,14 @@ export default {
 
 <style>
     .filters-container {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 0.25em;
+    }
+
+    @media only screen and (max-width: 780px) {
+        .filters-container {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

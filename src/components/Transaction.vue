@@ -1,8 +1,7 @@
 <template>
     <div data-cy="container-transaction" class="container-transaction">
         <div class="header">{{ transaction.date }}, {{ transaction.payee }}</div>
-        <div :class="[assetValue > 0 && 'positive-balance',
-                  assetValue < 0 && 'negative-balance']"
+        <div
             v-for="(entry, index) in transaction.entries"
             :key="index">
             <Entry :account="entry.account" :amount="entry.amount" />
@@ -16,19 +15,6 @@ import Entry from './Entry.vue'
 
 export default {
     name: 'Transaction',
-
-    computed: {
-        assetValue: function() {
-            const assets_entries = this.transaction.entries.filter(entry => entry.account.startsWith('A'));
-            let assetValue = 0;
-
-            assets_entries.forEach(entry => {
-                const convertedEntry = parseInt(parseFloat(entry.amount)*100);
-                assetValue += convertedEntry;
-            });
-            return assetValue;
-        }
-    },
 
     props: {
         transaction: Object,
@@ -84,12 +70,5 @@ export default {
         background-color: #ddd;
     }
 
-    .positive-balance {
-        color: #32821f;
-    }
-
-    .negative-balance {
-        color: #994343;
-    }
 </style>
 

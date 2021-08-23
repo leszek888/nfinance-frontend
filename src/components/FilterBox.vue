@@ -1,7 +1,9 @@
 <template>
     <div data-cy="container-filterbox" class="container-filterbox">
         <div class="filterbox-title">{{ title }}</div>
-        <slot></slot>
+        <div class="filterbox-inputs">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -16,39 +18,43 @@ export default {
 </script>
 <style>
     .container-filterbox {
+        align-items: flex-start;
         background-color: #fafafa;
         border: none;
-        box-shadow: 0px 0px 6px #ccc;
-        height: 105pt;
-        margin: 0.5em;
-        text-align: center;
-        width: 120pt;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        width: 100%;
     }
     .filterbox-title {
-        padding: 0.25em 0em 0.75em 0em;
+        padding: 0.25em;
     }
-    .container-filterbox input {
+    .filterbox-inputs {
+        width: 100%;
+    }
+    .filterbox-inputs input {
         box-sizing: border-box;
         border: solid 1px #aaa;
         font-size: 11pt;
         padding: 0.2em;
-        width: 90%;
+        width: 100%;
     }
-    .container-filterbox select {
+    .filterbox-inputs select {
         background: #fff;
         border: solid 1px #aaa;
         box-sizing: border-box;
         font-size: 11pt;
-        margin: 0.25em;
         padding: 0.2em;
-        width: 90%;
+        width: 100%;
     }
-    .container-filterbox input[type="date"] {
+    .filterbox-inputs input[type="date"] {
         appearance: none;
         background: #fff;
         border: solid 1px #aaa;
         box-sizing: border-box;
         font-family: "Helvetica", arial, sans-serif;
         font-size: 11pt;
+        width: 100%;
     }
 </style>

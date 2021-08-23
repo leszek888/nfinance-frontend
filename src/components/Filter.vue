@@ -32,7 +32,4 @@ export default {
 </script>
 
 <style>
-    .container-filter {
-        margin: 0.25em;
-    }
 </style>
