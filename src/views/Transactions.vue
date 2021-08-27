@@ -38,13 +38,13 @@ export default {
     data() {
         return {
             editedTransaction: null,
-            transactions: null,
         }
     },
 
     computed: {
         authToken() { return this.$store.getters.getAuthToken; },
-        filters() { return this.$store.getter.getFilters; },
+        filters() { return this.$store.getters.getFilters; },
+        transactions() { return this.$store.getters.allTransactions; },
     },
 
     methods: {
@@ -67,7 +67,6 @@ export default {
         async updateFilters(filters) {
             this.$store.commit('setFilters', filters);
             await this.$store.dispatch('fetchData');
-            this.transactions = this.$store.getters.allTransactions;
         },
 
         async saveEditedTransaction(transaction) {

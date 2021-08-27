@@ -103,7 +103,7 @@ export default {
 
             filters += this.period;
             this.$store.commit('setAccountsFilters', filters);
-            await this.$store.dispatch('fetchData');
+            await this.$store.dispatch('loadAccounts');
         },
 
         updatePeriod(period) {
@@ -121,7 +121,7 @@ export default {
     mounted() {
         if (!this.$route.params.report_type);
             this.$router.push('/reports/balance');
-        this.$store.dispatch('fetchData');
+        this.$store.dispatch('loadAccounts');
     },
 }
 </script>
