@@ -16,6 +16,7 @@
                 label="Amount"
                 ref="amount"
                 type="number"
+                inputType="number"
                 :value="entry.amount"
                 @change="updateAmount"
                 @focusout="updateEntry"

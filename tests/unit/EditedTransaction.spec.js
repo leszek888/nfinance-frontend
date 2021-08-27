@@ -54,9 +54,9 @@ describe('EditedTransaction.vue', () => {
         expect(payee_input.element.value).toBe('Payee');
         expect(date_input.element.value).toBe('2020-01-01');
         expect(entries[0].find("[data-cy='input-account']").element.value).toBe('Assets');
-        expect(entries[0].find("[data-cy='input-amount']").element.value).toBe('-5,00');
+        expect(entries[0].find("[data-cy='input-amount']").element.value).toBe('-5');
         expect(entries[1].find("[data-cy='input-account']").element.value).toBe('Expenses');
-        expect(entries[1].find("[data-cy='input-amount']").element.value).toBe('5,00');
+        expect(entries[1].find("[data-cy='input-amount']").element.value).toBe('5');
     });
 
     it('should remove entry when clicking remove button', () => {

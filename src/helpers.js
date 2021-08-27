@@ -10,11 +10,14 @@ export function numberToString(number) {
                 return '';
         }
     }
-    return Intl.NumberFormat('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 8}).format(number);
+    return Intl.NumberFormat(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 8}).format(number);
 }
 
 export function stringToNumber(string) {
-    string = string.replaceAll(' ', '').replaceAll('.','').replaceAll(',','.');
+    if (!string.match(/^-?(([1-9]\d{0,2}(\.\d{3})*)|([1-9]\d*|0))(,\d+)?$/))
+        return '';
+
+    string = string.replaceAll(' ', '').replaceAll('.', '').replaceAll(',','.');
 
     if (string.length === 0) {
         return '';

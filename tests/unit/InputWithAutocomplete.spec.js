@@ -101,16 +101,6 @@ describe('InputWithAutocomplete.vue', () => {
         expect(wrapper.findAll('.selected')).toHaveLength(1);
     });
 
-    it('should convert number to string, when input type is number', async () => {
-        const wrapper = mount(InputWithAutocomplete, {
-            props: {
-                value: '12345.44',
-                type: 'number',
-            } ,
-        });
-        expect(wrapper.find('input').element.value).toEqual('12.345,44');
-    });
-
     it('should format number input after blur', async () => {
         const wrapper = mount(InputWithAutocomplete, {
             props: {
@@ -121,7 +111,7 @@ describe('InputWithAutocomplete.vue', () => {
 
         await wrapper.find('input').setValue('1234,5');
         await wrapper.find('input').trigger('keydown.tab');
-        expect(wrapper.find('input').element.value).toEqual('1.234,50');
+        expect(wrapper.find('input').element.value).toEqual('1234,50');
     });
 
     it('should update current selection when up and down arrows are pressed', async () => {

@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import { formatNumber, numberToString, stringToNumber } from './../helpers.js'
+import { numberToString } from './../helpers.js'
 
 export default {
     name: 'InputWithLabel',
 
     data() {
         return {
-            input_value: this.formatValue(),
+            input_value: this.value,
         }
     },
 
@@ -51,8 +51,8 @@ export default {
         },
 
         handleBlur() {
-            if (this.type === 'number' && formatNumber(this.input_value))
-                this.input_value = formatNumber(this.input_value);
+            if (this.type === 'number')
+                this.input_value = this.input_value.replaceAll('.', ',');
         },
 
         handleFocus() {
@@ -61,12 +61,9 @@ export default {
 
         handleChange() {
             let value = this.input_value;
-
-            if (this.type === 'number')
-                value = stringToNumber(value);
-
             value = value.trim();
 
+            console.log("change! emitting: ", value);
             this.$emit('change', value);
         },
     },
