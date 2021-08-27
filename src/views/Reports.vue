@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="reportscontainer">
-            <button :class="report_type == 'balance' && 'active'" @click="handleClick('balance')">Balance Sheet</button>
-            <button @click="handleClick('net-worth')">Net Worth</button>
-            <button @click="handleClick('cash-flow')">Cash Flow</button>
+            <router-link to="/reports/balance" class="report-link" active-class="active">Balance Sheet</router-link>
+            <router-link to="/reports/net-worth" class="report-link" active-class="active">Net Worth</router-link>
+            <router-link to="/reports/cash-flow" class="report-link" active-class="active">Cash Flow</router-link>
         </div>
 
         <FilterDate data-cy="filter-date" title="Period" name="date" @filter-update="updatePeriod" />
@@ -33,8 +33,15 @@ export default {
     data() {
         return {
             period: '',
-            report_type: '',
+            report_type: this.$route.params.report_type,
         }
+    },
+
+    watch: {
+        $route(to) {
+            this.report_type = to.params.report_type;
+            this.updateFilters();
+        },
     },
 
     computed: {
@@ -138,7 +145,19 @@ export default {
     .reportscontainer button:hover {
         background-color: #f3f3f3;
     }
+    .report-link {
+        background-color: #fafafa;
+        color: #00ff00;
+        text-align: center;
+        text-decoration: none;
+        padding: 1em;
+    }
+    .report-link:hover {
+        background-color: #f0f0f0;
+        color: #00cc00;
+    }
     .active {
         background-color: #f0f0f0;
+        color: #00cc00;
     }
 </style>

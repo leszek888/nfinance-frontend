@@ -4,7 +4,7 @@
             <ul>
                 <li><router-link
                         data-cy="nav-link-accounts"
-                        to="/accounts"
+                        to="/reports"
                         class="nav-link"
                         active-class="nav-link-active"
                     >

@@ -40,6 +40,18 @@ const routes = [
     },
     {
         path: '/accounts',
+        name: 'Accounts',
+        component: Reports,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: '/reports',
+        redirect: '/reports/balance',
+    },
+    {
+        path: '/reports/:report_type',
         name: 'Reports',
         component: Reports,
         meta: {
