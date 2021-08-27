@@ -54,27 +54,4 @@ describe('Transaction.vue', () => {
         expect(wrapper.emitted('edit-transaction')).toBeTruthy();
         expect(wrapper.emitted('edit-transaction')[0][0]).toEqual(transaction.id);
     });
-
-    it('adds positive or negative balance class when Assets are positive/negative', () => {
-        transaction.entries[0].amount = '-10';
-        transaction.entries[1].amount = '10';
-        const wrapper = mount(Transaction, {
-            props: { transaction: transaction },
-        })
-
-        expect(wrapper.find('.negative-balance').exists()).toBeTruthy();
-        expect(wrapper.find('.positive-balance').exists()).toBeFalsy();
-
-        transaction.entries[0].amount = '10';
-        transaction.entries[1].amount = '-10';
-
-        const wrapper2 = mount(Transaction, {
-            props: { transaction: transaction },
-        })
-        
-        expect(wrapper2.find('.negative-balance').exists()).toBeFalsy();
-        expect(wrapper2.find('.positive-balance').exists()).toBeTruthy();
-
-    });
-
 })

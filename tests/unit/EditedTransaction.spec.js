@@ -62,11 +62,22 @@ describe('EditedTransaction.vue', () => {
     it('should remove entry when clicking remove button', () => {
         const wrapper = mountWrapper(null);
         const entries = wrapper.findAll('.edited-entry-container');
+        wrapper.find('[data-cy="btn-add-entry"]').element.click();
+
+        expect(wrapper.vm.transaction.entries.length).toBe(3);
+        entries[0].find('button').element.click();
+
+        expect(wrapper.vm.transaction.entries.length).toBe(2);
+    });
+
+    it('should clear entry instead of removing it when remove button clicked and entry count is 2', () => {
+        const wrapper = mountWrapper(null);
+        const entries = wrapper.findAll('.edited-entry-container');
 
         expect(wrapper.vm.transaction.entries.length).toBe(2);
         entries[0].find('button').element.click();
 
-        expect(wrapper.vm.transaction.entries.length).toBe(1);
+        expect(wrapper.vm.transaction.entries.length).toBe(2);
     });
 
     it('should add entry when clicking add entry button', () => {

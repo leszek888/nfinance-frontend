@@ -207,19 +207,25 @@ export default {
             this.$emit('delete-transaction', this.transaction);
         },
         addEntry() {
-            this.transaction.entries = [ ...this.transaction.entries, this.parseEntry(null)];
+            this.transaction.entries = [ ...this.transaction.entries, this.addIdToEntry(null)];
         },
         updateEntry(entry) {
+            console.log("Updating this: ", entry);
             const index = this.transaction.entries.findIndex(e => e.id === entry.id);
             this.transaction.entries[index] = {...entry};
         },
-        parseEntry(entry) {
+        addIdToEntry(entry) {
             if (!entry)
                 entry = { account: '', amount: '' };
             return { ...entry, id: nanoid() };
         },
         removeEntry(id) {
-            this.transaction.entries = this.transaction.entries.filter(entry => entry.id !== id);
+            if (this.transaction.entries.length == 2) {
+                const index = this.transaction.entries.findIndex(e => e.id === id);
+                this.transaction.entries[index] = { id: nanoid(), account: '', amount: '' };
+            }
+            else 
+                this.transaction.entries = this.transaction.entries.filter(entry => entry.id !== id);
         },
         updatePayee(value) {
             this.transaction.payee = value;
@@ -248,7 +254,7 @@ export default {
         this.transaction.id = this.id;
         this.transaction.date = this.date;
         this.transaction.payee = this.payee;
-        this.transaction.entries = this.entries.map((entry) => {return this.parseEntry(entry)});
+        this.transaction.entries = this.entries.map((entry) => {return this.addIdToEntry(entry)});
         this.dateSuggestions = this.getLastDays(4);
     },
 
