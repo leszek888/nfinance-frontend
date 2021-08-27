@@ -4,7 +4,7 @@
             <ul>
                 <li><router-link
                         data-cy="nav-link-accounts"
-                        to="/reports"
+                        :to="{name: 'Reports'}"
                         class="nav-link"
                         active-class="nav-link-active"
                     >
@@ -12,7 +12,7 @@
                 </router-link></li>
                 <li><router-link
                         data-cy="nav-link-transactions"
-                        to="/transactions"
+                        :to="{name: 'Transactions'}"
                         class="nav-link"
                         active-class="nav-link-active"
                     >
@@ -81,5 +81,4 @@ export default {
         max-width: 1100px;
         padding: 1em;
     }
-
 </style>

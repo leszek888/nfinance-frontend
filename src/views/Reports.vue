@@ -1,9 +1,9 @@
 <template>
     <div class="container" data-cy="container-accounts">
         <div class="reportscontainer">
-            <router-link to="/reports/balance" class="report-link" active-class="active">Balance Sheet</router-link>
-            <router-link to="/reports/net-worth" class="report-link" active-class="active">Net Worth</router-link>
-            <router-link to="/reports/cash-flow" class="report-link" active-class="active">Cash Flow</router-link>
+            <router-link to="/reports/balance" class="report-link" active-class="report-link-active">Balance Sheet</router-link>
+            <router-link to="/reports/net-worth" class="report-link" active-class="report-link-active">Net Worth</router-link>
+            <router-link to="/reports/cash-flow" class="report-link" active-class="report-link-active">Cash Flow</router-link>
         </div>
 
         <FilterDate data-cy="filter-date" title="Period" name="date" @filter-update="updatePeriod" />
@@ -119,6 +119,8 @@ export default {
 
 
     mounted() {
+        if (!this.$route.params.report_type);
+            this.$router.push('/reports/balance');
         this.$store.dispatch('fetchData');
     },
 }
@@ -154,7 +156,7 @@ export default {
         background-color: #f0f0f0;
         color: #055;
     }
-    .active {
+    .report-link-active {
         background-color: #f0f0f0;
         color: #055;
     }
