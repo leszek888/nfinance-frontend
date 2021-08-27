@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Accounts from '@/views/Accounts.vue'
+import Reports from '@/views/Reports.vue'
 import LoadBalance from '@/views/LoadBalance.vue'
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
@@ -40,8 +40,8 @@ const routes = [
     },
     {
         path: '/accounts',
-        name: 'Accounts',
-        component: Accounts,
+        name: 'Reports',
+        component: Reports,
         meta: {
             requiresAuth: true,
         },

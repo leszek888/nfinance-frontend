@@ -6,6 +6,7 @@ const store = createStore({
         accounts: [],
         balanceId: '',
         filters: '',
+        accountsFilters: '',
         initialized: false,
         name: 'Vue',
         transactions: [],
@@ -15,6 +16,7 @@ const store = createStore({
         setTransactions: (state, transactions) => (state.transactions = transactions),
         setAccounts: (state, accounts) => (state.accounts = [...accounts]),
         setFilters: (state, filters) => (state.filters = filters),
+        setAccountsFilters: (state, filters) => (state.accountsFilters = filters),
 
         setAuthToken: (state, token) => {
             state.authToken = token;
@@ -69,8 +71,8 @@ const store = createStore({
             if ('transactions' in response)
                 commit('setTransactions', response['transactions']);
         },
-        async loadAccounts({ commit, dispatch }) {
-            const response = await dispatch('sendApiRequest', {url: 'accounts', method: 'GET'});
+        async loadAccounts({ commit, dispatch, getters }) {
+            const response = await dispatch('sendApiRequest', {url: 'accounts?'+getters.getAccountsFilters, method: 'GET'});
             if ('accounts' in response) {
                 commit('setAccounts', response['accounts']);
             }
@@ -105,6 +107,7 @@ const store = createStore({
         allTransactions: (state) => state.transactions,
         getAuthToken: (state) => state.authToken,
         getAccounts: (state) => state.accounts,
+        getAccountsFilters: (state) => state.accountsFilters,
         getBalanceId: (state) => state.balanceId,
         getFilters: (state) => state.filters,
         isInitialized: (state) => state.initialized,

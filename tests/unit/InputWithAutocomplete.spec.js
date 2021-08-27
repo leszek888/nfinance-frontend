@@ -48,7 +48,7 @@ describe('InputWithAutocomplete.vue', () => {
         expect(wrapper.find('input').element.value).toEqual('Assets:');
         await wrapper.find('input').setValue('L');
         await wrapper.find('input').trigger('keydown.enter');
-        expect(wrapper.find('input').element.value).toEqual('Liabilities:');
+        expect(wrapper.find('input').element.value).toEqual('Liabilities');
         await wrapper.find('input').setValue('L');
     });
 
