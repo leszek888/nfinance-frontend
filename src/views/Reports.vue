@@ -154,10 +154,12 @@ export default {
     }
     .report-link:hover {
         background-color: #f0f0f0;
+        box-shadow: #aaa 0 0 6px;
         color: #055;
     }
     .report-link-active {
         background-color: #f0f0f0;
+        box-shadow: #aaa 0 0 6px;
         color: #055;
     }
 </style>
