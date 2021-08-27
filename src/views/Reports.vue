@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container" data-cy="container-accounts">
         <div class="reportscontainer">
             <router-link to="/reports/balance" class="report-link" active-class="active">Balance Sheet</router-link>
             <router-link to="/reports/net-worth" class="report-link" active-class="active">Net Worth</router-link>
@@ -8,13 +8,11 @@
 
         <FilterDate data-cy="filter-date" title="Period" name="date" @filter-update="updatePeriod" />
 
-        <div class="container" data-cy="container-accounts">
             <div v-if="accounts && accounts.length > 0">
                 <div v-for="account, index in accounts" :key="index">
                     <account-row :account="account" :collapsed="false" />
                 </div>
             </div>
-        </div>
     </div>
 </template>
 
@@ -147,17 +145,17 @@ export default {
     }
     .report-link {
         background-color: #fafafa;
-        color: #00ff00;
+        color: #0aa;
         text-align: center;
         text-decoration: none;
         padding: 1em;
     }
     .report-link:hover {
         background-color: #f0f0f0;
-        color: #00cc00;
+        color: #055;
     }
     .active {
         background-color: #f0f0f0;
-        color: #00cc00;
+        color: #055;
     }
 </style>

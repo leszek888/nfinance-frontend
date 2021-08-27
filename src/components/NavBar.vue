@@ -8,7 +8,7 @@
                         class="nav-link"
                         active-class="nav-link-active"
                     >
-                    Accounts
+                    Reports
                 </router-link></li>
                 <li><router-link
                         data-cy="nav-link-transactions"
