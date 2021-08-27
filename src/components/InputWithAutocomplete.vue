@@ -63,7 +63,9 @@ export default {
 
                     this.suggestionsList.forEach((suggestion) => {
                         if (suggestion.toLowerCase().startsWith(this.input_value.toLowerCase())) {
-                            let splittedSuggestion = suggestion.split(':')[depth-1] + ':';
+                            let splittedSuggestion = suggestion.split(':')[depth-1];
+                            if (suggestion.split(':').length > depth)
+                                splittedSuggestion += ':';
 
                             if (!updatedSuggestions.includes(splittedSuggestion) &&
                                 this.input_value.split(':')[depth-1].replace(':', '') !== splittedSuggestion.replace(':', '')) {
