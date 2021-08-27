@@ -210,7 +210,6 @@ export default {
             this.transaction.entries = [ ...this.transaction.entries, this.addIdToEntry(null)];
         },
         updateEntry(entry) {
-            console.log("Updating this: ", entry);
             const index = this.transaction.entries.findIndex(e => e.id === entry.id);
             this.transaction.entries[index] = {...entry};
         },

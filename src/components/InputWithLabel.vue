@@ -9,6 +9,7 @@
                 @change="handleChange"
                 @focus="handleFocus"
                 :type="inputType ? inputType : 'text'"
+                :step="inputType == 'number' && '0.01'"
                 name="input"
                 autocomplete="off"
             />
@@ -63,7 +64,6 @@ export default {
             let value = this.input_value;
             value = value.trim();
 
-            console.log("change! emitting: ", value);
             this.$emit('change', value);
         },
     },
