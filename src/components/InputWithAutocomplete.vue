@@ -171,7 +171,7 @@ export default {
         },
 
         selectSuggestion(index) {
-            if (index < 0 || index > this.currentSuggestions.length)
+            if (index < 0 || index >= this.currentSuggestions.length)
                 return;
 
             if (this.autoCompleteType === 'splitted' && this.currentSuggestions.length > 0) {
