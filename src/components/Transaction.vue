@@ -32,7 +32,7 @@ export default {
     .container-transaction {
         background-color: #fefefe;
         border-top: solid 1px #ddd;
-        margin-top: 1em;
+        margin-top: 0.5em;
         padding: 1em;
         position: relative;
         text-align: left;

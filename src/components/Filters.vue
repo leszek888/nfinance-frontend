@@ -70,7 +70,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .filters-container {
         background-color: #fafafa;
         border: solid 1px #ddd;

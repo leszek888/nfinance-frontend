@@ -53,15 +53,18 @@ export default {
                 const index = (this.transactions.findIndex(transaction => transaction.id === id));
                 this.editedTransaction = this.transactions[index];
             }
+            document.body.classList.add('blocked');
         },
 
         createNewTransaction() {
             this.editedTransaction = { date: '', payee: '',
                 entries: [ {account: '', amount: ''}, {account: '', amount: ''} ] };
+            document.body.classList.add('blocked');
         },
 
         closeEditedTransaction() {
             this.editedTransaction = null;
+            document.body.classList.remove('blocked');
         },
 
         async updateFilters(filters) {

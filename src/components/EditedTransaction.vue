@@ -302,10 +302,10 @@ export default {
         animation-name: slide-in-animation;
         background-color: #fefefe;
         border: solid 1px #bbb;
-        border-radius: 10px;
+        border-radius: 5px;
         box-shadow: 0px 0px 6px #aaa;
         display: grid;
-        grid-gap: 10pt;
+        grid-gap: 0.5rem;
         grid-template-columns: 2fr 3fr;
         left: 0;
         margin: auto;
@@ -318,7 +318,7 @@ export default {
         z-index: 99;
     }
  
-    .header {
+    .header, .entries {
         display: flex;
         flex-direction: column;
         position: relative;
@@ -358,7 +358,6 @@ export default {
     }
 
     .btn-add-entry {
-        box-sizing: border-box;
         width: 90%;
     }
 

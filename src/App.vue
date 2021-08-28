@@ -49,8 +49,21 @@ export default {
 
 <style>
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+*:focus {
+    outline: thin #111 solid;
+}
+a:focus {
+    outline: thin #aaa dotted;
+}
+
 body {
-    padding-top: 3.5em;
+    padding-top: 5em;
 }
 
 #app {
@@ -92,20 +105,37 @@ body {
   opacity: 1;
 }
 
-.link {
+a {
     color: #48a;
     text-decoration: none;
 }
-.link:hover {
+
+a:hover {
     color: #157;
 }
 
 input {
     padding: 0.5em 0.5em;
+    border: solid 1px #aaa;
+    font-size: 11pt;
+}
+
+select {
+    background: #fff;
+    border: solid 1px #aaa;
+    font-size: 11pt;
+    padding: 0.5em 0.5em;
+}
+
+input[type="date"] {
+    appearance: none;
+    background: #fff;
+    border: solid 1px #aaa;
+    font-size: 11pt;
 }
 
 @media only screen and (max-width: 640px) {
-    input {
+    input, select {
         padding: 0.75em 0.5em;
     }
 }

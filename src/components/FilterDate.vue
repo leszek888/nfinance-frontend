@@ -100,7 +100,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
     .date-selector {
         align-items: center;
         display: grid;

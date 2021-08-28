@@ -1,5 +1,5 @@
 <template>
-    <div @click="isCollapsed = !isCollapsed" class="account_row" data-cy="account-row">
+    <div @click="isCollapsed = !isCollapsed" class="account-row" data-cy="account-row">
         <span>
             <div v-if="subAccountsArePresent">
                 <div v-if="isCollapsed"><font-awesome-icon icon="plus-square" class="icons" />&nbsp;</div>
@@ -12,7 +12,7 @@
     </div>
     <div v-if="!isCollapsed">
         <div v-for="sub_account, index in account.sub_accounts" :key="index">
-            <div class="sub_account">
+            <div class="sub-account">
                 <account-row :account="sub_account" :collapsed="collapsed" />
             </div>
         </div>
@@ -47,22 +47,22 @@ export default {
         display: flex;
     }
 
-    .account_row {
+    .account-row {
         border-top: solid 1px #ccc;
         display: flex;
         justify-content: space-between;
         padding: 0.3em;
         transition: all 0.2s;
     }
-    .account_row:hover {
+    .account-row:hover {
         background-color: #eee;
         cursor: pointer;
         font-weight: bold;
     }
-    .sub_arrow {
+    .sub-arrow {
         border: solid 1px red;
     }
-    .sub_account {
+    .sub-account {
         padding-left: 1em;
     }
     .icons {
@@ -70,10 +70,10 @@ export default {
     }
 
     @media only screen and (max-width: 640px) {
-        .account_row {
+        .account-row {
             padding: 0.6em 0em;
         }
-        .sub_account {
+        .sub-account {
             padding-left: 0.5em;
         }
     }

@@ -20,7 +20,6 @@ export default {
     .container-filterbox {
         align-items: flex-start;
         border: none;
-        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         padding: 1em;
@@ -33,27 +32,9 @@ export default {
         width: 100%;
     }
     .filterbox-inputs input {
-        box-sizing: border-box;
-        border: solid 1px #aaa;
-        font-size: 11pt;
-        padding: 0.2em;
         width: 100%;
     }
     .filterbox-inputs select {
-        background: #fff;
-        border: solid 1px #aaa;
-        box-sizing: border-box;
-        font-size: 11pt;
-        padding: 0.2em;
-        width: 100%;
-    }
-    .filterbox-inputs input[type="date"] {
-        appearance: none;
-        background: #fff;
-        border: solid 1px #aaa;
-        box-sizing: border-box;
-        font-family: "Helvetica", arial, sans-serif;
-        font-size: 11pt;
         width: 100%;
     }
 </style>

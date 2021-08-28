@@ -217,10 +217,6 @@ export default {
         from { max-height: 100pt; border: 1px; }
         to { max-height: 0pt; border: 0px; }
     }
-
-    *:focus {
-        outline: none;
-    }
     .input-with-label-container {
         background-color: #fefefe;
         padding-top: 0.3rem;
