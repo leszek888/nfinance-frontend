@@ -308,5 +308,8 @@ export default {
     .suggestion {
         padding: 0.7em 0.5em;
     }
+    .error-message {
+        font-size: 18pt;
+    }
 }
 </style>
