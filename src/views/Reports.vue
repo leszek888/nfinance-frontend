@@ -8,6 +8,8 @@
 
         <FilterDate data-cy="filter-date" title="Period" name="date" @filter-update="updatePeriod" selected-period="All Time" />
 
+        <div class="balance-sum"><span>Total</span><span>{{ balanceSum }}</span></div>
+
             <div v-if="accounts && accounts.length > 0">
                 <div v-for="account, index in accounts" :key="index">
                     <account-row :account="account" :collapsed="false" />
@@ -19,6 +21,8 @@
 <script>
 import AccountRow from '@/components/AccountRow.vue'
 import FilterDate from '@/components/FilterDate.vue'
+import Decimal from 'decimal.js'
+import { numberToString } from './../helpers.js'
 
 export default {
     name: 'Reports',
@@ -48,12 +52,24 @@ export default {
 
             this.$store.getters.getAccounts.forEach(account => {
                 let sub_accounts = account['name'].split(':');
+                account['balance'] = Decimal(account['balance']);
 
-                this.parseSubAccounts(sub_accounts, parseFloat(account['balance']), parsedAccounts, 0);
+                this.parseSubAccounts(sub_accounts, account['balance'], parsedAccounts, 0);
             });
 
             return parsedAccounts;
         },
+        balanceSum() {
+            let sum = Decimal(0);
+            console.log('called');
+            console.log(this.accounts);
+
+            this.accounts.forEach(account => {
+                sum = sum.plus(Decimal(account.balance));
+            });
+
+            return numberToString(sum.toString());
+        }
     },
 
     methods: {
@@ -68,7 +84,7 @@ export default {
             array.forEach(element => {
                 if (element['name'] == account['name']) {
                     account_found = true;
-                    element['balance'] += account['balance'];
+                    element['balance'] = element['balance'].plus(account['balance']);
                     this.parseSubAccounts(accounts, balance, element['sub_accounts'], depth+1);
                 }
             });
@@ -126,6 +142,15 @@ export default {
 </script>
 
 <style>
+    .balance-sum {
+        display: flex;
+        font-weight: bold;
+        font-size: 15pt;
+        justify-content: space-between;
+        padding: 0.3rem;
+        text-align: right;
+        width: 100%;
+    }
     .container {
         position: relative;
     }

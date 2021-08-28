@@ -16,8 +16,7 @@
                 data-cy="input-amount"
                 label="Amount"
                 ref="amount"
-                type="number"
-                inputType="number"
+                :numeric=true
                 :value="entry.amount"
                 @change="updateAmount"
                 @focusout="updateEntry"

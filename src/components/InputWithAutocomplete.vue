@@ -38,13 +38,14 @@
 </template>
 
 <script>
+import { numberToLocaleDecimal, localeDecimalToPeriod } from '@/helpers.js'
 export default {
     name: 'InputWithAutocomplete',
 
     data() {
         return {
             currentSelection: 0,
-            input_value: this.value,
+            input_value: '',
             isFocused: false,
             errorMessage: '',
             showError: false,
@@ -58,6 +59,7 @@ export default {
         label: String,
         suggestionsList: Array,
         type: String,
+        numeric: Boolean,
         value: String,
     },
 
@@ -143,6 +145,9 @@ export default {
             if (this.autoCompleteType === 'splitted')
                 value = value.replace(/:$/, '');
 
+            if (this.numeric)
+                value = localeDecimalToPeriod(value);
+
             this.$emit('change', value);
         },
 
@@ -200,7 +205,10 @@ export default {
     },
 
     created() {
-        this.formatValue();
+        if (this.numeric)
+            this.input_value = numberToLocaleDecimal(this.value);
+        else
+            this.input_value = this.value;
     },
 
     emits: ['change'],
@@ -244,10 +252,11 @@ export default {
         position: absolute;
     }
     .input-with-label-container .error-message {
+        background-color: #fff;
         color: #a55a;
         position: absolute;
         top: 10pt;
-        right: 10pt;
+        right: 7pt;
         z-index: 100;
     }
     .input-with-label-container .error-message-popup {

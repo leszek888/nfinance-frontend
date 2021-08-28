@@ -71,7 +71,7 @@ export default {
 
     @media only screen and (max-width: 640px) {
         .account-row {
-            padding: 0.6em 0em;
+            padding: 0.6em 0.3em;
         }
         .sub-account {
             padding-left: 0.5em;
