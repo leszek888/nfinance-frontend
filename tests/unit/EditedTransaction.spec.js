@@ -86,21 +86,6 @@ describe('EditedTransaction.vue', () => {
         expect(wrapper.vm.transaction.entries.length).toBe(3);
     });
 
-    it('should create array with five last dates for date input autocomplete', () => {
-        const wrapper = mountWrapper(null);
-        const dateStub = jest.spyOn(Date, 'now').mockImplementation(() => 1625517407660); // 2021-07-05
-
-        const days = wrapper.vm.getLastDays(5);
-        expect(days).toEqual(['2021-07-05', '2021-07-04', '2021-07-03', '2021-07-02', '2021-07-01']);
-
-        dateStub.mockRestore();
-    });
-
-    it('should pass array with five last days to input date upon creation', () => {
-        const wrapper = mountWrapper(null);
-        expect(wrapper.findComponent({name: 'InputWithAutocomplete'}).props().suggestionsList.length).toBeGreaterThan(0);
-    });
-
     it('should not allow to save when there are empty inputs', async () => {
         const wrapper = mountWrapper({ ...transaction, date: '', payee: ''});
 

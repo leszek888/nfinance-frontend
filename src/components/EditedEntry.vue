@@ -3,6 +3,7 @@
         <div class="entry-row">
             <InputWithAutoComplete
                 auto-complete-type="splitted"
+                :auto-complete="true"
                 data-cy="input-account"
                 label="Account"
                 ref="account"
@@ -11,7 +12,7 @@
                 @change="updateAccount"
                 @focusout="updateEntry"
             />
-            <InputWithLabel
+            <InputWithAutoComplete
                 data-cy="input-amount"
                 label="Amount"
                 ref="amount"
@@ -29,14 +30,12 @@
 
 <script>
 import InputWithAutoComplete from './InputWithAutocomplete.vue'
-import InputWithLabel from './InputWithLabel.vue'
 
 export default {
     name: 'EditedEntry',
 
     components: {
         InputWithAutoComplete,
-        InputWithLabel,
     },
 
     computed: {

@@ -3,7 +3,7 @@
     </div>
     <div ref="container" data-cy="container-edit-transaction" class="edited-transaction-container">
         <div class="header">
-            <InputWithLabel
+            <InputWithAutoComplete
                 data-cy="input-date"
                 label="Date"
                 ref="date"
@@ -11,7 +11,7 @@
                 @change="updateDate"
                 type="date"
             />
-            <InputWithLabel
+            <InputWithAutoComplete
                 data-cy="input-payee"
                 label="Payee"
                 ref="payee"
@@ -27,7 +27,7 @@
             <div v-for="(entry, index) in transaction.entries" :key="entry.id">
                 <EditedEntry
                     :account="entry.account"
-                    :accountValidator="validate"
+                    :accountValidator="validateAccount"
                     :amount="entry.amount" 
                     :amountValidator="validateNumber"
                     :id="entry.id"
@@ -50,7 +50,7 @@
 
 <script>
 import EditedEntry from './EditedEntry.vue'
-import InputWithLabel from './InputWithLabel.vue'
+import InputWithAutoComplete from './InputWithAutocomplete.vue'
 import { nanoid } from 'nanoid'
 import { numberToString } from '../helpers.js'
 import Decimal from 'decimal.js'
@@ -60,7 +60,7 @@ export default {
 
     components: {
         EditedEntry,
-        InputWithLabel,
+        InputWithAutoComplete,
     },
 
     props: {
@@ -76,6 +76,7 @@ export default {
             suggestions: ['Assets', 'Equity'],
             transaction: {},
             dateSuggestions: [],
+            errorsList: [],
         }
     },
 
@@ -103,6 +104,13 @@ export default {
     methods: {
         validate(value) {
             return value.toString().trim().length > 0 ? true : false;
+        },
+        validateAccount(value) {
+            let topAccount = value.split(':')[0];
+            let topAccountsNames = ['Assets', 'Liabilities', 'Expenses', 'Income', 'Equity'];
+            if (topAccountsNames.includes(topAccount))
+                return true;
+            return false;
         },
         validateDate(value) {
             if (!this.validate(value))
@@ -167,29 +175,38 @@ export default {
         },
         transactionIsValid() {
             let isValid = true;
+            this.errorsList = [];
 
-            if (this.unbalancedAmount != 0)
+            if (this.unbalancedAmount != 0) {
+                this.errorsList.push('Amount is unbalanced');
                 isValid = false;
+            }
 
             if (!this.validateDate(this.transaction.date)) {
                 isValid = false;
-                this.$refs.date.markAsInvalid();
+                this.$refs.date.markAsInvalid('Date is required');
             }
 
             if (!this.validate(this.transaction.payee)) {
                 isValid = false;
-                this.$refs.payee.markAsInvalid();
+                this.$refs.payee.markAsInvalid('Payee is required');
             }
 
             this.transaction.entries.forEach((entry, index) => {
-                if (!this.validate(entry.account)) {
+                if (!this.validateAccount(entry.account)) {
                     isValid = false;
-                    this.$refs['entry'+index].$refs.account.markAsInvalid();
+                    let errorMessage = '';
+                    if (entry.account.length > 0)
+                        errorMessage = 'Top account has to be Assets, Liabilities, Equity, Income or Expenses';
+                    else
+                        errorMessage = 'Account is required';
+
+                    this.$refs['entry'+index].$refs.account.markAsInvalid(errorMessage);
                 }
 
                 if (!this.validateNumber(entry.amount)) {
                     isValid = false;
-                    this.$refs['entry'+index].$refs.amount.markAsInvalid();
+                    this.$refs['entry'+index].$refs.amount.markAsInvalid('Amount is invalid');
                 }
             });
 

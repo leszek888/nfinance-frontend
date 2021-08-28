@@ -1,5 +1,11 @@
 <template>
     <div @keydown="handleKeyDown" class="input-with-label-container">
+        <div v-if="errorMessage" class="error-message" @mouseenter="showErrorMessage(true)" @mouseleave="showErrorMessage(false)">
+            <font-awesome-icon icon="question-circle" class="icons" />
+        </div>
+        <div v-if="showError" class="error-message-popup">
+            {{ errorMessage }}
+        </div>
         <label for="input" class="label">{{ label }}</label>
             <input
                 :data-cy="dataCy"
@@ -9,12 +15,13 @@
                 @focus="handleFocus"
                 autocomplete="off"
                 name="input"
+                :type="type ? type : 'text'"
             />
         <div
             :class="['autocomplete-container', !isFocused ? 'hidden' : 'shown']"
             data-cy="container-autocomplete"
             tabindex="-1"
-            v-if="currentSuggestions.length > 0"
+            v-if="currentSuggestions.length > 0 && autoComplete"
         >
             <div v-for="(suggestion, index) in currentSuggestions" :key="index">
                 <div
@@ -31,16 +38,16 @@
 </template>
 
 <script>
-import { formatNumber, numberToString, stringToNumber } from './../helpers.js'
-
 export default {
     name: 'InputWithAutocomplete',
 
     data() {
         return {
             currentSelection: 0,
-            input_value: this.formatValue(),
+            input_value: this.value,
             isFocused: false,
+            errorMessage: '',
+            showError: false,
         }
     },
 
@@ -87,13 +94,14 @@ export default {
     },
 
     methods: {
-        markAsInvalid() {
+        markAsInvalid(message) {
             this.$refs.input.classList.add('has-error');
+            this.errorMessage = message;
         },
 
-        formatValue() {
+        formatValue(val) {
             if (this.type === 'number')
-                return numberToString(this.value);
+                return Number(val) ? Number(val) : '';
             return this.value;
         },
 
@@ -104,8 +112,6 @@ export default {
         handleBlur() {
             this.isFocused = false;
             document.removeEventListener('click', this.checkClicks);
-            if (this.type === 'number' && formatNumber(this.input_value))
-                this.input_value = formatNumber(this.input_value);
         },
 
         checkClicks(e) {
@@ -124,16 +130,14 @@ export default {
         handleFocus() {
             this.isFocused = true;
             this.$refs.input.classList.remove('has-error');
+            this.errorMessage = '';
+            this.showError = false;
 
             document.addEventListener('click', this.checkClicks);
         },
 
         handleChange() {
             let value = this.input_value;
-
-            if (this.type === 'number')
-                value = stringToNumber(value);
-
             value = value.trim();
 
             if (this.autoCompleteType === 'splitted')
@@ -189,6 +193,10 @@ export default {
             this.currentSelection = 0;
             this.handleChange();
         },
+
+        showErrorMessage(val) {
+            this.showError = val;
+        }
     },
 
     created() {
@@ -235,6 +243,25 @@ export default {
         font-size: 8pt;
         left: 8pt;
         position: absolute;
+    }
+    .input-with-label-container .error-message {
+        color: #a55a;
+        position: absolute;
+        top: 10pt;
+        right: 10pt;
+        z-index: 100;
+    }
+    .input-with-label-container .error-message-popup {
+        border: solid 1px red;
+        background-color: #fffafa;
+        color: #400;
+        font-size: 10pt;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        position: absolute;
+        top: 30pt;
+        width: 100%;
+        z-index: 101;
     }
     .suggestion {
         padding: 0.5em;

@@ -4,10 +4,10 @@ import store from './store'
 import router from './router'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faMinusSquare, faPlusSquare, faCoffee);
+library.add(faMinusSquare, faPlusSquare, faQuestionCircle);
 
 createApp(App).use(router).use(store).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
 
