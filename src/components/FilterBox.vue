@@ -27,6 +27,7 @@ export default {
     }
     .filterbox-title {
         padding: 0.25em;
+        font-size: 10pt;
     }
     .filterbox-inputs {
         width: 100%;
