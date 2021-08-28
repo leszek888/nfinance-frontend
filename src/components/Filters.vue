@@ -1,8 +1,11 @@
 <template>
     <div class="filters-container">
-        <FilterDate data-cy="filter-date" title="Date" name="date" @filter-update="updateFilters" />
-        <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
-        <FilterSimple data-cy="filter-account" title="Account" value="" name="account" @filter-update="updateFilters" />
+        <label>Filters</label>
+        <div class="filters-list">
+            <FilterDate data-cy="filter-date" title="Date" name="date" @filter-update="updateFilters" />
+            <FilterSimple data-cy="filter-payee" title="Payee" value="" name="payee" @filter-update="updateFilters" />
+            <FilterSimple data-cy="filter-account" title="Account" value="" name="account" @filter-update="updateFilters" />
+        </div>
     </div>
 </template>
 
@@ -69,13 +72,19 @@ export default {
 
 <style>
     .filters-container {
+        background-color: #fafafa;
+        border: solid 1px #ddd;
+        padding: 1em;
+    }
+    .filters-list {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 0.25em;
+        position: relative;
     }
 
     @media only screen and (max-width: 780px) {
-        .filters-container {
+        .filters-list {
             grid-template-columns: 1fr;
         }
     }

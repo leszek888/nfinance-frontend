@@ -1,4 +1,6 @@
 <template>
+    <div class="background-blocker">
+    </div>
     <div ref="container" data-cy="container-edit-transaction" class="edited-transaction-container">
         <div class="header">
             <InputWithLabel
@@ -7,7 +9,7 @@
                 ref="date"
                 :value="transaction.date"
                 @change="updateDate"
-                input-type="date"
+                type="date"
             />
             <InputWithLabel
                 data-cy="input-payee"
@@ -266,6 +268,16 @@ export default {
     @keyframes slide-in-animation {
         from { top: -100pt; opacity: 0.5; }
         to { top: 5em; opacity: 1; }
+    }
+
+    .background-blocker {
+        background-color: #aaaaaaaa;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 98;
     }
 
     .edited-transaction-container {

@@ -19,7 +19,6 @@ export default {
 <style>
     .container-filterbox {
         align-items: flex-start;
-        background-color: #fafafa;
         border: none;
         box-sizing: border-box;
         display: flex;

@@ -5,11 +5,9 @@
                 :data-cy="dataCy"
                 ref="input"
                 v-model="input_value"
-                @blur="handleBlur"
-                @change="handleChange"
+                @change="handleChange()"
                 @focus="handleFocus"
-                :type="inputType ? inputType : 'text'"
-                :step="inputType == 'number' && '0.01'"
+                :type="type ? type : 'text'"
                 name="input"
                 autocomplete="off"
             />
@@ -17,8 +15,6 @@
 </template>
 
 <script>
-import { numberToString } from './../helpers.js'
-
 export default {
     name: 'InputWithLabel',
 
@@ -41,19 +37,8 @@ export default {
             this.$refs.input.classList.add('has-error');
         },
 
-        formatValue() {
-            if (this.type === 'number')
-                return numberToString(this.value);
-            return this.value;
-        },
-
         isValid() {
             return this.input_value.trim().length > 0 ? true : false;
-        },
-
-        handleBlur() {
-            if (this.type === 'number')
-                this.input_value = this.input_value.replaceAll('.', ',');
         },
 
         handleFocus() {
@@ -61,15 +46,20 @@ export default {
         },
 
         handleChange() {
-            let value = this.input_value;
+            let value = this.$refs.input.value;
             value = value.trim();
 
             this.$emit('change', value);
         },
+        formatValue(val) {
+            if (this.type === 'number')
+                return Number(val) ? Number(val) : '';
+            return val;
+        }
     },
 
     created() {
-        this.formatValue();
+        this.input_value = this.formatValue(this.value);
     },
 
     emits: ['change'],
@@ -78,15 +68,6 @@ export default {
 </script>
 
 <style scoped>
-    @keyframes show-autocomplete {
-        from { max-height: 0pt; }
-        to { max-height: 100pt; }
-    }
-    @keyframes hide-autocomplete {
-        from { max-height: 100pt; border: 1px; }
-        to { max-height: 0pt; border: 0px; }
-    }
-
     *:focus {
         outline: none;
     }
@@ -104,6 +85,7 @@ export default {
     }
     .input-with-label-container input[type="date"] {
         appearance: none;
+        background-color: #fefefe;
         border: solid 1px #ddd;
         box-sizing: border-box;
         font-size: 11pt;

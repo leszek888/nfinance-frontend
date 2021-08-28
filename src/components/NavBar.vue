@@ -56,7 +56,7 @@ export default {
         position: fixed;
         right: 0;
         top: 0;
-        z-index: 99;
+        z-index: 97;
     }
 
     .nav-link {

@@ -24,7 +24,7 @@ export default {
     data() {
         return {
             periodes: [ 'This Month', 'Last Month', 'This Year', 'All Time', 'Custom' ],
-            currentPeriod: 'This Month',
+            currentPeriod: this.selectedPeriod ? this.selectedPeriod : 'This Month',
             value_from: '',
             value_to: '',
         }
@@ -33,6 +33,7 @@ export default {
         value: String,
         title: String,
         name: String,
+        selectedPeriod: String,
     },
     components: {
         FilterBox,
@@ -88,14 +89,11 @@ export default {
        },
 
         emitAll() {
-            if (this.currentPeriod === 'Custom' && (!this.value_from || !this.value_to))
-                return;
-
             this.$emit('filter-update', [{name: 'date_from', value: this.value_from},
                                           {name: 'date_to', value: this.value_to}]);
         },
     },
-    emits: [ 'filter-update', 'filters-update' ],
+    emits: [ 'filter-update' ],
     mounted() {
         this.$nextTick(function() {this.updateSelection();});
     },

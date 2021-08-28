@@ -6,7 +6,7 @@
             <router-link to="/reports/cash-flow" class="report-link" active-class="report-link-active">Cash Flow</router-link>
         </div>
 
-        <FilterDate data-cy="filter-date" title="Period" name="date" @filter-update="updatePeriod" />
+        <FilterDate data-cy="filter-date" title="Period" name="date" @filter-update="updatePeriod" selected-period="All Time" />
 
             <div v-if="accounts && accounts.length > 0">
                 <div v-for="account, index in accounts" :key="index">
@@ -107,12 +107,11 @@ export default {
         },
 
         updatePeriod(period) {
-            if (period[0].value && period[1].value) {
-                this.period = '&' + period[0].name + '=' + period[0].value;
+            this.period = '';
+            if (period[0].value)
+                this.period += '&' + period[0].name + '=' + period[0].value;
+            if (period[1].value)
                 this.period += '&' + period[1].name + '=' + period[1].value;
-            }
-            else
-                this.period = '';
             this.updateFilters();
         },
     },
