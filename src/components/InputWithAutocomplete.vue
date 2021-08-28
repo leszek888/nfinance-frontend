@@ -233,6 +233,9 @@ export default {
         font-size: 11pt;
         width: 100%;
     }
+    .input-with-label-container input[type="date"] {
+        background-color: none;
+    }
     .input-with-label-container input:focus {
         border-color: #666;
     }
