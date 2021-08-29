@@ -85,7 +85,7 @@ Equity
 Expenses
 Income
 ```
-Sub accounts have to be separated with ':', and are created on the fly.
+Sub accounts have to be separated with ':', and are created on the fly. Sub accounts can be named however you wish.
 Example accounts:
 ```
 Assets:Current:Bank
