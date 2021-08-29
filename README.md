@@ -42,7 +42,7 @@ Example transaction:
 Assets:Current:Cash     -50.00
 Expenses:Groceries       50.00
 ```
-In this example, Assets have decreased, and Expenses increased, since the money went from Assets to Expenses, this example is pretty intuitive.
+In this example, Assets have decreased, and Expenses increased, this example is pretty intuitive.
 
 Second example:
 ```
