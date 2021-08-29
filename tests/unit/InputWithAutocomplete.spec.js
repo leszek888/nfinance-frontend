@@ -2,6 +2,10 @@ import { mount } from '@vue/test-utils'
 import InputWithAutocomplete from '@/components/InputWithAutocomplete.vue'
 
 describe('InputWithAutocomplete.vue', () => {
+    beforeEach(() => {
+        jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
     it('renders with AutoComplete when suggestions are present and is focused', async () => {
         const wrapper = mount(InputWithAutocomplete, {
             props: {

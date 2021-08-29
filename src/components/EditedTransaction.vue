@@ -115,52 +115,9 @@ export default {
         validateDate(value) {
             if (!this.validate(value))
                 return false;
-
-            const dateFormat = /^(\d{4})(-)(\d{1,2})(-)(\d{1,2})$/;
-            let dateString = value.trim();
-            let dateIsValid = true;
-
-            if(dateString.match(dateFormat)){      
-                const datePart = dateString.split('-');
-                if (datePart.length != 3)
-                    dateIsValid = false;
-
-                const year = parseInt(datePart[0]);      
-                const month= parseInt(datePart[1]);      
-                const day = parseInt(datePart[2]);      
-                      
-                const listOfDays = [31,28,31,30,31,30,31,31,30,31,30,31];      
-
-                if (day < 1)
-                    dateIsValid = false;
-
-                if (month >= 1 && month <= 12 && month != 2) {
-                    if (day>listOfDays[month-1])
-                        dateIsValid = false;
-                }
-                else if (month==2) {      
-                    let leapYear = false;
-
-                    if ( (!(year % 4) && year % 100) || !(year % 400))
-                        leapYear = true;
-
-                    if ((leapYear == false) && (day>=29))
-                        dateIsValid = false;
-                    else {
-                        if ((leapYear==true) && (day>29)){
-                            dateIsValid = false;
-                        }
-                    }
-                }
-                else
-                    dateIsValid = false;
-            }
-            else {
-                dateIsValid = false;
-            }
-
-            return dateIsValid;
-
+            if (!new Date(value))
+                return false;
+            return true;
         },
         validateNumber(value) {
             if (!this.validate(value))

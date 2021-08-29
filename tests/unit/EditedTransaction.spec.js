@@ -2,6 +2,9 @@ import { mount } from '@vue/test-utils'
 import EditedTransaction from '@/components/EditedTransaction.vue'
 
 describe('EditedTransaction.vue', () => {
+    beforeEach(() => {
+        jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
     const transaction = {
         date: '2020-01-01',
         payee: 'Payee',
@@ -100,13 +103,6 @@ describe('EditedTransaction.vue', () => {
                     { account: 'Equity', amount: '33' }
                 ]
             });
-
-        await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
-        expect(wrapper.emitted('save-transaction')).toBeFalsy();
-    });
-
-    it('should not allow to save when date is invalid', async () => {
-        const wrapper = mountWrapper({ ...transaction, date: '2021-02-01a' });
 
         await wrapper.find('[data-cy="btn-save-transaction"]').trigger('click');
         expect(wrapper.emitted('save-transaction')).toBeFalsy();

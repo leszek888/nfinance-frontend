@@ -2,7 +2,9 @@ import { mount } from '@vue/test-utils'
 import EditedEntry from '@/components/EditedEntry.vue'
 
 describe('EditedEntry.vue', () => {
-
+    beforeEach(() => {
+        jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
     const mountEntry = (props) => {
         return mount(EditedEntry, {
             props: props ? props :
