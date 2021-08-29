@@ -22,27 +22,10 @@ Testing is performed with following technologies:
 * e2e testing - cypress
 
 ## Setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+You can find the current demo version on https://nbudget.eu/
+Use "demo balance" to create balance sheet pre-filled with dummy transactions to just get the feeling of the software.
+Use "empty balance" to create empty balance sheet.
+Please note this is still work in progress, and created balances are not saved.
 
 ## Usage
 * [Introduction](#introduction)
