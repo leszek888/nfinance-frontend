@@ -260,7 +260,7 @@ export default {
         background-color: #fefefe;
         border: solid 1px #bbb;
         border-radius: 5px;
-        box-shadow: 0px 0px 6px #aaa;
+        box-shadow: 0px 0px 6px #666;
         display: grid;
         grid-gap: 0.5rem;
         grid-template-columns: 2fr 3fr;
@@ -268,7 +268,8 @@ export default {
         margin: auto;
         max-width: 600pt;
         padding: 1em;
-        padding-bottom: 4em;
+        padding-top: 2em;
+        padding-bottom: 6em;
         position: fixed;
         right: 0;
         top: 5em;
@@ -288,8 +289,11 @@ export default {
     }
 
     .buttons {
+        left: 0;
+        right: 0;
         bottom: 1em;
-        left: 1em;
+        display: flex;
+        justify-content: center;
         position: absolute;
     }
 
@@ -297,7 +301,7 @@ export default {
         border: 0pt;
         box-shadow: 2px 2px 4px #bbb;
         padding: 0.5em;
-        margin: 0.25em;
+        margin: 0.5em;
         transition: all 0.2s;
     }
 
@@ -319,23 +323,19 @@ export default {
     }
 
 @media only screen and (max-width: 640px) {
-    .edited-transaction-container {
-        display: flex;
-        flex-direction: column;
-    }
-
     @keyframes slide-in {
         from { left: -100%; right: 100% }
         to { left: 0; right: 0 }
     }
 
     .edited-transaction-container {
+        display: flex;
+        flex-direction: column;
         position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 10px;
+        top: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
         z-index: 99;
         animation-name: slide-in;
         animation-duration: 0.3s;
