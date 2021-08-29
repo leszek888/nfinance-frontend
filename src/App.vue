@@ -13,15 +13,18 @@
                 </router-view>
             </div>
         </div>
+        <AppFooter />
 </template>
 
 <script>
+import AppFooter from '@/components/AppFooter.vue'
 import NavBar from '@/components/NavBar.vue'
 
 export default {
     name: 'App',
 
     components: {
+        AppFooter,
         NavBar,
     },
 
@@ -66,6 +69,16 @@ body {
     padding-top: 5em;
 }
 
+footer {
+    background-color: #666;
+    color: #eee;
+    margin-top: 10em;
+    min-height: 30vh;
+    padding: 4em;
+    text-align: center;
+    width: 100%;
+}
+
 #app {
     font-family: sans-serif;
     position: relative;
@@ -75,6 +88,7 @@ body {
 .main-content {
     max-width: 1100px;
     min-width: 320px;
+    min-height: 70vh;
     margin: auto;
 }
 

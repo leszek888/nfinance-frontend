@@ -65,23 +65,6 @@ describe('Transactions List Test', () => {
         cy.get('@inputAmount').type((-100).toString());
         cy.get('@inputAmount').blur();
       }
-      /*
-      if (index === 1) {
-        cy.get('@inputAccount').focus();
-        cy.get('@inputAccount').type('{enter}');
-        cy.get('@inputAccount').type('l');
-        cy.get('@inputAccount').type('{enter}');
-        cy.get('@inputAmount').type((-1*(transactionValue-100)).toString());
-        cy.get('@inputAmount').blur();
-        cy.get('[data-cy="field-unbalanced-amount"]').contains('-100,00');
-      }
-      if (index === 2) {
-        cy.get('@inputAccount').focus();
-        fillOutWithAutocomplete('click', cy.wrap(entry));
-        cy.get('@inputAmount').type((-100).toString());
-        cy.get('@inputAmount').blur();
-      }
-      */
     });
 
     // Save and display the transaction
@@ -100,6 +83,7 @@ describe('It filters transactions on the list', () => {
     cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
     cy.wait(4000);
     cy.get('[data-cy="nav-link-transactions"]').click();
+    cy.wait(1000);
 
     cy.get('[data-cy="filter-payee"]').find('input').type('Shop A').type('{enter}');
     cy.get('[data-cy="container-transaction"]').should('have.length', 1);
