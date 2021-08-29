@@ -23,6 +23,7 @@ Testing is performed with following technologies:
 
 ## Setup
 You can find the current demo version on https://nbudget.eu/
+
 Use "demo balance" to create balance sheet pre-filled with dummy transactions to just get the feeling of the software.
 Use "empty balance" to create empty balance sheet.
 Please note this is still work in progress, and created balances are not saved.
