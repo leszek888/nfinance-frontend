@@ -39,8 +39,8 @@ export default {
                 this.$store.commit('setBalanceId', balance_id);
             }
             else {
-                if (template && template === 'demo')
-                    await this.$store.dispatch('createDemoBalance')
+                if (template)
+                    await this.$store.dispatch('createBalanceFromTemplate', template)
                 else
                     await this.$store.dispatch('createNewBalance');
             }

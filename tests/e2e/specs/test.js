@@ -78,26 +78,35 @@ describe('Transactions List Test', () => {
 
 })
 
-describe('It filters transactions on the list', () => {
+describe.only('It filters transactions on the list', () => {
   it('Filters transactions by date, account and payee name', () => {
-    cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+    cy.visit('/load?template=e2e');
     cy.wait(4000);
     cy.get('[data-cy="nav-link-transactions"]').click();
     cy.wait(1000);
 
     cy.get('[data-cy="filter-payee"]').find('input').type('Shop A').type('{enter}');
     cy.get('[data-cy="container-transaction"]').should('have.length', 1);
+    cy.get('[data-cy="filter-payee"]').find('input').clear();
+
+    cy.get('[data-cy="filter-account"]').find('input').type('Expenses').type('{enter}');
+    cy.get('[data-cy="container-transaction"]').should('have.length', 2);
+    cy.get('[data-cy="filter-account"]').find('input').clear();
+
+    cy.get('[data-cy="filter-date"]').find('select').select('Custom');
+    cy.get('[data-cy="date-from"]').type('2021-08-03').blur();
+    cy.get('[data-cy="container-transaction"]').should('have.length', 1);
   });
 
 });
 
-describe('Displays accounts with balances on /accounts page', () => {
-  it('Filters transactions by date, account and payee name', () => {
-    cy.visit('/load?balance_id=b10fc767-7a43-43d8-ae1e-8125ebecf503');
+describe('Displays accounts with balances on /reports page', () => {
+  it('Displays accounts', () => {
+    cy.visit('/load?template=e2e');
     cy.wait(4000);
     cy.get('[data-cy="nav-link-accounts"]').click();
 
-    cy.get('[data-cy="container-accounts"]').find('[data-cy="account-row"]').should('have.length', 12);
+    cy.get('[data-cy="container-accounts"]').find('[data-cy="account-row"]').should('have.length', 10);
   });
 
 });

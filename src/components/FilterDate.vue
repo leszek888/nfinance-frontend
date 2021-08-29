@@ -6,10 +6,10 @@
             </select>
             <div v-if="currentPeriod == 'Custom'">
                 <div class="date-selector">
-                    From: <input type="date" name="date_from" v-model="value_from" @change="emitAll" autocomplete="off"/>
+                    From: <input type="date" data-cy="date-from" name="date_from" v-model="value_from" @change="emitAll" autocomplete="off"/>
                 </div>
                 <div class="date-selector">
-                    To: <input type="date" name="date_to" v-model="value_to" @change="emitAll" autocomplete="off" />
+                    To: <input type="date" data-cy="date-to" name="date_to" v-model="value_to" @change="emitAll" autocomplete="off" />
                 </div>
             </div>
         </div>
