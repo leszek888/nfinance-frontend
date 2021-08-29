@@ -64,6 +64,18 @@ export default {
 a:focus {
     outline: thin #aaa dotted;
 }
+.cta-btn {
+    background-color: #3ca4d1;
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 12pt;
+    padding: 1em;
+}
+.cta-btn:hover {
+    filter: brightness(1.1);
+    cursor: pointer;
+}
 
 body {
     padding-top: 5em;

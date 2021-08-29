@@ -227,6 +227,7 @@ export default {
     }
     .input-with-label-container {
         background-color: #fefefe;
+        padding: 0.1rem;
         padding-top: 0.3rem;
         position: relative;
         color: #aaa;
