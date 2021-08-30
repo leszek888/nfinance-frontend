@@ -27,12 +27,6 @@ export default {
         transactions: Array
     },
 
-    methods: {
-        editTransaction(id) {
-            console.log('Editing', id);
-        },
-    },
-
     emits: [ 'edit-transaction', 'filters-update' ],
 }
 </script>

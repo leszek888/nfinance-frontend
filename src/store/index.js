@@ -98,7 +98,6 @@ const store = createStore({
                 commit('setBalanceId', response['balance_id']);
         },
         async createBalanceFromTemplate({ commit, dispatch }, template) {
-            console.log('creating from template:', template);
             const response = await dispatch('sendApiRequest', {url: 'balance/new?template='+template, method: 'GET'});
             if ('balance_id' in response)
                 commit('setBalanceId', response['balance_id']);
