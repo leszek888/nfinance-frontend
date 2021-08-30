@@ -3,6 +3,7 @@
         <h1>
             You have been logged out.
         </h1>
+        <br />
         <router-link to="/login" class="link">Home Page</router-link>
     </div>
 </template>

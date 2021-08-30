@@ -56,7 +56,7 @@ export default {
     },
 
     async mounted() {
-        setTimeout(() => this.createBalance(), 1000);
+        setTimeout(() => this.createBalance(), 250);
     },
 }
 </script>
