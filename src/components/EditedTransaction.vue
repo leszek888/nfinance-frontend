@@ -232,6 +232,10 @@ export default {
         this.transaction.entries = this.entries.map((entry) => {return this.addIdToEntry(entry)});
         this.dateSuggestions = this.getLastDays(4);
     },
+    async mounted() {
+        console.log('mounted');
+        await this.$store.dispatch('fetchData');
+    },
 
     emits: [ 'close-transaction', 'save-transaction', 'delete-transaction' ]
 }

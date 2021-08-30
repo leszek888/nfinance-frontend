@@ -1,11 +1,12 @@
 <template>
     <div @click="isCollapsed = !isCollapsed" class="account-row" data-cy="account-row">
         <span>
-            <div v-if="subAccountsArePresent">
-                <div v-if="isCollapsed"><font-awesome-icon icon="plus-square" class="icons" />&nbsp;</div>
-                <div v-if="!isCollapsed"><font-awesome-icon icon="minus-square" class="icons" />&nbsp;</div>
+            <div class="plus-minus-box">
+                <div v-if="subAccountsArePresent">
+                    <div v-if="isCollapsed"><font-awesome-icon icon="plus-square" class="icons" /></div>
+                    <div v-if="!isCollapsed"><font-awesome-icon icon="minus-square" class="icons" /></div>
+                </div>
             </div>
-            <div v-if="!subAccountsArePresent">&nbsp;&nbsp;&nbsp;</div>
             {{ account.name }}
         </span>
         <span>{{ formattedBalance }}</span>
@@ -64,6 +65,9 @@ export default {
     }
     .sub-account {
         padding-left: 1em;
+    }
+    .plus-minus-box {
+        width: 2.5em;
     }
     .icons {
         color: #aaa;

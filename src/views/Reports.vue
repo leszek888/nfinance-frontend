@@ -61,8 +61,6 @@ export default {
         },
         balanceSum() {
             let sum = Decimal(0);
-            console.log('called');
-            console.log(this.accounts);
 
             this.accounts.forEach(account => {
                 sum = sum.plus(Decimal(account.balance));
@@ -81,6 +79,9 @@ export default {
             account['balance'] = balance;
             account['sub_accounts'] = [];
 
+            if (account['balance'] == 0 && depth > 0)
+                return;
+
             array.forEach(element => {
                 if (element['name'] == account['name']) {
                     account_found = true;
@@ -89,7 +90,7 @@ export default {
                 }
             });
 
-            if (!account_found) {
+            if (!account_found && accounts['balance'] != 0) {
                 array.push(account);
                 if (accounts.length > 0)
                     this.parseSubAccounts(accounts, balance, account['sub_accounts'], depth+1);
@@ -136,7 +137,6 @@ export default {
     mounted() {
         if (!this.$route.params.report_type);
             this.$router.push('/reports/balance');
-        this.$store.dispatch('loadAccounts');
     },
 }
 </script>
