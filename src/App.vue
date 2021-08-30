@@ -82,8 +82,9 @@ body {
 }
 
 footer {
-    background-color: #666;
-    color: #eee;
+    background-color: #eee;
+    border-top: solid 2px #ccc;
+    color: #aaa;
     margin-top: 10em;
     min-height: 30vh;
     padding: 4em;
@@ -100,7 +101,7 @@ footer {
 .main-content {
     max-width: 1100px;
     min-width: 320px;
-    min-height: 70vh;
+    min-height: 50vh;
     margin: auto;
 }
 

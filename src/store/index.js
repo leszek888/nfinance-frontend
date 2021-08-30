@@ -60,7 +60,7 @@ const store = createStore({
         },
         async fetchData({ dispatch }) {
             await dispatch('fetchTransactions');
-            await dispatch('loadAccounts');
+            await dispatch('loadAllAccounts');
         },
         async fetchTransactions({ commit, dispatch, getters }) {
             const response = await dispatch('sendApiRequest', {url: 'transaction?'+getters.getFilters, method: 'GET'});
@@ -70,6 +70,13 @@ const store = createStore({
 
             if ('transactions' in response)
                 commit('setTransactions', response['transactions']);
+        },
+        async loadAllAccounts({ commit, dispatch }) {
+            const response = await dispatch('sendApiRequest', {url: 'accounts', method: 'GET'});
+            if ('accounts' in response) {
+                commit('setAccounts', response['accounts']);
+            }
+ 
         },
         async loadAccounts({ commit, dispatch, getters }) {
             const response = await dispatch('sendApiRequest', {url: 'accounts?'+getters.getAccountsFilters, method: 'GET'});
