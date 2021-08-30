@@ -13,7 +13,6 @@ export default {
     name: 'LogoutView',
 
     mounted() {
-        console.log('LogoutView...');
         this.$store.commit('setBalanceId', '');
         this.$store.commit('setAuthToken', '');
         this.$store.commit('setTransactions', []);
