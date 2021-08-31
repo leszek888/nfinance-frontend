@@ -79,7 +79,7 @@ export default {
             account['balance'] = balance;
             account['sub_accounts'] = [];
 
-            if (account['balance'] == 0 && depth > 0)
+            if (account['balance'] == 0)
                 return;
 
             array.forEach(element => {
