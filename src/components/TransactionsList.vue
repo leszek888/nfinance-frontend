@@ -33,6 +33,8 @@ export default {
 
 <style scoped>
     .container-transactions-list {
+        display: grid;
+        grid-row-gap: 1em;
         width: 100%;
     }
 </style>
