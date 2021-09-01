@@ -37,6 +37,7 @@ export default {
 
     data() {
         return {
+            transactions: [],
             editedTransaction: null,
         }
     },
@@ -44,7 +45,7 @@ export default {
     computed: {
         authToken() { return this.$store.getters.getAuthToken; },
         filters() { return this.$store.getters.getFilters; },
-        transactions() { return this.$store.getters.allTransactions; },
+        // transactions() { return this.$store.getters.allTransactions; },
     },
 
     methods: {
@@ -69,19 +70,24 @@ export default {
 
         async updateFilters(filters) {
             this.$store.commit('setFilters', filters);
-            await this.$store.dispatch('fetchData');
+            this.updateState();
         },
 
         async saveEditedTransaction(transaction) {
             this.closeEditedTransaction();
             await this.$store.dispatch('saveTransaction', transaction);
-            await this.$store.dispatch('fetchData');
+            this.updateState();
         },
 
         async deleteEditedTransaction(transaction) {
             this.closeEditedTransaction();
             await this.$store.dispatch('deleteTransaction', transaction);
+            this.updateState();
+        },
+
+        async updateState() {
             await this.$store.dispatch('fetchData');
+            this.transactions = this.$store.getters.allTransactions;
         },
     },
 }
