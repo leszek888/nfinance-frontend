@@ -41,6 +41,7 @@ export default {
 
     watch: {
         $route(to) {
+            this.$store.commit('setAccounts', []);
             this.report_type = to.params.report_type;
             this.updateFilters();
         },
