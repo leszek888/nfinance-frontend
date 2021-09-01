@@ -9,6 +9,9 @@
         <div v-if="transactions && transactions.length === 0">
             No transactions found.
         </div>
+        <div v-if="transactions === null">
+            Loading...
+        </div>
     </div>
 </template>
 

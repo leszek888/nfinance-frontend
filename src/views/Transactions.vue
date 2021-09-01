@@ -37,7 +37,7 @@ export default {
 
     data() {
         return {
-            transactions: [],
+            transactions: null,
             editedTransaction: null,
         }
     },
